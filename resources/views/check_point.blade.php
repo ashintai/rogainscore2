@@ -61,16 +61,18 @@
     <p>チーム番号: {{ $team_no }}：{{ $team_name }}<br>
     ポイント番号: {{ $next_point->point_no }}：{{ $set_point_name }}</p>
     
-    <div>
-        <p>取得写真</p>
-        <div >
-            <img src="{{ $get_photo_url }}" alt="取得写真" style="width: 45%; height: auto;">
+    <div style="display: flex">
+        <div>
+            <p>取得写真</p>
+            <div >
+                <img src="{{ $get_photo_url }}" alt="取得写真" style="width: 45%; height: auto;">
+            </div>
         </div>
-    </div>
-    <div>
-        <p>正解写真</p>
-        <div >
-            <img src="{{ $set_photo_url }}" alt="正解写真" style="width: 45%; height: auto;">
+        <div>
+            <p>正解写真</p>
+            <div >
+                <img src="{{ $set_photo_url }}" alt="正解写真" style="width: 45%; height: auto;">
+            </div>
         </div>
     </div>
     <!-- <div class="container">
