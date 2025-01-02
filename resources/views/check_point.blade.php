@@ -16,7 +16,7 @@
             flex-wrap: wrap;/* 画像が横に並びきれない場合は次の行に移動 */
         }
 
-        .responsive-imag{
+        .responsive-image{
             width: 350px;/* 画像の最大幅を設定 */
             height: auto;/* 高さを自動に設定して縦横比を維持 */
             object-fit: contain;/* 画像の縦横比を維持しながらコンテナに収める */
