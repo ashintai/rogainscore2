@@ -64,14 +64,14 @@
     <div style="display: flex">
         <div style="width: 45%">
             <p>取得写真</p>
-            <div style="width: 100%; height:auto;">
-                <img src="{{ $get_photo_url }}" alt="取得写真" >
+            <div >
+                <img src="{{ $get_photo_url }}" alt="取得写真" style="width: 100%; height:auto;">
             </div>
         </div>
         <div style="width: 45%">
             <p>正解写真</p>
-            <div style="width: 100%; height:auto;">
-                <img src="{{ $set_photo_url }}" alt="正解写真" >
+            <div >
+                <img src="{{ $set_photo_url }}" alt="正解写真" style="width: 100%; height:auto;">
             </div>
         </div>
     </div>
