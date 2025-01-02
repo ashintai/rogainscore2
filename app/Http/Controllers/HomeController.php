@@ -909,6 +909,31 @@ public function download_get_photo( Request $request )
 {
     // ファイル名を取得
     $filename = $request->input('filename');
+    
+    // S3のURLからファイルパスを抽出
+    if (filter_var($filename, FILTER_VALIDATE_URL)) {
+        $parsedUrl = parse_url($filename);
+        $filename = ltrim($parsedUrl['path'], '/');
+    }
+
+    // S3からファイルを取得
+    $disk = Storage::disk('s3');
+    if (!$disk->exists($filename)) {
+        abort(404, 'File not found');
+    }
+    $file = $disk->get($filename);
+
+    // ファイルをダウンロード
+    return response($file, 200)
+        ->header('Content-Type', $disk->mimeType($filename))
+        ->header('Content-Disposition', 'attachment; filename="' . basename($filename) . '"');
+
+    
+    
+    
+    
+    
+    
     // ファイルをダウンロード
     return response()->download($filename);
 
