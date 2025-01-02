@@ -613,7 +613,7 @@ public function upload_image(Request $request)
 {
     // UPLOADされたファイルが画像であることにチェック
     $request->validate([
-        'image' => 'required|image|mimes:jpg,jpeg,png,gif',
+        'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:20480',
     ]);
 
     // \Log::debug($request->all());
