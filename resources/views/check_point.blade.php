@@ -64,13 +64,13 @@
     <div>
         <p>取得写真</p>
         <div >
-            <img src="{{ $get_photo_url }}" alt="取得写真" >
+            <img src="{{ $get_photo_url }}" alt="取得写真" style="width: 45%; height: auto;">
         </div>
     </div>
     <div>
         <p>正解写真</p>
         <div >
-            <img src="{{ $set_photo_url }}" alt="正解写真" >
+            <img src="{{ $set_photo_url }}" alt="正解写真" style="width: 45%; height: auto;">
         </div>
     </div>
     <!-- <div class="container">
