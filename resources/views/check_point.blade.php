@@ -17,7 +17,7 @@
         }
 
         .responsive-imag{
-            max-width: 45%;/* 画像の最大幅を設定 */
+            width: 350px;/* 画像の最大幅を設定 */
             height: auto;/* 高さを自動に設定して縦横比を維持 */
             object-fit: contain;/* 画像の縦横比を維持しながらコンテナに収める */
         }
