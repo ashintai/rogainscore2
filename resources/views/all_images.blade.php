@@ -81,8 +81,13 @@
                     </form> 
                 @endif
             </div>
-            <div>    
-                <a href="{{ route('download_get_photo', ['filename' => urlencode( $get_point->photo_filename ) ]) }}" class="btn btn-primary">この写真をダウンロード</a>
+            <div>  
+                <form action="{{ route('download_get_photo') }}" method="POST" class="mt-1">
+                    @csrf
+                    <input type="hidden" name="filename" value="{{ $get_point->photo_filename }}">
+                    <button type="submit" class="btn btn-primary ms-3" >この写真をダウンロード</button>  
+                </form>
+                    <!-- <a href="{{ route('download_get_photo', ['filename' => urlencode( $get_point->photo_filename ) ]) }}" class="btn btn-primary">この写真をダウンロード</a> -->
             </div>
         </div>
         <hr>

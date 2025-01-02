@@ -905,30 +905,34 @@ public function staff_main(){
 }
 
 // 取得写真のダウンロード
-public function download_get_photo( $filename )
+public function download_get_photo( Request $request )
 {
-    
-    \Log::debug($filename);
-    
-    // S3のURLからファイルパスを抽出
-    if (filter_var($filename, FILTER_VALIDATE_URL)) {
-        $parsedUrl = parse_url($filename);
-        $filename = ltrim($parsedUrl['path'], '/');
-    }
-
-    \Log::debug($filename);
-
-    // S3からファイルを取得
-    $disk = Storage::disk('s3');
-    $file = $disk->get($filename);
-
     // ファイル名を取得
-    $name = basename($filename);
+    $filename = $request->input('filename');
+    // ファイルをダウンロード
+    return response()->downloadFile($filename);
 
-    // ファイルをダウンロードさせるレスポンスを返す
-    return response($file, 200)
-        ->header('Content-Type', $disk->mimeType($filename))
-        ->header('Content-Disposition', 'attachment; filename="' . $name . '"');
+    \Log::debug($filename);
+    
+    // // S3のURLからファイルパスを抽出
+    // if (filter_var($filename, FILTER_VALIDATE_URL)) {
+    //     $parsedUrl = parse_url($filename);
+    //     $filename = ltrim($parsedUrl['path'], '/');
+    // }
+
+    // \Log::debug($filename);
+
+    // // S3からファイルを取得
+    // $disk = Storage::disk('s3');
+    // $file = $disk->get($filename);
+
+    // // ファイル名を取得
+    // $name = basename($filename);
+
+    // // ファイルをダウンロードさせるレスポンスを返す
+    // return response($file, 200)
+    //     ->header('Content-Type', $disk->mimeType($filename))
+    //     ->header('Content-Disposition', 'attachment; filename="' . $name . '"');
 }
 
 }
