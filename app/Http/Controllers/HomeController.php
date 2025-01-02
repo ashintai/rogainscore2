@@ -647,7 +647,8 @@ public function upload_image(Request $request)
         return redirect()->route('get_point',['flag' => 0] );
         }
 
-    return back()->withErrors(['image' => '画像のアップロードに失敗しました']);
+    // return back()->withErrors(['image' => '画像のアップロードに失敗しました']);
+    return redirect()->route('get_point',['flag' => 0] )->withErrors(['image' => '画像のアップロードに失敗しました']);
 }
 
 public function confirm_get_point(Request $request)
