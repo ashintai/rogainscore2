@@ -102,11 +102,12 @@ user: ログインしているユーザー -->
 <!-- Uploadが失敗の場合は、セッションにエラーが記録されている -->
 @if ($errors->any())
     <div class="alert alert-danger">
-        <ul>
+        アップロードに失敗しました。もう一度お試しください。
+        <!-- <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
-        </ul>
+        </ul> -->
     </div>
 @endif
 
