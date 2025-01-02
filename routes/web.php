@@ -30,6 +30,7 @@ Auth::routes();
 // ログイン後のページ
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home2');
+Route::get('/index', [HomeController::class, 'index'])->name('index');
 
 // 非同期でS3no画像URLを取得するためのルートを追加
 Route::get('/image-url', [ImageController::class, 'getImageUrl'])->name('image.url');
