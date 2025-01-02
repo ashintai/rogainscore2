@@ -910,7 +910,7 @@ public function download_get_photo( Request $request )
     // ファイル名を取得
     $filename = $request->input('filename');
     // ファイルをダウンロード
-    return response()->downloadFile($filename);
+    return response()->download($filename);
 
     \Log::debug($filename);
     
