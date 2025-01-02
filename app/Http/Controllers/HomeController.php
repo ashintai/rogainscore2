@@ -604,25 +604,6 @@ return view('get_point', compact('flag' , 'set_point_no' ,'set_points', 'get_poi
 
 /**
  * 
- * 
- * 
- *  お試し　S3へのアップロード
- * 
- * 
- */
-
-public function upload(Request $request) 
-{
-    if ($request->hasFile('file') && $request->file('file')->isValid()){ 
-        $path = $request->file('file')->storeAs('uploads', $filenme , 's3');
-        $url = Storage::disk('s3')->url($path); 
-        return response()->json(['url' => $url], 200); 
-    } 
-    return response()->json(['error' => 'Invalid file upload.'], 400); 
-} 
-
-/**
- * 
  *  UPLOADされた写真をAWS-S3へ保存し、get_pointテーブルを追加し仮登録する
  *  point 設定で選択されているポイント番号
  *  imaage アップロードされた写真
@@ -647,10 +628,7 @@ public function upload_image(Request $request)
         $randomString = Str::random(5); 
         $filename = "get_" . $randomString . "_" . $team_no . "." . $originalExt;
     
-        // 新しいコード
-        $path = $request->file('image')->storeAs('rogain',$filename ,  's3');
-        // 元のコード
-        // $path = Storage::disk('s3')->putFileAs('/', $file ,$filename);
+        $path = Storage::disk('s3')->putFileAs('/', $file ,$filename);
 
         $url = Storage::disk('s3')->url($path );
 
