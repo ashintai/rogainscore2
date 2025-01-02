@@ -58,9 +58,22 @@
 </header>  
     
     <!-- 渡されたデータを表示 -->
-    <p>チーム番号: {{ $team_no }}：{{ $team_name }}</p>
-    <p>ポイント番号: {{ $next_point->point_no }}：{{ $set_point_name }}</p>
-    <div class="container">
+    <p>チーム番号: {{ $team_no }}：{{ $team_name }}<br>
+    ポイント番号: {{ $next_point->point_no }}：{{ $set_point_name }}</p>
+    
+    <div>
+        <p>取得写真</p>
+        <div >
+            <img src="{{ $get_photo_url }}" alt="取得写真" >
+        </div>
+    </div>
+    <div>
+        <p>正解写真</p>
+        <div >
+            <img src="{{ $set_photo_url }}" alt="正解写真" >
+        </div>
+    </div>
+    <!-- <div class="container">
         <div class="text-container">
             <p>取得写真</p>
             <p>正解写真</p>
@@ -69,7 +82,7 @@
             <img src="{{ $get_photo_url }}" alt="取得写真" class="responsive-image">
             <img src="{{ $set_photo_url }}" alt="正解写真" class="responsive-image">
         </div>
-    </div>
+    </div> -->
 
     <!-- 判定ボタン -->
     <form action="{{ route('change_checked') }}" method="POST">
