@@ -12,13 +12,15 @@
         .image-container {
             display: flex;
             justify-content: space-between;
+            align-items: flex-start;/* 画像の上端を揃える */
         }
 
         .responsive-imag{
-            max-width: 45%;
-            height: auto;
+            max-width: 45%;/* 画像の最大幅を設定 */
+            height: auto;/* 高さを自動に設定して縦横比を維持 */
+            object-fit: contain;/* 画像の縦横比を維持しながらコンテナに収める */
         }
-
+        
         /* .image-container img {
             width: 48%; /* 画像の幅を調整 */
             height: auto;
