@@ -59,7 +59,7 @@ Route::get('/result' , [HomeController::class , 'result'])->name('result');
 // 参加者＆スタッフー成績のデータ取得
 Route::get('/get-results', [HomeController::class, 'getResults']);
 // 参加者ー取得写真のダウンロード
-Route::get('/download_get_photo', [HomeController::class, 'download_get_photo'])->name('download_get_photo');
+Route::post('/download_get_photo', [HomeController::class, 'download_get_photo'])->name('download_get_photo');
 // Route::get('/download_get_photo/{filename}', [HomeController::class, 'download_get_photo'])->where('filename' , '.*')->name('download_get_photo');
 // Route::get('/download_get_photo', [HomeController::class, 'download_get_photo'])->name('download_get_photo');
 
