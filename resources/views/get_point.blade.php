@@ -144,7 +144,7 @@ user: ログインしているユーザー -->
             <div class="mb-3">
                 <input type="hidden" id="selected_point" name="set_point_no">
                 <label for="image" class="form-label">画像を選択または撮影し「アップロード」ボタンをタップしてください。</label>
-                <input type="file" class="form-control" id="image" name="image" accept="image/*" capture="camera" required>
+                <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
             </div>
             <button type="submit" class="btn btn-primary">アップロード</button>
         </form>
