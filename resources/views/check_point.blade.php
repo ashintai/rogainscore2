@@ -62,13 +62,13 @@
     ポイント番号: {{ $next_point->point_no }}：{{ $set_point_name }}</p>
     
     <div style="display: flex">
-        <div style="width: 45%">
+        <div style="width: 45%; margin-left:5px;">
             <p>取得写真</p>
             <div >
                 <img src="{{ $get_photo_url }}" alt="取得写真" style="width: 100%; height:auto;">
             </div>
         </div>
-        <div style="width: 45%">
+        <div style="width: 45%; margin-left:5px;" >
             <p>正解写真</p>
             <div >
                 <img src="{{ $set_photo_url }}" alt="正解写真" style="width: 100%; height:auto;">
