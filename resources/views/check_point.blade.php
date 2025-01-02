@@ -13,11 +13,17 @@
             display: flex;
             justify-content: space-between;
         }
-        .image-container img {
+
+        .responsive-imag{
+            max-width: 45%;
+            height: auto;
+        }
+
+        /* .image-container img {
             width: 48%; /* 画像の幅を調整 */
             height: auto;
             object-fit: cover; 
-        }
+        } */
         .text-container {
             display: flex;
             justify-content: space-between;
@@ -49,8 +55,8 @@
             <p>正解写真</p>
         </div>
         <div class="image-container">
-            <img src="{{ $get_photo_url }}" alt="取得写真">
-            <img src="{{ $set_photo_url }}" alt="正解写真">
+            <img src="{{ $get_photo_url }}" alt="取得写真" class="responsive-image">
+            <img src="{{ $set_photo_url }}" alt="正解写真" class="responsive-image">
         </div>
     </div>
 
