@@ -13,6 +13,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;/* 画像の上端を揃える */
+            flex-wrap: wrap;/* 画像が横に並びきれない場合は次の行に移動 */
         }
 
         .responsive-imag{
@@ -20,12 +21,20 @@
             height: auto;/* 高さを自動に設定して縦横比を維持 */
             object-fit: contain;/* 画像の縦横比を維持しながらコンテナに収める */
         }
-        
+
+        @media (max-width: 768px) {
+            .responsive-image {
+                max-width: 100%; /* 画像の最大幅を100%に設定 */
+                margin-bottom: 10px;
+            }
+        }
+
         /* .image-container img {
-            width: 48%; /* 画像の幅を調整 */
+            width: 48%; /* 画像の幅を調整 
             height: auto;
             object-fit: cover; 
         } */
+
         .text-container {
             display: flex;
             justify-content: space-between;
