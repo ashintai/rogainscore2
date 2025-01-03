@@ -286,6 +286,73 @@ if ($request->hasFile('csvFile')){
 return view('set_point');
 }
 
+
+/**
+ * 取得ダミーデータのファイル（CSV）を読み込んでDBのテーブルにセットする
+ */
+public function dummy_get(Request $request)
+{
+// CSVファイルの読み込み
+
+// 拡張子が.csvでないファイルを添付しようとした場合
+$app_file = $request->file('csvFile');
+// ファイルがアップロードされているか確認
+if (!$app_file) {
+    return back()->withErrors(['ini' => 'ファイルがアップロードされていません。']);
+}
+
+// 拡張子がcsvであることを確認
+if ($app_file->getClientOriginalExtension() !== 'csv') {
+    return back()->withErrors(['ini' => 'ファイルはCSV形式である必要があります。']);
+}
+
+// MIMEタイプがtext/csvであることを確認
+if ($app_file->getMimeType() !== 'text/csv') {
+    return back()->withErrors(['ini' => 'ファイルのタイプが不正です。']);
+}
+
+// CSVファイルのカラム位置指定
+$csv_point_no = 0;
+$csv_team_no = 1;
+
+if ($request->hasFile('csvFile')){
+    // 指定されたCSVファイル名を取得
+    $file=$request->file('csvFile');
+    $path=$file->getRealPath();
+    // ファイルを開く
+    $fp=fopen($path, 'r');
+    // ヘッダ行をスキップ
+    fgetcsv($fp);
+
+    // １行ずつCSVファイルを読込み
+    while(( $csvData = fgetcsv($fp)) !== FALSE){
+    
+        // 新しいGet_pointインスタンス
+        $get_point = new Get_point();
+        // 設定ポイント番号
+        $get_point->point_no  = $csvData[$csv_point_no];
+        // チーム番号
+        $get_point->point_no = $csvData[$csv_team_no];
+        // 写真ファイルへのURL
+        $get_point->photo_filename = "https://rogain.s3.amazonaws.com/get_" . $get_point->point_no . "_" . $get_point->photo_filename . ".JPG";
+        
+                
+        // DBへ挿入
+        $get_point->save();
+    }
+    // ファイルを閉じる        
+    fclose($fp);
+}else{
+    // ここにCSVファイルがなかったときの処理
+    return back()->withErrors([
+        'ini' => ['CSVファイルがありません'],
+    ]);
+}
+return view('set_point');
+}
+
+
+
 /**
  * 写真判定画面
  * 

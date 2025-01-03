@@ -43,6 +43,8 @@ Route::post('/pointdata_set',[HomeController::class, 'pointdata_set'])->name('po
 Route::post('/category_set' , [HomeController::class, 'category_set'])->name('category_set');
 // 管理者ーチームDBへの設定
 Route::post('/team_set' , [HomeController::class, 'team_set'])->name('team_set');
+// 管理者ー取得ダミーデータの設定
+Route::post('/dummy_get', [HomeController::class, 'dummy_get'])->name('dummy_get'); 
 
 // 参加者メイン画面
 Route::get('/get_point/{flag}', [HomeController::class, 'get_point'])->name('get_point');

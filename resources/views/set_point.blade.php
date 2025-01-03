@@ -42,7 +42,13 @@
         <button class="btn btn-primary ">CSVファイル読込</button>
     </form>
 
-
+    取得写真のダミーデータのアップロード<br>
+    <form action="{{ url('/dummy_get') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <!-- CSVファイルの選択 -->
+        <input type="file" name="csvFile" class="ms-3" id="csvFile">
+        <button class="btn btn-primary ">CSVファイル読込</button>
+    </form>
 
 
 
