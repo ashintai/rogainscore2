@@ -334,7 +334,7 @@ if ($request->hasFile('csvFile')){
         // チーム番号
         $get_point->team_no = $csvData[$csv_team_no];
         // 写真ファイルへのURL
-        $get_point->photo_filename = "https://rogain.s3.amazonaws.com/get_" . $get_point->point_no . "_" . $get_point->photo_filename . ".JPG";
+        $get_point->photo_filename = "https://rogain.s3.amazonaws.com/get_" . $get_point->point_no . "_" . $get_point->team_no . ".JPG";
         // checked フラグのセット
         $get_point->checked = 0;
                 
