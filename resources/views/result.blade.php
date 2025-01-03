@@ -17,14 +17,14 @@
 
 <body>
     <header>
-        <h5 style="color: blue;">モリコロロゲイニング　成績速報</h5>
-        <h6>チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
+        <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　成績速報</h5>
+        <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-left:5px">
             <!-- 戻るボタン -->
             <!-- 参加者とスタッフで戻り先は違うが、そこはH.indexが判断してくれる -->
-            <a href="{{ route('checkpoint') }}" class="btn btn-primary">戻る</a>
+            <a href="{{ route('checkpoint') }}" class="btn btn-primary" style="margin-left: 20px;">戻る</a>
             <!-- ログアウト -->
-            <form action="{{ route('logout') }}" method="POST" >
+            <form action="{{ route('logout') }}" method="POST" style="margin-right: 10px;">
                 @csrf
                 <button type="submit" >ログアウト</button>
             </form>
@@ -46,7 +46,7 @@
 
 
     <!-- 結果表示 -->
-    <div id="result" >
+    <div id="result" style="margin-top: 10px;">
         <!-- 結果を表示するためのコンテナ -->
     </div>
 

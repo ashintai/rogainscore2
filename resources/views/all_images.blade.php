@@ -17,8 +17,8 @@
 </head>
 <body>
 <header>
-    <h5 style="color: blue;">モリコロロゲイニング　通過ポイント一覧</h5>
-    <h6>チーム番号:{{ $user->team_no }} {{ $user->name }}<h6>
+    <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　通過ポイント一覧</h5>
+    <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}<h6>
     <!-- ボタンを横並びに表示 -->
     <div style="display: flex; justify-content: space-between; align-items: center;">
     <!-- 戻るボタン -->
@@ -31,8 +31,8 @@
             <button type="submit" class="btn btn-primary" >戻る</button>
         </form>
     <!-- ログアウトボタン -->
-        <form action="{{ route('logout') }}" method="POST" >
-        @csrf
+        <form action="{{ route('logout') }}" method="POST" style="margin-right: 20px;">
+            @csrf
             <button type="submit" style="float: right;">ログアウト</button>
         </form>
     </div>
@@ -82,7 +82,7 @@
                 @endif
             </div>
             <div>  
-                <form action="{{ route('download_get_photo') }}" method="POST" class="mt-1">
+                <form action="{{ route('download_get_photo') }}" method="POST" class="mt-1" style="margin-right: 10px;">
                     @csrf
                     <input type="hidden" name="filename" value="{{ $get_point->photo_filename }}">
                     <button type="submit" class="btn btn-primary ms-3" >この写真をダウンロード</button>  
