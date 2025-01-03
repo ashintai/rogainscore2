@@ -51,9 +51,9 @@
 </head>
 <body>
 <header>
-    <h5 style="color: blue;">モリコロロゲイニング　写真判定</h5>
+    <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　写真判定</h5>
     <!-- チェック中はログアウトや他のページに遷移しない -->
-    <h6 style="color: red;">ブラウザの再読み込み、戻るを行わないでください！！</h6>
+    <h6 style="color: red; margin-left: 10px;">ブラウザの再読み込み、戻るを行わないでください！！</h6>
     <hr>
 </header>  
     
@@ -92,8 +92,8 @@
         <br>
         <input type="hidden" name="get_id" value="{{ $next_point->id }}">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-left:5px">
-            <button type="submit" name="result" value="ok" class="btn btn-success">ＯＫ</button>
-            <button type="submit" name="result" value="ng" class="btn btn-danger">ＮＧ</button>
+            <button type="submit" name="result" value="ok" class="btn btn-success" style="margin-left: 20px;">ＯＫ</button>
+            <button type="submit" name="result" value="ng" class="btn btn-danger" style="margin-right: 40px;">ＮＧ</button>
             <!-- <button type="submit" name="result" value="skip" class="btn btn-success">保留</button> -->
         </div>
         </form>
@@ -104,7 +104,7 @@
     <form action="{{ route('change_checked') }}" method="POST">
         @csrf
         <input type="hidden" name="get_id" value="{{ $next_point->id }}">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-left:5px">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-left:20px">
             <button type="submit" name="result" value="cancel" class="btn btn-primary">写真判定終了</button>
         </div>
     </form>
