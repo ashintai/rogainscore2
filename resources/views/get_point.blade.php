@@ -40,17 +40,17 @@ user: ログインしているユーザー -->
 @endif
 
 <header>
-    <h5 style="color: blue;">モリコロロゲイニング　ポイント通過登録</h5>
-    <h6>チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
+    <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　ポイント通過登録</h5>
+    <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
     <!-- 各ボタンを横並びに表示 -->
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <!-- すべての取得写真の一覧の表示・編集画面 -->
-        <a href="{{ route('all_images') }}" class="btn btn-primary">写真一覧&編集</a>
+        <a href="{{ route('all_images') }}" class="btn btn-primary" style="margin-left: 10px;">写真一覧&編集</a>
         <!-- 成績速報画面へのボタン -->
         <a href="{{ route('result') }}" class="btn btn-primary">成績速報</a>
         <br>
         <!-- ログアウトボタン -->
-        <form action="{{ route('logout') }}" method="POST" >
+        <form action="{{ route('logout') }}" method="POST" style="margin-right: 10px;">
             @csrf
             <button type="submit" style="float: right;">ログアウト</button>
         </form>
