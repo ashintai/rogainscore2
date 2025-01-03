@@ -46,7 +46,7 @@
 
 
     <!-- 結果表示 -->
-    <div id="result" style="margin-top: 10px;">
+    <div id="result" style="margin-left: 10px;">
         <!-- 結果を表示するためのコンテナ -->
     </div>
 
