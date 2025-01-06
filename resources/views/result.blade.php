@@ -73,7 +73,7 @@
                 resultContainer.innerHTML = '';
                 data.results.forEach(result => {
                     const resultElement = document.createElement('div');
-                    resultElement.innerHTML = `<hr>${result.team_no}:${result.team_name}(${result.member_num}名) 総得点:${result.total_score}点(減点${result.penalty}点) : (確認待ち-${result.checking_num} NG-${result.ng_num} ポイント番号不明-${result.unknown_num}) <br> <span style="color: green;">${result.result_str}</span>`;
+                    resultElement.innerHTML = `<hr>${result.team_no}:${result.team_name}(${result.member_num}名) 総得点:${result.total_score}点(減点${result.penalty}点) <br>   (確認待ち-${result.checking_num} NG-${result.ng_num} ポイント番号不明-${result.unknown_num}) <br> <span style="color: green;">${result.result_str}</span>`;
                     resultContainer.appendChild(resultElement);
                 });
             })
