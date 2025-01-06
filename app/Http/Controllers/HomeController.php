@@ -931,6 +931,12 @@ public function getResults(Request $request)
         $penalty = $result->penalty;
         // 巡ったポイントのうち、OKがでているポイントを取得
         $get_points = Get_point::where('team_no', $result->team_no)->where('checked', 2)->get();
+        // 未確認待ちのポイント数をカウント
+        $checking_num = Get_point::where('team_no', $result->team_no)->where('checked', 0)->count();
+        // NGのポイント数をカウント
+        $ng_num = Get_point::where('team_no', $result->team_no)->where('checked', 3)->count();
+        // ポイント番号不明をカウント
+        $unknown_num = Get_point::where('team_no', $result->team_no)->where('checked', 4)->count();
         // 表示用文字列に変換 と同時に総合得点を計算
         $result_str = "";
         $total_score = 0;
@@ -945,13 +951,16 @@ public function getResults(Request $request)
             'team_no' => $result->team_no,
             'team_name' => $result->name,
             'member_num' => $result->member_num,
+            'checking_num' => $checking_num,
+            'ng_num' => $ng_num,
+            'unknown_num' => $unknown_num,
             'penalty' => $penalty,
             'result_str' => $result_str,
             'total_score' => $total_score,
         ];
     }
     
-    // 配列をteam_noの順番に並べ替える
+    // 配列を得点の順番に並べ替える
     usort($resultArray, function($a, $b) {
         return $b['total_score'] <=> $a['total_score'];
     });
