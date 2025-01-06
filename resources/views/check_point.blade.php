@@ -58,7 +58,7 @@
 </header>  
     
     <!-- 渡されたデータを表示 -->
-    <p>チーム番号: {{ $team_no }}：{{ $team_name }}<br>
+    <p>チーム番号: {{ $team_no }}：{{ $team_name }}（{{$member_num}}名）<br>
     ポイント番号: {{ $next_point->point_no }}：{{ $set_point_name }}</p>
     
     <div style="display: flex">
@@ -69,7 +69,7 @@
             </div>
         </div>
         <div style="width: 45%; margin-left:5px;" >
-            <p>正解写真</p>
+            <p>見本写真</p>
             <div >
                 <img src="{{ $set_photo_url }}" alt="正解写真" style="width: 100%; height:auto;">
             </div>

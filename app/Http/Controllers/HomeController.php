@@ -382,10 +382,11 @@ public function next_get_point()
         // $set_photo_url = "https://rogain.s3.amazonaws.com/set_" . $next_point->point_no . ".JPG"; 
         // 取得写真のURL
         $get_photo_url = $next_point->photo_filename ;
-        // チーム番号とチーム名を準備する
+        // チーム番号とチーム名,メンバー数を準備する
         $team_no = $next_point->team_no;
         $team_name = $next_point->user->name; //リレーションでUsrからチーム名を取得
-        
+        $member_num = $next_point->user->member_num;
+
         // Bladeへ渡す
         return view('check_point', compact('next_point','team_no' , 'team_name' , 'set_point_name' ,'set_photo_url' , 'get_photo_url'));
 
