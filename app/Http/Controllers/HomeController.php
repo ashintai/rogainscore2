@@ -43,8 +43,12 @@ class HomeController extends Controller
     
         // 役割が０（それ以外）、参加者メイン画面のコントローラーへ
         // flag=0で渡して、ログイン直後であることを伝える
-        session(['set_point_no' => 1]);
+        // set_point_no は　最初レコードの番号を渡す
+        $set_point = Set_point::first();
+        session(['set_point_no' => $set_point->point_no]);
+        // $get_point_id はログイン直後はなし
         session(['get_point_id' => 0]);
+        // ログイン直後はflag=0 前で写真登録なしで入る
         return redirect()->route('get_point',['flag' => 0]);
     }
 
@@ -619,7 +623,7 @@ public function all_images()
 
 /**
  * 
- *  参加者へのメイン画面へのコントローラ
+ *  参加者メイン画面へのコントローラ
  * 
  * 
  */

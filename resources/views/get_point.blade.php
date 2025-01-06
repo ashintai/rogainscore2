@@ -1,6 +1,6 @@
 <!-- View:get_point> -->
 <!-- このViewはController:get_pointから以下のパラメータを受け取る
-flag:0ログイン直後　1アップロード後　2写真一覧から変更要請　3新規本登録から　4ダブり変更なし　5ダブり変更あり　
+flag:0 前に写真の登録なし　1:前に写真登録ありで入る　$get_point_id,$get_photo_filenameがあることが前提
 set_point_no:表示すべき設定ポイント番号　何もなければ０
 set_points:設定ポイント一覧データ
 get_point_id:ロックオンされているget_point_id なにもなければ　０
