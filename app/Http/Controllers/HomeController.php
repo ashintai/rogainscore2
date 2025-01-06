@@ -388,7 +388,7 @@ public function next_get_point()
         $member_num = $next_point->user->member_num;
 
         // Bladeへ渡す
-        return view('check_point', compact('next_point','team_no' , 'team_name' , 'set_point_name' ,'set_photo_url' , 'get_photo_url'));
+        return view('check_point', compact('next_point','team_no' , 'team_name' , 'member_num' ,'set_point_name' ,'set_photo_url' , 'get_photo_url'));
 
     } else {
         // 未チェックの写真がない場合はスタッフメイン画面へ戻る
