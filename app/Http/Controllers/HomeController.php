@@ -716,12 +716,12 @@ public function upload_image(Request $request)
         
         //アップロードから戻る flag=0 写真は登録されていない
         session(['get_point_id' => $get_point_id]);
-        session(['set_point_no' => $request->set_point_no]);
+        session(['set_point_no' => $request->input('set_point_no')]);
         return redirect()->route('get_point',['flag' => 0] );
         }
 
     // return back()->withErrors(['image' => '画像のアップロードに失敗しました']);
-    return redirect()->route('get_point',['flag' => 0] )->withErrors(['image' => '画像のアップロードに失敗しました']);
+    return redirect()->route('get_point',['flag' => 0] )->withErrors(['image' => '画像のアップロードに失敗しました。']);
 }
 
 public function confirm_get_point(Request $request)
@@ -735,10 +735,10 @@ public function confirm_get_point(Request $request)
 // 以下の動作をする
 // flag=0 初めて入ってきた
 // 　team_no set_point_no がget_pointテーブルに登録されいるか判定
-// 　　登録されていない場合
+// 　　登録されていない場合(重複していない場合)
 // 　　　新規登録として、get_pointテーブルの書き換え、awsファイル名の変更
 // 　　　flag=0 でconfirm_get_point確認画面へ「変更しました」ー＞get_point画面へ（次の登録へ）
-// 　　登録されている場合
+// 　　登録されている場合（重複している場合）
 // 　　　flag=1でconfirm_get_point確認画面へ「このまま変更」ー＞flag1で戻ってくる
 //                                       「戻る」ー＞get_point画面へ（設定ポイント番号選びなおし）
 // flag=1 ダブっているけどこのまま登録
@@ -834,8 +834,11 @@ if($get_point_before){
     }
 
         // get_point画面へ戻る
+        // set_point の　最初のレコードをセット
+        $set_point = Set_point::first();
+        session(['set_point_no' => $set_point->point_no]);
         session(['get_point_id' => 0]);
-        session(['set_point_no' => 1]);
+        
         return redirect()->route('get_point',['flag' => 1] );
 
     }
@@ -847,7 +850,7 @@ if($get_point_before){
     // ファイル名の抽出
     $oldfilename= basename($get_point->photo_filename);
 
-    \Log::debug('oldFilename:' . $oldfilename);
+    // \Log::debug('oldFilename:' . $oldfilename);
     // 新しいファイル名の生成
     $filename= "get_" . $set_point_no . "_" . $team_no . "." . $ext;
     // 写真ファイル名の変更
@@ -866,8 +869,10 @@ if($get_point_before){
 
     // 取得画面get_point画面へ戻る
     // 受け渡しパラメータをセッションにセット
+    // set_point_noは最初のレコードをセット
+    $set_point = Set_point::first();
+    session(['set_point_no' => $set_point->point_no]);
     session(['get_point_id' => 0]);
-    session(['set_point_no' => 1]);
     return redirect()->route('get_point',['flag' => 1] );
 }
 }
@@ -876,12 +881,19 @@ if($get_point_before){
  * 
  * Blade の　Confirm_get_pointからRequestを受け取り、Controllerのget_pointへ受け渡す
  * flag は　ルートパラメータで渡す
- * 
+ * ただし、set_point_no が０の場合は、set_pointの第一レコードの番号に変える
  */
 public function storeSessionData(Request $request)
 {
     // フォームから送信されたデータをセッションに保存
-    session(['set_point_no' => $request->input('set_point_no')]);
+    // set_point_no が　０の場合は第一レコードへ変換
+    if ($request->input('set_point_no') == 0){
+        $set_point = Set_point::first();
+        $set_point_no = $set_point->point_no;
+    }else{
+        $set_point_no = $request->input('set_point_no');
+    }
+    session(['set_point_no' => $set_point_no]);
     session(['get_point_id' => $request->input('get_point_id')]);
     $flag = $request->input('flag');
     // get_pointルートにリダイレクト
@@ -1000,16 +1012,9 @@ public function download_get_photo( Request $request )
         ->header('Content-Type', $disk->mimeType($filename))
         ->header('Content-Disposition', 'attachment; filename="' . basename($filename) . '"');
 
-    
-    
-    
-    
-    
-    
-    // ファイルをダウンロード
-    return response()->download($filename);
+    // return response()->download($filename);
 
-    \Log::debug($filename);
+    // \Log::debug($filename);
     
     // // S3のURLからファイルパスを抽出
     // if (filter_var($filename, FILTER_VALIDATE_URL)) {

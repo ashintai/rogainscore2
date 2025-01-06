@@ -126,10 +126,11 @@ user: ログインしているユーザー -->
         </form>
         <!-- 登録せず戻るボタン -->
         <!-- get_point画面で戻る　flag=0で初期状態画面へ -->
+        <!-- set_point_no=0として、store_session_dataでset_pointの第一レコードへ変換 -->
         <form action="{{ route('store_session_data') }}" method="POST">
             @csrf
             <input type="hidden" name="flag" value="0">
-            <input type="hidden" name="set_point_no" value="1">
+            <input type="hidden" name="set_point_no" value="0">
             <input type="hidden" name="get_point_id" value="0">
             <button type="submit" class="btn btn-primary" >登録せず戻る</button>
         </form>

@@ -56,7 +56,7 @@ before_photo_filename:だぶっている場合、前の写真 -->
     </div>
 @endif
 <br>
-<h6 style="color: red;">{{$set_point_no}}：{{$set_point_name}}の正解写真は以下です。</h6>
+<h6 style="color: red;">{{$set_point_no}}：{{$set_point_name}}の見本写真は以下です。</h6>
 <!-- 設定ポイントの写真 -->
 @if ( $set_photo_filename )
     <!-- <p>設定ポイント写真: {{ $set_photo_filename }}</p> -->

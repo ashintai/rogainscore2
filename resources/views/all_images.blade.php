@@ -26,7 +26,7 @@
         <form action="{{ route('store_session_data') }}" method="POST" style="margin-left: 20px;">
             @csrf
             <input type="hidden" name="flag" value="0">
-            <input type="hidden" name="set_point_no" value="1">
+            <input type="hidden" name="set_point_no" value="0">
             <input type="hidden" name="get_point_id" value="0">
             <button type="submit" class="btn btn-primary" >戻る</button>
         </form>
@@ -72,7 +72,8 @@
                     @csrf
                         <input type="hidden" name="flag" value="0" >
                         @if ($get_point->checked == 4)
-                            <input type="hidden" name="set_point_no" value="1" >
+                        <!-- ポイント番号不明の場合はset_point_no=0で、store_session_dataで第一レコードへ変換 -->
+                            <input type="hidden" name="set_point_no" value="0" >
                         @else
                             <input type="hidden" name="set_point_no" value="{{ $get_point->point_no }}" >
                         @endif
@@ -99,7 +100,7 @@
     <form action="{{ route('store_session_data') }}" method="POST" class="d-flex justify-content-center">
         @csrf
         <input type="hidden" name="flag" value="0">
-        <input type="hidden" name="set_point_no" value="1">
+        <input type="hidden" name="set_point_no" value="0">
         <input type="hidden" name="get_point_id" value="0">
         <button type="submit" class="btn btn-primary" >戻る</button>
     </form>
