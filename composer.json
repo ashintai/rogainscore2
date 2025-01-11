@@ -54,7 +54,8 @@
         ],
         "post-install-cmd": [ 
             "echo 'upload_max_filesize = 50M' >> .heroku/php/etc/php/php.ini", 
-            "echo 'post_max_size = 50M' >> .heroku/php/etc/php/php.ini" 
+            "echo 'post_max_size = 50M' >> .heroku/php/etc/php/php.ini" ,
+            "echo 'extension=imagick.so' >> .heroku/php/etc/php/php.ini"
         ]
     },
     "extra": {
