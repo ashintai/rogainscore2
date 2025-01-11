@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Get_point;
 use Illuminate\Support\Str;
+use Imagick;
 
 class HomeController extends Controller
 {
@@ -404,8 +405,8 @@ public function change_checked(Request $request)
     // チェック結果は$result で送られてくる。oh,ng,skipのいずれか
     $result = request('result');
 
-    \Log::debug($get_id);
-    \Log::debug($result);
+    // \Log::debug($get_id);
+    // \Log::debug($result);
 
     // getテーブルのid からレコードを取得
     $get_point = Get_point::find($get_id);
@@ -686,7 +687,7 @@ public function upload_image(Request $request)
 {
     // UPLOADされたファイルが画像であることにチェック
     $request->validate([
-        'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:20480',
+        'image' => 'required|image|mimes:jpg,jpeg,png,gif,heic|max:20480',
     ]);
 
     // \Log::debug($request->all());
@@ -696,14 +697,42 @@ public function upload_image(Request $request)
         $file = $request->file('image');
         // アップロードされた元のファイルの拡張子を取得
         $originalExt = $file->getClientOriginalExtension();
-        // ファイル名を生成
+        
+        // 保存時のファイル名を生成 拡張子を除く
         $team_no = Auth::user()->team_no;
         $randomString = Str::random(5); 
-        $filename = "get_" . $randomString . "_" . $team_no . "." . $originalExt;
-    
-        $path = Storage::disk('s3')->putFileAs('/', $file ,$filename);
+        $filename = "get_" . $randomString . "_" . $team_no . "." ;
+        
+        // HEIC形式の場合、JPGに変換
+        if ($originalExt === 'heic') {
+            $imagick = new Imagick();
+            $imagick->readImageBlob($file->getPathname());
+            $imagick->setImageFormat('jpg');
+            
+            // 変換後のファイル名を生成 .jpg
+            $filename = $filename . 'jpg';
 
-        $url = Storage::disk('s3')->url($path );
+            // 変換後の画像を一時ファイルに保存
+            $tempFilePath = sys_get_temp_dir() . '/' . $filename;
+            $imagick->writeImage($tempFilePath);
+            
+            // S3にアップロード
+            $path = Storage::disk('s3')->putFileAs('/', file_get_contents($tempFilePath) ,$filename);
+            // S3のファイルパスを返す
+            $url = Storage::disk('s3')->url($path );
+
+            // 一時ファイルを削除
+            unlink($tempFilePath);
+
+        }else{
+            // HEIC以外の場合
+            // 保存時のファイル名を生成
+            $filename=$filename .  $originalExt;
+            // S3にアップロード
+            $path = Storage::disk('s3')->putFileAs('/', $file ,$filename);
+            // S3のファイルパスを返す
+            $url = Storage::disk('s3')->url($path );
+        }
 
         // Get_point のテーブルに追記
         $get_point = Get_point::create([
