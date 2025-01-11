@@ -13,8 +13,10 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.5",
-        "league/flysystem-aws-s3-v3": "^3.29"
+        "league/flysystem-aws-s3-v3": "^3.29",
+        "ext-imagick": "*"
     },
+    
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
@@ -69,11 +71,7 @@
             "php-http/discovery": true
         }
     },
-    "require": {
-        "ext-imagick": "*"
-    },
-
+    
     "minimum-stability": "stable",
-    "prefer-stable": true,
-
+    "prefer-stable": true
 }
