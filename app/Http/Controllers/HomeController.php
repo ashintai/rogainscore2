@@ -690,7 +690,7 @@ public function upload_image(Request $request)
         'image' => 'required|image|mimes:jpg,jpeg,png,gif,heic|max:20480',
     ]);
 
-    // \Log::debug($request->all());
+    \Log::debug($request->all());
 
     if ($request->hasFile('image')) {
         // アップロードされたファイルを取得
@@ -703,6 +703,8 @@ public function upload_image(Request $request)
         $randomString = Str::random(5); 
         $filename = "get_" . $randomString . "_" . $team_no . "." ;
         
+        \Log::debug($originalExt);
+
         // HEIC形式の場合、JPGに変換
         if ($originalExt === 'heic') {
             $imagick = new Imagick();
@@ -748,7 +750,7 @@ public function upload_image(Request $request)
         session(['get_point_id' => $get_point_id]);
         session(['set_point_no' => $request->input('set_point_no')]);
         return redirect()->route('get_point',['flag' => 0] );
-        }
+    }
 
     // return back()->withErrors(['image' => '画像のアップロードに失敗しました']);
     return redirect()->route('get_point',['flag' => 0] )->withErrors(['image' => '画像のアップロードに失敗しました。']);
