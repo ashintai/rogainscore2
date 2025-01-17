@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Get_point;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class HomeController extends Controller
 {
@@ -778,7 +778,13 @@ public function upload_image(Request $request)
     
         // $path = Storage::disk('s3')->putFileAs('/', file_get_contents($tempFilePath) ,$filename);
         
-        $path = Storage::disk('s3')->putFileAs('/', $file ,$filename);
+        // リサイズ
+        $img = Image::make($file->getRealPath());
+        $img->resize(600, null, function ($constraint) { $constraint->aspectRatio(); });
+        $imageData = (string) $img->encode('jpg', 100);
+
+        // S3にアップロード
+        $path = Storage::disk('s3')->put('/', $filename ,$imageData ,'public');
         // S3のファイルパスを返す
         $url = Storage::disk('s3')->url($path );
         // 一時ファイルを削除
