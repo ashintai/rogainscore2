@@ -10,18 +10,19 @@
     <title>モリコロロゲイン</title>
     
 </head>
+<header>
+    <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング</h5>
+    <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
+    <hr>
+</header>
+
 <body>
-
 <div class="container text-center mt-5">
-<p>ログイン状態が切れました。</p>
-
-<p>お手数ですが、ログインしなおしてください。</p>
-
-<br>
-<br>
-
-<a href="{{ route('login') }}" class="btn btn-primary" onclick="clearSession()">ログイン</a>
-
+    <p>ログイン状態が切れました。</p>
+    <p>お手数ですが、ログインしなおしてください。</p>
+    <br>
+    <br>
+    <a href="{{ route('login') }}" class="btn btn-primary" onclick="clearSession()">ログイン</a>
 </div>
 
 <script>
@@ -32,7 +33,6 @@
             localStorage.clear();
         }
     </script>
-
 
 </body>
 </html>
