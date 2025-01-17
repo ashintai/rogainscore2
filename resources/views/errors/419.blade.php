@@ -12,12 +12,26 @@
 </head>
 <body>
 
-PAGE EXPIRED です
+<div class="container text-center mt-5">
+<p>ログイン状態が切れました。</p>
 
-お手数ですが、ログインしなおしてください。
+<p>お手数ですが、ログインしなおしてください。</p>
 
-<a> href="{{ route('login') }}" class="btn btn-primary">ログイン</a>
+<br>
+<br>
 
+<a href="{{ route('login') }}" class="btn btn-primary" onclick="clearSession()">ログイン</a>
+
+</div>
+
+<script>
+        function clearSession() {
+            // セッションストレージをクリア
+            sessionStorage.clear();
+            // ローカルストレージをクリア
+            localStorage.clear();
+        }
+    </script>
 
 
 </body>
