@@ -10,7 +10,7 @@
         "aws/aws-sdk-php": "^3.334",
         "barryvdh/laravel-debugbar": "^3.14",
         "guzzlehttp/guzzle": "^7.2",
-        "intervention/image": "^3.10",
+        "intervention/image": "*",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
