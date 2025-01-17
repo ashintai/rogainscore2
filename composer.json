@@ -10,7 +10,8 @@
         "aws/aws-sdk-php": "^3.334",
         "barryvdh/laravel-debugbar": "^3.14",
         "guzzlehttp/guzzle": "^7.2",
-        "intervention/image": "*",
+        "intervention/image": "^3.10.2",
+        "intervention/gif": "^4.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
@@ -53,9 +54,7 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "post-install-cmd": [ 
-            "echo 'upload_max_filesize = 50M' >> .heroku/php/etc/php/php.ini", 
-            "echo 'post_max_size = 50M' >> .heroku/php/etc/php/php.ini"            
+        "post-install-cmd": [             
         ]
     },
     "extra": {
