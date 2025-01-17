@@ -87,3 +87,6 @@ Route::get('/team_index' , [HomeController::class , 'team_index'])->name('team_i
 Route::get('/team_edit/{id}' , [HomeController::class , 'team_edit'])->name('team_edit');
 // チーム情報編集のDBへの登録
 Route::post('/team_update/{id}' , [HomeController::class , 'team_update'])->name('team_update');
+
+// でバグ用
+Route::get('/bug', [HomeController::class, 'bug'])->name('bug');

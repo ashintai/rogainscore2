@@ -729,60 +729,60 @@ public function upload_image(Request $request)
         'image' => 'required|mimes:jpg,jpeg,png,gif,heic,heif|max:20480',
     ]);
     // アップロードされたファイルの容量を取得
-    $filesize = $request->file("image")->getSize();
+    // $filesize = $request->file("image")->getSize();
 
     if ($request->hasFile('image')) {
         // アップロードされたファイルを取得
         $file = $request->file('image');
         // アップロードされた元のファイルの拡張子を取得
         $originalExt = $file->getClientOriginalExtension();
-        
+
         // 保存時のファイル名を生成 拡張子を除く
         $team_no = Auth::user()->team_no;
         $randomString = Str::random(5); 
-        $filename = "get_" . $randomString . "_" . $team_no ;
-        
+        $filename = "get_" . $randomString . "_" . $team_no . "." .$originalExt;
+
         // HEIC形式の場合、JPGに変換
-        if ($originalExt === 'heic') {
-            $imagick = new Imagick();
-            $imagick->readImage($file->getPathname());
-            $imagick->setImageFormat('jpg');
+        // if ($originalExt === 'heic') {
+        //     $imagick = new Imagick();
+        //     $imagick->readImage($file->getPathname());
+        //     $imagick->setImageFormat('jpg');
             
-            // 変換後のファイル名を生成 .jpg
-            $filename = "{$filename}.jpg";
+        //     // 変換後のファイル名を生成 .jpg
+        //     $filename = "{$filename}.jpg";
 
-            // 変換後の画像を一時ファイルに保存
-            $tempFilePath = sys_get_temp_dir() . '/' . $filename;
-            $imagick->writeImage($tempFilePath);
-        }else{
-            // HEIC以外の場合
-            // 保存時のファイル名を生成
-            $filename=$filename .  "." . $originalExt;
-             // 変換後の画像を一時ファイルに保存
-            $tempDir = sys_get_temp_dir();
-            $tempFilePath = $tempDir . '/' . $filename;
-            $file->move($tempDir, $filename);
-        }
-        // 一時保存されたファイルの容量
-        $filesize = filesize($tempFilePath);
-        // 容量が１MBを超えた場合は圧縮する
-        if ($filesize > 1024 * 1024) {
-            $imagick = new Imagick();
-            $imagick->readImage($tempFilePath);
-            // $imagick->setImageCompressionQuality(80);
-            $newWidth = 600; // 幅を600pxに設定
-            $imagick->resizeImage($newWidth, 0, \Imagick::FILTER_LANCZOS, 1);
-            $imagick->writeImage($tempFilePath);
-        }
+        //     // 変換後の画像を一時ファイルに保存
+        //     $tempFilePath = sys_get_temp_dir() . '/' . $filename;
+        //     $imagick->writeImage($tempFilePath);
+        // }else{
+        //     // HEIC以外の場合
+        //     // 保存時のファイル名を生成
+        //     $filename=$filename .  "." . $originalExt;
+        //      // 変換後の画像を一時ファイルに保存
+        //     $tempDir = sys_get_temp_dir();
+        //     $tempFilePath = $tempDir . '/' . $filename;
+        //     $file->move($tempDir, $filename);
+        // }
+        // // 一時保存されたファイルの容量
+        // $filesize = filesize($tempFilePath);
+        // // 容量が１MBを超えた場合は圧縮する
+        // if ($filesize > 1024 * 1024) {
+        //     $imagick = new Imagick();
+        //     $imagick->readImage($tempFilePath);
+        //     // $imagick->setImageCompressionQuality(80);
+        //     $newWidth = 600; // 幅を600pxに設定
+        //     $imagick->resizeImage($newWidth, 0, \Imagick::FILTER_LANCZOS, 1);
+        //     $imagick->writeImage($tempFilePath);
+        // }
 
-        // ファイル名に含まれるNULLバイトを削除
-        $filename = str_replace("\0", "", $filename);
-        // S3にアップロード
-        $path = Storage::disk('s3')->putFileAs('/', file_get_contents($tempFilePath) ,$filename);
+    
+        // $path = Storage::disk('s3')->putFileAs('/', file_get_contents($tempFilePath) ,$filename);
+        
+        $path = Storage::disk('s3')->putFileAs('/', $file ,$filename);
         // S3のファイルパスを返す
         $url = Storage::disk('s3')->url($path );
         // 一時ファイルを削除
-        unlink($tempFilePath);
+        // unlink($tempFilePath);
 
         // Get_point のテーブルに追記
         $get_point = Get_point::create([
@@ -802,6 +802,11 @@ public function upload_image(Request $request)
 
     // return back()->withErrors(['image' => '画像のアップロードに失敗しました']);
     return redirect()->route('get_point',['flag' => 0] )->withErrors(['image' => '画像のアップロードに失敗しました。']);
+}
+
+public function bug()
+{
+    return view('bug');
 }
 
 public function confirm_get_point(Request $request)
