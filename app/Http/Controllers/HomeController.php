@@ -30,6 +30,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        
+        \Log::debug('LoginOK');
+        
         $user = Auth::user();
 
         // 役割が１：管理者の場合,ポイント設定画面へ直リンク
@@ -481,6 +484,41 @@ public function change_penalty(Request $request){
     return redirect()->route('staff_main');
 }
 
+
+// チーム情報一覧＆編集
+public function team_index(){
+    // 参加者のみの情報を取得
+    $users = User::with('category')->where('role', 0)->get();
+    // チーム情報を渡す
+    return view('team_index', compact('users'));
+}
+
+// チーム情報編集画面へ
+public function team_edit($id){
+    // チーム情報を取得
+    $user = User::find($id);
+    // カテゴリー情報を取得
+    $categories = Category::all();
+    // チーム情報を渡す
+    return view('team_edit', compact('user', 'categories'));
+}
+
+// チーム情報編集のDBへの登録
+public function team_update(Request $request){
+    // チーム情報を取得
+    $user = User::find($request->id);
+    // チーム情報を更新
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->category_id = $request->category_id;
+    $user->member_num = $request->member_num;
+    $user->role = 0;
+    // データベースに保存
+    $user->save();
+    // チーム情報一覧へリダイレクト
+    return redirect()->route('team_index');
+}
+
 // 取得写真一覧画面の作成
 public function all_images()
 {
@@ -685,12 +723,13 @@ return view('get_point', compact('flag' , 'set_point_no' ,'set_points', 'get_poi
  */
 public function upload_image(Request $request)
 {
+    
     // UPLOADされたファイルが画像であることにチェック
     $request->validate([
-        'image' => 'required|image|mimes:jpg,jpeg,png,gif,heic|max:20480',
+        'image' => 'required|mimes:jpg,jpeg,png,gif,heic,heif|max:20480',
     ]);
-
-    \Log::debug($request->all());
+    // アップロードされたファイルの容量を取得
+    $filesize = $request->file("image")->getSize();
 
     if ($request->hasFile('image')) {
         // アップロードされたファイルを取得
@@ -701,40 +740,49 @@ public function upload_image(Request $request)
         // 保存時のファイル名を生成 拡張子を除く
         $team_no = Auth::user()->team_no;
         $randomString = Str::random(5); 
-        $filename = "get_" . $randomString . "_" . $team_no . "." ;
+        $filename = "get_" . $randomString . "_" . $team_no ;
         
-        \Log::debug($originalExt);
-
         // HEIC形式の場合、JPGに変換
         if ($originalExt === 'heic') {
             $imagick = new Imagick();
-            $imagick->readImageBlob($file->getPathname());
+            $imagick->readImage($file->getPathname());
             $imagick->setImageFormat('jpg');
             
             // 変換後のファイル名を生成 .jpg
-            $filename = $filename . 'jpg';
+            $filename = "{$filename}.jpg";
 
             // 変換後の画像を一時ファイルに保存
             $tempFilePath = sys_get_temp_dir() . '/' . $filename;
             $imagick->writeImage($tempFilePath);
-            
-            // S3にアップロード
-            $path = Storage::disk('s3')->putFileAs('/', file_get_contents($tempFilePath) ,$filename);
-            // S3のファイルパスを返す
-            $url = Storage::disk('s3')->url($path );
-
-            // 一時ファイルを削除
-            unlink($tempFilePath);
-
         }else{
             // HEIC以外の場合
             // 保存時のファイル名を生成
-            $filename=$filename .  $originalExt;
-            // S3にアップロード
-            $path = Storage::disk('s3')->putFileAs('/', $file ,$filename);
-            // S3のファイルパスを返す
-            $url = Storage::disk('s3')->url($path );
+            $filename=$filename .  "." . $originalExt;
+             // 変換後の画像を一時ファイルに保存
+            $tempDir = sys_get_temp_dir();
+            $tempFilePath = $tempDir . '/' . $filename;
+            $file->move($tempDir, $filename);
         }
+        // 一時保存されたファイルの容量
+        $filesize = filesize($tempFilePath);
+        // 容量が１MBを超えた場合は圧縮する
+        if ($filesize > 1024 * 1024) {
+            $imagick = new Imagick();
+            $imagick->readImage($tempFilePath);
+            // $imagick->setImageCompressionQuality(80);
+            $newWidth = 600; // 幅を600pxに設定
+            $imagick->resizeImage($newWidth, 0, \Imagick::FILTER_LANCZOS, 1);
+            $imagick->writeImage($tempFilePath);
+        }
+
+        // ファイル名に含まれるNULLバイトを削除
+        $filename = str_replace("\0", "", $filename);
+        // S3にアップロード
+        $path = Storage::disk('s3')->putFileAs('/', file_get_contents($tempFilePath) ,$filename);
+        // S3のファイルパスを返す
+        $url = Storage::disk('s3')->url($path );
+        // 一時ファイルを削除
+        unlink($tempFilePath);
 
         // Get_point のテーブルに追記
         $get_point = Get_point::create([

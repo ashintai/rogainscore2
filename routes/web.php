@@ -81,3 +81,9 @@ Route::get('/reset_checking' , [HomeController::class , 'reset_checking'])->name
 Route::post('/change_penalty' , [HomeController::class , 'change_penalty'])->name('change_penalty');
 // ＮＧリセット
 Route::get('/reset_ng' , [HomeController::class , 'reset_ng'])->name('reset_ng');
+// チーム情報一覧＆編集
+Route::get('/team_index' , [HomeController::class , 'team_index'])->name('team_index');
+// チーム情報編集画面
+Route::get('/team_edit/{id}' , [HomeController::class , 'team_edit'])->name('team_edit');
+// チーム情報編集のDBへの登録
+Route::post('/team_update/{id}' , [HomeController::class , 'team_update'])->name('team_update');
