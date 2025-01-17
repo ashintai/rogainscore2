@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Get_point;
 use Illuminate\Support\Str;
-use Imagick;
+use Intervention\Image\Facades\Image;
 
 class HomeController extends Controller
 {
