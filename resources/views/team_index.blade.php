@@ -25,7 +25,7 @@
     <h5 style="color: blue;">モリコロロゲイニング　スタッフ操作</h5>
     <!-- ログアウトボタン -->
     <form action="{{ route('logout') }}" method="POST" >
-        <!-- @csrf -->
+        @csrf
             <button type="submit" style="float: right;">ログアウト</button>
     </form>
     <br>

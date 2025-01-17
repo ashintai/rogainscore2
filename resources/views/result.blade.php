@@ -25,7 +25,7 @@
             <a href="{{ route('checkpoint') }}" class="btn btn-primary" style="margin-left: 20px;">戻る</a>
             <!-- ログアウト -->
             <form action="{{ route('logout') }}" method="POST" style="margin-right: 10px;">
-                @csrf
+                <!-- @csrf -->
                 <button type="submit" >ログアウト</button>
             </form>
         </div>
