@@ -729,7 +729,7 @@ public function upload_image(Request $request)
 {
     // UPLOADされたファイルが画像であることにチェック
     $request->validate([
-        'image' => 'required|mimes:jpg,jpeg,png,gif,heic,heif',
+        'image' => 'required|mimes:jpg,jpeg,png,gif,heic,heif|max:20240000',
     ]);
     // アップロードされたファイルの容量を取得
     // $filesize = $request->file("image")->getSize();
