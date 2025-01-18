@@ -778,16 +778,25 @@ public function upload_image(Request $request)
     
         // $path = Storage::disk('s3')->putFileAs('/', file_get_contents($tempFilePath) ,$filename);
         
+
+        // テスト
+        $filename = "aaa_test.jpg";
+
+ // $imageData = (string) $img->encode('jpg', 100);
+
         // リサイズ
         $img = Image::make($file)->resize(300, 200);
-        // $imageData = (string) $img->encode('jpg', 100);
+
+        $tempFilePath = sys_get_temp_dir() . '/' . $filename;
+        $img->save($tempFilePath);
+
 
         // S3にアップロード
-        $path = Storage::disk('s3')->putFileAs('/', $file ,$filename);
+        $path = Storage::disk('s3')->putFileAs('/', new File($tempFilePath) ,$filename);
         // S3のファイルパスを返す
         $url = Storage::disk('s3')->url($path );
         // 一時ファイルを削除
-        // unlink($tempFilePath);
+        unlink($tempFilePath);
 
         // Get_point のテーブルに追記
         $get_point = Get_point::create([
