@@ -10,7 +10,10 @@ use App\Models\User;
 use App\Models\Get_point;
 use Illuminate\Support\Str;
 // use Intervention\Image\ImageManagerStatic as Image;
-use Intervention\Image\Facades\Image;
+// use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Http\File;
 
 class HomeController extends Controller
 {
@@ -785,12 +788,16 @@ public function upload_image(Request $request)
  // $imageData = (string) $img->encode('jpg', 100);
 
         // リサイズ
-        $img = Image::make($file)->resize(300, 200);
+        $manager = new ImageManager(new Driver());
+        $image = $manager->read($file);
+
+        $image->resize(300, 200);
 
         $tempFilePath = sys_get_temp_dir() . '/' . $filename;
-        $img->save($tempFilePath);
 
+        $image->save($tempFilePath);
 
+    
         // S3にアップロード
         $path = Storage::disk('s3')->putFileAs('/', new File($tempFilePath) ,$filename);
         // S3のファイルパスを返す
