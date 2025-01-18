@@ -9,7 +9,8 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Get_point;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManagerStatic as Image;
+// use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\Facades\Image;
 
 class HomeController extends Controller
 {
@@ -723,10 +724,9 @@ return view('get_point', compact('flag' , 'set_point_no' ,'set_points', 'get_poi
  */
 public function upload_image(Request $request)
 {
-    
     // UPLOADされたファイルが画像であることにチェック
     $request->validate([
-        'image' => 'required|mimes:jpg,jpeg,png,gif,heic,heif|max:20480',
+        'image' => 'required|mimes:jpg,jpeg,png,gif,heic,heif',
     ]);
     // アップロードされたファイルの容量を取得
     // $filesize = $request->file("image")->getSize();
@@ -779,8 +779,7 @@ public function upload_image(Request $request)
         // $path = Storage::disk('s3')->putFileAs('/', file_get_contents($tempFilePath) ,$filename);
         
         // リサイズ
-        // $img = Image::make($file->getRealPath());
-        // $img->resize(600, null, function ($constraint) { $constraint->aspectRatio(); });
+        $img = Image::make($file)->resize(300, 200);
         // $imageData = (string) $img->encode('jpg', 100);
 
         // S3にアップロード
