@@ -779,24 +779,17 @@ public function upload_image(Request $request)
         // }
 
     
-        // $path = Storage::disk('s3')->putFileAs('/', file_get_contents($tempFilePath) ,$filename);
-        
-
-        // テスト
-        $filename = "aaa_test.jpg";
-
- // $imageData = (string) $img->encode('jpg', 100);
-
         // リサイズ
         $manager = new ImageManager(new Driver());
         $image = $manager->read($file);
-
-        $image->resize(300, 200);
-
+        // 写真の横幅を調整
+        $width = $image->width();
+        if ($width > 600) {
+            $image->scaleDown(width: 600);
+        }
+        // 一時ファイルに保存
         $tempFilePath = sys_get_temp_dir() . '/' . $filename;
-
         $image->save($tempFilePath);
-
     
         // S3にアップロード
         $path = Storage::disk('s3')->putFileAs('/', new File($tempFilePath) ,$filename);
