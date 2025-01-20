@@ -12,7 +12,12 @@ use Illuminate\Support\Str;
 // use Intervention\Image\ImageManagerStatic as Image;
 // use Intervention\Image\Facades\Image;
 use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
+
+
+// use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Drivers\Imagick\Driver;
+
+
 use Illuminate\Http\File;
 
 class HomeController extends Controller
@@ -743,7 +748,7 @@ public function upload_image(Request $request)
         // 保存時のファイル名を生成 拡張子を除く
         $team_no = Auth::user()->team_no;
         $randomString = Str::random(5); 
-        $filename = "get_" . $randomString . "_" . $team_no . "." .$originalExt;
+        $filename = "get_" . $randomString . "_" . $team_no ;
 
         // HEIC形式の場合、JPGに変換
         // if ($originalExt === 'heic') {
@@ -779,9 +784,21 @@ public function upload_image(Request $request)
         // }
 
     
-        // リサイズ
+        // UPLOAD画像読み込み
         $manager = new ImageManager(new Driver());
         $image = $manager->read($file);
+
+
+        // ここからトライアル    
+        // ファイル形式をJPGに変更
+        if($originalExt == 'heic'){
+            $image->encodeByExtension('jpg');
+            $filename = $filename . ".jpg";
+        }else{
+            $filename = $filename . "." . $originalExt;
+        }
+    
+
         // 写真の横幅を調整
         $width = $image->width();
         if ($width > 600) {
