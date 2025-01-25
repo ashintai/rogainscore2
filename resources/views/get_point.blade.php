@@ -32,7 +32,7 @@ user: ログインしているユーザー -->
 <body>
 
 <!-- 取得写真が登録された場合の確認メッセージ -->
- @if( $flag == 1 )
+@if( $flag == 1 )
     <script>
         // JavaScriptでアラートを表示
         alert('写真が登録されました');
@@ -103,11 +103,11 @@ user: ログインしているユーザー -->
 @if ($errors->any())
     <div class="alert alert-danger">
         アップロードに失敗しました。もう一度お試しください。
-        <!-- <ul>
+        <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
-        </ul> -->
+        </ul>
     </div>
 @endif
 

@@ -735,11 +735,17 @@ public function upload_image(Request $request)
     // UPLOADされたファイルが画像であることにチェック
     $request->validate([
         'image' => 'required|mimes:jpg,jpeg,png,gif,heic,heif|max:20240000',
+    ], [
+        'image.required' => '画像ファイルは必須です。',
+        'image.mimes' => '画像ファイルはjpg、jpeg、png、gif、heic、heif形式でなければなりません。',
+        'image.max' => '画像ファイルのサイズは20MB以下でなければなりません。',
     ]);
+
     // アップロードされたファイルの容量を取得
     // $filesize = $request->file("image")->getSize();
 
     if ($request->hasFile('image')) {
+        try{
         // アップロードされたファイルを取得
         $file = $request->file('image');
         // アップロードされた元のファイルの拡張子を取得
@@ -749,40 +755,6 @@ public function upload_image(Request $request)
         $team_no = Auth::user()->team_no;
         $randomString = Str::random(5); 
         $filename = "get_" . $randomString . "_" . $team_no ;
-
-        // HEIC形式の場合、JPGに変換
-        // if ($originalExt === 'heic') {
-        //     $imagick = new Imagick();
-        //     $imagick->readImage($file->getPathname());
-        //     $imagick->setImageFormat('jpg');
-            
-        //     // 変換後のファイル名を生成 .jpg
-        //     $filename = "{$filename}.jpg";
-
-        //     // 変換後の画像を一時ファイルに保存
-        //     $tempFilePath = sys_get_temp_dir() . '/' . $filename;
-        //     $imagick->writeImage($tempFilePath);
-        // }else{
-        //     // HEIC以外の場合
-        //     // 保存時のファイル名を生成
-        //     $filename=$filename .  "." . $originalExt;
-        //      // 変換後の画像を一時ファイルに保存
-        //     $tempDir = sys_get_temp_dir();
-        //     $tempFilePath = $tempDir . '/' . $filename;
-        //     $file->move($tempDir, $filename);
-        // }
-        // // 一時保存されたファイルの容量
-        // $filesize = filesize($tempFilePath);
-        // // 容量が１MBを超えた場合は圧縮する
-        // if ($filesize > 1024 * 1024) {
-        //     $imagick = new Imagick();
-        //     $imagick->readImage($tempFilePath);
-        //     // $imagick->setImageCompressionQuality(80);
-        //     $newWidth = 600; // 幅を600pxに設定
-        //     $imagick->resizeImage($newWidth, 0, \Imagick::FILTER_LANCZOS, 1);
-        //     $imagick->writeImage($tempFilePath);
-        // }
-
     
         // UPLOAD画像読み込み
         $manager = new ImageManager(new Driver());
@@ -807,7 +779,11 @@ public function upload_image(Request $request)
         // 一時ファイルに保存
         $tempFilePath = sys_get_temp_dir() . '/' . $filename;
         $image->save($tempFilePath);
-    
+    }catch(\Exception $e){
+        return redirect()->route('get_point',['flag' => 0] )->withErrors(['image' => '画像のアップロードに失敗しました。']);
+
+    }
+
         // S3にアップロード
         $path = Storage::disk('s3')->putFileAs('/', new File($tempFilePath) ,$filename);
         // S3のファイルパスを返す
