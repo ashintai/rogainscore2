@@ -13,6 +13,11 @@
 <body>
 <header>
     <h5 style="color: blue;">モリコロロゲイニング　ポイント履歴一覧</h5>
+    <!-- 戻るボタン -->
+    <div class="ms-3">
+    <a href="{{ route('staff_main') }}" class="btn btn-primary">戻る</a>
+    </div>
+    
     <!-- ログアウトボタン -->
     <form action="{{ route('logout') }}" method="POST" >
         @csrf
