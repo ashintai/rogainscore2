@@ -1089,6 +1089,38 @@ public function staff_main(){
                                 
 }
 
+// ポイント履歴一覧
+public function point_history()
+{
+    // ポイント履歴を取得
+    $set_ponits = Set_point::all();
+    // 結果を入れる配列
+    $results = [];
+    
+    foreach ($set_ponits as $set_point) {
+        // ポイント番号
+        $point_no = $set_point->point_no;
+        // ポイント名
+        $point_name = $set_point->point_name;
+        // そのポイントを通過したチーム番号を取得し１列の文字列にする
+        $get_points = Get_point::where('point_no', $point_no)->where('checked', 2)->get();
+        // ポイント毎の通過チーム番号を文字列に
+        $result_str = "";
+        foreach ($get_points as $get_point) {
+            $team_no = $get_point->team_no;
+            $team_name = User::where('team_no', $team_no)->first()->name;
+            $result_str .= $team_no . ":" . $team_name . "ー";
+        }
+        $results[] = [
+            'point_no' => $point_no,
+            'point_name' => $point_name,
+            'point_history' => $result_str,
+        ];
+    }
+
+    return view('point_history', compact('results'));
+}
+
 // 取得写真のダウンロード
 public function download_get_photo( Request $request )
 {
@@ -1112,30 +1144,7 @@ public function download_get_photo( Request $request )
     return response($file, 200)
         ->header('Content-Type', $disk->mimeType($filename))
         ->header('Content-Disposition', 'attachment; filename="' . basename($filename) . '"');
-
-    // return response()->download($filename);
-
-    // \Log::debug($filename);
     
-    // // S3のURLからファイルパスを抽出
-    // if (filter_var($filename, FILTER_VALIDATE_URL)) {
-    //     $parsedUrl = parse_url($filename);
-    //     $filename = ltrim($parsedUrl['path'], '/');
-    // }
-
-    // \Log::debug($filename);
-
-    // // S3からファイルを取得
-    // $disk = Storage::disk('s3');
-    // $file = $disk->get($filename);
-
-    // // ファイル名を取得
-    // $name = basename($filename);
-
-    // // ファイルをダウンロードさせるレスポンスを返す
-    // return response($file, 200)
-    //     ->header('Content-Type', $disk->mimeType($filename))
-    //     ->header('Content-Disposition', 'attachment; filename="' . $name . '"');
 }
 
 }

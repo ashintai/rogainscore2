@@ -40,7 +40,11 @@
     <!-- NGリセットボタン -->
     <a href="{{ route('reset_ng') }}" class="btn btn-primary">NGリセット</a>
     <br><br>
+    <!-- チーム情報一覧＆編集 -->
     <a href="{{ route('team_index') }}" class="btn btn-primary">チーム情報一覧・編集</a>
+    <br><br>
+    <!-- ポイント履歴一覧 -->
+    <a href="{{ route('point_history') }}" class="btn btn-primary">ポイント履歴一覧</a>
     <br><br>
 </div>
 <hr>

@@ -42,7 +42,7 @@
     @foreach( $users as $user)
         <div class="user-row">
             <p>{{ $user->team_no }}:{{ $user->name }}-{{ $user->category->category_name}}コース{{ $user->category->class_name }}クラス</p>
-            <input type="text" name="penalties[{{ $user->team_no }}]" value="{{ $user->penalty }}">
+            <input type="number" name="penalties[{{ $user->team_no }}]" value="{{ $user->penalty }}" min="-9999" step="1">
         </div>
     @endforeach
 
