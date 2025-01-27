@@ -165,6 +165,9 @@ public function clear_get(){
 
 
     if ($request->hasFile('csvFile')){
+        
+        // set_point テーブルをクリア
+        Set_point::truncate();
         // 指定されたCSVファイル名を取得
         $file=$request->file('csvFile');
         $path=$file->getRealPath();
@@ -237,6 +240,8 @@ $csv_category_name = 1;
 $csv_class_name = 2;
 
 if ($request->hasFile('csvFile')){
+    // カテゴリーテーブルをクリア
+    Category::truncate();
     // 指定されたCSVファイル名を取得
     $file=$request->file('csvFile');
     $path=$file->getRealPath();
