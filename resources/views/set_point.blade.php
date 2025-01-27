@@ -17,7 +17,22 @@
     </form>
     <br>
     <hr>
-    </header>  
+    </header>
+    ログイン待機状態のON/OFF<br>
+    <div style="display: flex; align-items: center;">
+    @if ($flag == 1)
+        <p class="btn btn-danger rounded-circle ms-3">ログイン待機</p>
+    @else
+    <p class="btn btn-success rounded-circle ms-3">ログインOK</p>
+    @endif
+
+    <form action="{{ url('/login_wait') }}" method="POST" class="ms-3">
+    @csrf
+        <button class="btn btn-primary ">ログインON/OFF</button>
+    </form>
+    </div>
+    <br>
+    
     ポイント設定ファイルのアップロード<br>
     <form action="{{ url('/pointdata_set') }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -25,7 +40,7 @@
         <input type="file" name="csvFile" class="ms-3" id="csvFile">
         <button class="btn btn-primary ">CSVファイル読込</button>
     </form>
-
+    <br>
     カテゴリー設定ファイルのアップロード<br>
     <form action="{{ url('/category_set') }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -33,7 +48,7 @@
         <input type="file" name="csvFile" class="ms-3" id="csvFile">
         <button class="btn btn-primary ">CSVファイル読込</button>
     </form>
-
+    <br>
     チーム設定ファイルのアップロード<br>
     <form action="{{ url('/team_set') }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -41,7 +56,7 @@
         <input type="file" name="csvFile" class="ms-3" id="csvFile">
         <button class="btn btn-primary ">CSVファイル読込</button>
     </form>
-
+    <br>
     取得写真のダミーデータのアップロード<br>
     <form action="{{ url('/dummy_get') }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -49,6 +64,23 @@
         <input type="file" name="csvFile" class="ms-3" id="csvFile">
         <button class="btn btn-primary ">CSVファイル読込</button>
     </form>
+    <br>
+    Userテーブルの消去（admin@gmail.com 1234は残す）<br>
+    <form action="{{ url('/clear_user') }}" method="POST" class="ms-3">
+    @csrf
+    <!-- CSVファイルの選択 -->
+        <button class="btn btn-danger ">Userテーブルの消去</button>
+    </form>
+    <br>
+
+    取得写真データの消去（getテーブルの全データおよびAWS-S3のget写真を消去）<br>
+    <form action="{{ url('/clear_get') }}" method="POST" class="ms-3">
+    @csrf
+        <button class="btn btn-danger ">取得写真の消去</button>
+    </form>
+    <br>
+
+    
 
 
 

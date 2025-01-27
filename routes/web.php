@@ -31,7 +31,12 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home2');
 Route::get('/index', [HomeController::class, 'index'])->name('index');
-
+// 参加者のログインをスタートまで待機
+Route::post('/login_wait', [HomeController::class, 'login_wait'])->name('login_wait');
+// Userテーブルの消去
+Route::post('/clear_user', [HomeController::class, 'clear_user'])->name('clear_user');
+// 取得写真データの消去とAWS-S3のget写真消去
+Route::post('/clear_get', [HomeController::class, 'clear_get'])->name('clear_get');
 // 非同期でS3no画像URLを取得するためのルートを追加
 Route::get('/image-url', [ImageController::class, 'getImageUrl'])->name('image.url');
 

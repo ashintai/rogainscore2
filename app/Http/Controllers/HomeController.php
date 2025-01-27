@@ -40,13 +40,22 @@ class HomeController extends Controller
     public function index()
     {
         
-        \Log::debug('LoginOK');
-        
+                
         $user = Auth::user();
 
+        if(!Auth::check() ){
+            return redirect()->route('logout');
+        }
+
         // 役割が１：管理者の場合,ポイント設定画面へ直リンク
+        // 引数$flag = 0でログイン可　1でログイン不可
         if(Auth::check() && $user->role == 1){
-            return view( 'set_point');
+            if( $user->team_no == NULL || $user->team_no == 0){
+                $flag = 0;
+            }else{
+                $flag = 1;
+            }
+            return view( 'set_point' , compact('flag'));
         }
         
         // 役割が２：スタッフの場合、チェック画面へ直リンク
@@ -54,6 +63,12 @@ class HomeController extends Controller
             return redirect()->route('staff_main');
         }
     
+        // ログイン待機状態ではwait_login画面へ
+        $user = User::where('role', 1)->first();
+        if($user->team_no == 1){
+            return view('wait_login');
+        }
+
         // 役割が０（それ以外）、参加者メイン画面のコントローラーへ
         // flag=0で渡して、ログイン直後であることを伝える
         // set_point_no は　最初レコードの番号を渡す
@@ -65,26 +80,57 @@ class HomeController extends Controller
         return redirect()->route('get_point',['flag' => 0]);
     }
 
-    // public function upload_set()
-    // {
-    //     return view('upload_set');
-    // }
 
-    // public function import_set(Request $request)
-    // {
-    //     $request->validate([
-    //         'files.*' => 'required|file|mimes:jpg,jpeg,png.gif',
-    //     ]);
+    // 参加者ログイン待機状態のON/OFF
+    public function login_wait()
+    {
+        // userテーブルの管理者（role=1）のteam_no がNULL　または　0のときログイン可
+        // それ以外1はログイン不可
+        $user = User::where('role', 1)->first();
+        if($user->team_no == NULL || $user->team_no == 0){
+            $user->team_no = 1;
+            $flag = 1;
+        }else{
+            $user->team_no = 0;
+            $flag = 0;
+        }
+        $user->save();
+        return redirect()->route('index');
+    }
 
-    //     if($request->hasFile('files')){
-    //         foreach ($request->file('files') as $file) {
-    //             $originalName = $file->getClientOriginalName();
-    //             $path = $file->storeAs('uploads' , $originalName, 'public');
-    //         }
-    //     }
-    //     $files = Storage::disk('public')->files('uploads');
-    //     return view('verify_set', compact('files'));
+
+
+// ユーザーテーブルの消去
+public function clear_user(){
+    User::truncate();
+    $user = new User();
+    $user->name = '管理者';
+    $user->email = 'admin@gmail.com';
+    $user->password = bcrypt('1234');
+    $user->role = 1;
+    $user->team_no = 0;
+    $user->category_id = 0;
+    $user->member_num = 0;
+    $user->save();
+    return redirect()->route('index');
+}
+
+// 取得写真の消去およびAWS-S3のget写真の消去
+public function clear_get(){
+    \App\Models\Get_point::truncate();
+
+    // 'get'で始まるファイルをリストアップ
+    // $prefix = 'get';
+    // $files = Storage::disk('s3')->files($prefix);
+    // リストアップされたファイルをすべて削除
+    // foreach ($files as $file) {
+    //     Storage::disk('s3')->delete($file);
     // }
+    // 管理者画面へ戻る
+    return redirect()->route('index');
+}
+
+
 /**
  * ポイント設定ファイル（CSV）を読み込んでDBのテーブルにセットする
  */
@@ -157,8 +203,8 @@ class HomeController extends Controller
             'ini' => ['CSVファイルがありません'],
         ]);
     }
+    return redirect()->route('index');
     
-    return view('set_point');
 }
 
 /**
@@ -222,7 +268,7 @@ if ($request->hasFile('csvFile')){
         'ini' => ['CSVファイルがありません'],
     ]);
 }
-return view('set_point');
+return redirect()->route('index');
 }
 
 /**
@@ -300,7 +346,7 @@ if ($request->hasFile('csvFile')){
         'ini' => ['CSVファイルがありません'],
     ]);
 }
-return view('set_point');
+return redirect()->route('index');
 }
 
 
@@ -366,7 +412,7 @@ if ($request->hasFile('csvFile')){
         'ini' => ['CSVファイルがありません'],
     ]);
 }
-return view('set_point');
+return redirect()->route('index');
 }
 
 
@@ -543,131 +589,7 @@ public function all_images()
 
 }
 
-// ポイント番号変更
-// public function edit_point($id)
-// {
-//     // ユーザー情報
-//     $user = Auth::user();
-//     // 設定ポイント情報
-//     $set_points = Set_point::all();
-//     // id からレコードを取得
-//     $get_point = Get_point::find($id);
-    
-//     if($get_point){
-//         // ポイント番号変更画面へ渡す
-//         return view('edit_point', compact('get_point', 'set_points', 'user'));
-//     }else{
-//         // get_pointsテーブルのidが不正 本来はありえない
-//     }
-    
-// }
 
-// ポイント番号変更の処理
-// public function change_point(Request $request)
-// {
-//     $user = Auth::user();
-//     $change_point_no = $request->input('point');
-//     $get_point_id = $request->input('get_point_id');
-
-//     // ポイント番号の変更手順
-//     // １．変更後のポイント番号がすでに登録されているか調べる（get_pointテーブル）
-//     // ２．まだ登録されていない場合は
-//     // 　　写真ファイル名を生成し、aws-s3の該当ファイルのファイル名を変更する。
-//     // 　　（コピーした後、前の写真ファイルを削除）
-//     // 　　get_pointテーブルの該当レコードのpoint_no,checked=0,photo_filenameを変更
-//     // 　　changed_verify.blade.phpに変更後のポイント番号、ポイント名、取得ファイル名、正解ファイル名、flag=0をわたす
-//     // ３．すでに登録されている場合は
-//     // 　　前に登録したaws-s3の該当ファイルのファイル名を乱数で変更する。
-//     // 　　get_pointテーブルの前登録レコードのponit_no=0,cheked=4,photo_filenameを変更
-//     // 　　新規レコードを作成し、team_no,point_no,checked=0,photo_filenameを作成
-//     // 　　changed_verify.blade.phpに変更後のポイント番号、ポイント名、取得ファイル名、正解ファイル名、ダブったファイル名、flag=1をわたす
-//     // ４．chaged_verify.blade.phpではbefore_photo_filenameがあるかないかでダブりを検出
-//     //     変更後のポイント番号、ポイント名、取得ファイル、正解ファイルを表示
-//     //    ダブった場合は、(前に登録あり)
-//     //     変更後のポイント番号、ポイント名、取得ファイル、正解ファイル、ダブったファイルを表示
-//     //     ダブったことをウオーニングする
-
-//     // 変更するレコードを取得
-//     $change_get_point = Get_point::find($get_point_id)->first();
-//     // 正解のポイント名を取得
-//     $set_point = Set_point::where('point_no', $change_point_no)->first();
-//     $set_point_name = $set_point->point_name;
-//     // 正解ファイル名を生成
-//     $set_photo_filename = "https://rogain.s3.amazonaws.com/set_" . $change_point_no . ".JPG";
-
-//     // 変更するポイント番号がすでに登録されているか調べる
-//     $team_no = $user->team_no;
-//     $before_get_point = Get_point::where('team_no' , $team_no )->where('point_no', $change_point_no)->first();
-
-//     if($before_get_point){
-//         // 前に登録されたポイントがある場合
-//         // 元の取得ファイル名
-//         $before_photo_filename = $before_get_point->photo_filename;
-//         // 拡張子の取得
-//         $ext = pathinfo($before_photo_filename, PATHINFO_EXTENSION);
-//         // 新しいファイル名-退避用
-//         $change_photo_filename = "get_" . Str::random(10) . "_" . $team_no  . "." . $ext;
-//         // 新しいファイル名のURL
-//         $change_photo_filename = "https://rogain.s3.amazonaws.com/" . $change_photo_filename;
-//         // ファイルのコピー
-//         Storage::disk('s3')->copy($before_photo_filename, $change_photo_filename);
-//         // 元のファイルの削除
-//         Storage::disk('s3')->delete($before_photo_filename);
-//         // get_pointテーブルのレコードの変更
-//         // データベースの更新
-//         $before_get_point->point_no = 0;
-//         $before_get_point->photo_filename = $change_photo_filename;
-//         $before_get_point->checked = 4;
-//         $before_get_point->save();
-
-//         // 変更後の取得ファイル名を生成
-//         //    元の取得ファイル名
-//         $before_photo_filename = $change_get_point->photo_filename;
-//         //    拡張子の取得
-//         $ext = pathinfo($before_photo_filename, PATHINFO_EXTENSION);
-//         //    変更後のファイル名生成
-//         $change_photo_filename = "get_" . $change_point_no . "_" . $team_no . "." . $ext;
-//         //    変更後のファイル名のURL
-//         $change_photo_filename = "https://rogain.s3.amazonaws.com/" . $change_photo_filename;
-//         //    ファイルのコピー
-//         Storage::disk('s3')->copy($before_photo_filename, $change_photo_filename);
-//         //    元のファイルの削除
-//         Storage::disk('s3')->delete($before_photo_filename);
-                
-//         // レコードの修正
-//         $change_get_point->point_no = $change_point_no;
-//         $change_get_point->checked = 0;
-//         $change_get_point->photo_filename = $change_photo_filename;
-//         $change_get_point->save();
-
-//         return view('changed_verify', compact('change_point_no', 'set_point_name' , 'change_photo_filename', 'set_photo_filename', 'before_photo_filename' , 'user'));
-        
-//     }else{
-//         // 前の登録がない場合
-//         // 元の取得ファイル名
-//         $before_filename = $change_get_point->photo_filename;
-//         // 拡張子の取得
-//         $ext = pathinfo($before_filename, PATHINFO_EXTENSION);
-//         // 新しいファイル名
-//         $change_filename = "get_" . $change_point_no . "_" . $team_no . "." . $ext;
-//         // 新しいファイル名のURL
-//         $change_photo_filename = "https://rogain.s3.amazonaws.com/" . $change_filename;
-//         // ファイルのコピー
-//         Storage::disk('s3')->copy($before_filename, $change_filename);
-//         // 元のファイルの削除
-//         Storage::disk('s3')->delete($before_filename);
-//         // get_pointテーブルのレコードの変更
-//         // データベースの更新
-//         $change_get_point->point_no = $change_point_no;
-//         $change_get_point->photo_filename = $change_filename;
-//         $change_get_point->checked = 0;
-//         $change_get_point->save();     
-        
-//         $before_photo_filename = null;
-
-//         return view('changed_verify', compact('change_point_no', 'set_point_name' , 'change_photo_filename', 'set_photo_filename' , 'before_photo_filename' , 'user' ));
-//     }
-// }
 
 
 /**
@@ -851,12 +773,6 @@ $get_point_before = Get_point::where('team_no', $team_no)->where('point_no', $se
 // ロックオンされているレコードを取得
 $get_point = Get_point::where('id' , $get_point_id)->first();
 
-// \Log::debug($request->all());
-// \Log::debug($get_point_before);
-// \Log::debug($get_point_id);
-// \Log::debug($get_point);
-// \Log::debug($set_point_no);
-
 
 if($get_point_before){
     // ダブっている場合
@@ -868,8 +784,6 @@ if($get_point_before){
     // 設定ポイントのファイル名を生成
     $key="set_" . $set_point_no . ".JPG";
     $set_photo_filename = Storage::disk('s3')->url($key);
-
-        // \Log::debug('set_photo_filename:' . $set_photo_filename);
 
     $set_point_name = $set_point->point_name;
     $get_photo_filename = $get_point->photo_filename ;
