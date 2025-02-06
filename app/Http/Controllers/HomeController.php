@@ -933,7 +933,7 @@ public function getResults(Request $request)
     // カテゴリIDに基づいて該当するチームデータを取得
     $results = User::where('category_id', $categoryId)->get();
 
-    Log::debug($results);
+    return view('debug', compact('results'));
 
     // 結果を入れる配列を準備
     $resultArray = [];
