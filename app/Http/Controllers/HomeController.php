@@ -957,7 +957,7 @@ public function getResults(Request $request)
 
         foreach ($get_points as $get_point) {
         //     $result_str .= $get_point->point_no . ":" . $get_point->setPoint->point_name . "ー";
-        //     $total_score += $get_point->setPoint->score;
+            $total_score += $get_point->setPoint->score;
         }
         
         // 減点を加える

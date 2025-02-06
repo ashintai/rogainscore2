@@ -66,28 +66,28 @@
     // alert(`選択されたカテゴリID: ${selectedCategoryId}`);
 
 
-fetch(`/get-results?category_id=${selectedCategoryId}`)
-    .then(response => response.text())
-    .then(html => {
-        document.getElementById('result').innerHTML = html;
-    })
+// fetch(`/get-results?category_id=${selectedCategoryId}`)
+//     .then(response => response.text())
+//     .then(html => {
+//         document.getElementById('result').innerHTML = html;
+//     })
 
 
-        // サーバーにリクエストを送信して結果を取得
-        // fetch(`/get-results?category_id=${selectedCategoryId}`)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // 結果を表示するためのコンテナを取得
-        //         const resultContainer = document.getElementById('result');
+        サーバーにリクエストを送信して結果を取得
+        fetch(`/get-results?category_id=${selectedCategoryId}`)
+            .then(response => response.json())
+            .then(data => {
+                // 結果を表示するためのコンテナを取得
+                const resultContainer = document.getElementById('result');
 
-        //         // 結果を表示
-        //         resultContainer.innerHTML = '';
-        //         data.results.forEach(result => {
-        //             const resultElement = document.createElement('div');
-        //             resultElement.innerHTML = `<hr>${result.team_no}:${result.team_name}(${result.member_num}名) 総得点:${result.total_score}点(減点${result.penalty}点) <br>   (確認待ち-${result.checking_num} NG-${result.ng_num} ポイント番号不明-${result.unknown_num}) <br> <span style="color: green;">${result.result_str}</span>`;
-        //             resultContainer.appendChild(resultElement);
-        //         });
-        //     })
+                // 結果を表示
+                resultContainer.innerHTML = '';
+                data.results.forEach(result => {
+                    const resultElement = document.createElement('div');
+                    resultElement.innerHTML = `<hr>${result.team_no}:${result.team_name}(${result.member_num}名) 総得点:${result.total_score}点(減点${result.penalty}点) <br>   (確認待ち-${result.checking_num} NG-${result.ng_num} ポイント番号不明-${result.unknown_num}) <br> <span style="color: green;">${result.result_str}</span>`;
+                    resultContainer.appendChild(resultElement);
+                });
+            })
             .catch(error => {
                 console.error('Error fetching results:', error);
             });
