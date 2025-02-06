@@ -954,10 +954,10 @@ public function getResults(Request $request)
         // 表示用文字列に変換 と同時に総合得点を計算
         $result_str = "";
         $total_score = 10;
-        // foreach ($get_points as $get_point) {
-        //     $result_str .= $get_point->point_no . ":" . $get_point->setPoint->point_name . "ー";
-        //     $total_score += $get_point->setPoint->score;
-        // }
+        foreach ($get_points as $get_point) {
+            $result_str .= $get_point->point_no . ":" . $get_point->setPoint->point_name . "ー";
+            $total_score += $get_point->setPoint->score;
+        }
         // 減点を加える
         $total_score -= $penalty;
                 
