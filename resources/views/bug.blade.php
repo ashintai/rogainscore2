@@ -6,8 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    @foreach($results as $result)
-        <p>{{ $result->name }}</p>
+    @foreach($get_points as $get_point)
+        <p>{{ $get_point->team_no }}</p>
+        <p>{{ $get_point->point_no }}</p>
     @endforeach
         バグあり！！
 </body>

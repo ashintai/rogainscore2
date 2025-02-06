@@ -953,7 +953,11 @@ public function getResults(Request $request)
         $unknown_num = Get_point::where('team_no', $result->team_no)->where('checked', 4)->count();
         // 表示用文字列に変換 と同時に総合得点を計算
         $result_str = "";
-        $total_score = 10;
+        $total_score = 0;
+
+        // デバッグ
+        return view('bug' , compact('get_points'));
+
         foreach ($get_points as $get_point) {
             $result_str .= $get_point->point_no . ":" . $get_point->setPoint->point_name . "ー";
             $total_score += $get_point->setPoint->score;
