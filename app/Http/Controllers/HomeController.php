@@ -956,8 +956,13 @@ public function getResults(Request $request)
         $total_score = 0;
 
         foreach ($get_points as $get_point) {
-            $result_str .= $get_point->point_no . ":" . $get_point->setPoint->point_name . "ー";
-            $total_score += $get_point->setPoint->score;
+            if($get_point->setPoint){
+                $result_str .= $get_point->point_no . ":" . $get_point->setPoint->point_name . "ー";
+                $total_score += $get_point->setPoint->score;
+            }else{
+                $result_str .= $get_point->point_no . ":未設定" . "ー";
+            }
+            
         }
         
         // 減点を加える
