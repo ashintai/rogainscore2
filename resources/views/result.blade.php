@@ -73,6 +73,8 @@
                 // 結果を表示するためのコンテナを取得
                 const resultContainer = document.getElementById('result');
 
+                alert( 'ここまできたよ');
+
                 // 結果を表示
                 resultContainer.innerHTML = '';
                 data.results.forEach(result => {
