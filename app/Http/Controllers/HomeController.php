@@ -955,13 +955,10 @@ public function getResults(Request $request)
         $result_str = "";
         $total_score = 0;
 
-        // foreach ($get_points as $get_point) {
+        foreach ($get_points as $get_point) {
         //     $result_str .= $get_point->point_no . ":" . $get_point->setPoint->point_name . "ー";
         //     $total_score += $get_point->setPoint->score;
-        // }
-        
-        // でバック
-        $result_str = $get_points->count();
+        }
         
         // 減点を加える
         $total_score -= $penalty;
