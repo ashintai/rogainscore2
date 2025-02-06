@@ -934,7 +934,7 @@ public function getResults(Request $request)
     $results = User::where('category_id', $categoryId)->get();
 
     // デバッグ
-    return view('bug');
+    return view('bug' , compact('results'));
     
     
     // 結果を入れる配列を準備

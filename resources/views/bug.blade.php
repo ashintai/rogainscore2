@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    バグあり！！
+    @foreach($results as $result)
+        <p>{{ $result->name }}</p>
+    @endforeach
+        バグあり！！
 </body>
 </html>
