@@ -933,8 +933,7 @@ public function getResults(Request $request)
     // カテゴリIDに基づいて該当するチームデータを取得
     $results = User::where('category_id', $categoryId)->get();
 
-    // デバッグ
-    return view('bug' , compact('results'));
+    
     
     
     // 結果を入れる配列を準備
@@ -979,9 +978,10 @@ public function getResults(Request $request)
     usort($resultArray, function($a, $b) {
         return $b['total_score'] <=> $a['total_score'];
     });
-
+    // デバッグ
+    return view('bug' , compact('results'));
     // 結果をJSON形式で返す
-    return response()->json(['results' => $resultArray]);
+    // return response()->json(['results' => $resultArray]);
 }
 
 
