@@ -953,7 +953,7 @@ public function getResults(Request $request)
         $unknown_num = Get_point::where('team_no', $result->team_no)->where('checked', 4)->count();
         // 表示用文字列に変換 と同時に総合得点を計算
         $result_str = "";
-        $total_score = 0;
+        $total_score = 10;
         // foreach ($get_points as $get_point) {
         //     $result_str .= $get_point->point_no . ":" . $get_point->setPoint->point_name . "ー";
         //     $total_score += $get_point->setPoint->score;
@@ -978,10 +978,8 @@ public function getResults(Request $request)
     usort($resultArray, function($a, $b) {
         return $b['total_score'] <=> $a['total_score'];
     });
-    // デバッグ
-    return view('bug' , compact('results'));
-    // 結果をJSON形式で返す
-    // return response()->json(['results' => $resultArray]);
+    
+    return response()->json(['results' => $resultArray]);
 }
 
 
