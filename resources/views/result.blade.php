@@ -73,7 +73,7 @@
 //     })
 
 
-        サーバーにリクエストを送信して結果を取得
+        // サーバーにリクエストを送信して結果を取得
         fetch(`/get-results?category_id=${selectedCategoryId}`)
             .then(response => response.json())
             .then(data => {
