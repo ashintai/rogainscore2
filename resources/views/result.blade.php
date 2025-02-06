@@ -63,7 +63,7 @@
         const selectedCategoryId = select.value;
 
     // alertを使用してselectedCategoryIdの値を表示
-    alert(`選択されたカテゴリID: ${selectedCategoryId}`);
+    // alert(`選択されたカテゴリID: ${selectedCategoryId}`);
 
 
         // サーバーにリクエストを送信して結果を取得
