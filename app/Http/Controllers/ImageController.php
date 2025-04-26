@@ -34,7 +34,7 @@ class ImageController extends Controller
             $file = $request->file('image');
             // アップロードされた元のファイルの拡張子を取得
             $originalExt = $file->getClientOriginalExtension();
-            // ファイル名を生成
+            // ファイル名を生成だよよ
             $teamno = Auth::user()->team_no;
             $point_no = $request->input('point');
             $filename = "get_" . $point_no . "_" . $teamno . "." . $originalExt;
