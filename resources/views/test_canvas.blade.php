@@ -19,7 +19,7 @@
             @csrf
             <div class="mb-3">
                 <label for="image" class="form-label">画像を選択または撮影し「アップロード」ボタンをタップしてください。</label>
-                <input type="file" class="form-control" id="imageSelect"  onChange="canvsDraw();" name="image" accept="image/*" required >
+                <input type="file" class="form-control" id="imageSelect"  onChange="canvasDraw();" name="image" accept="image/*" required >
             </div>
             <button type="submit" class="btn btn-primary" >アップロード</button>
         </form>
