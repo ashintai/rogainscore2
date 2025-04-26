@@ -17,16 +17,17 @@
 <body>
     <form id="upload-form" action="{{ route('canvas_upload_test') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <img src="" id="preview" />
+            <canvas id="canvas" ></canvas>
             <div class="mb-3">
                 <label for="image" class="form-label">画像を選択または撮影し「アップロード」ボタンをタップしてください。</label>
                 <input type="file" class="form-control" id="imageSelect"  onChange="canvasDraw();" name="image" accept="image/*" required >
             </div>
-            <button type="submit" class="btn btn-primary" >アップロード</button>
+            <input type="button" onClick="" value="アップロード" />
         </form>
 </body>
 
-<img src="" id="preview" />
-<canvas id="canvas" width="600" height="400"></canvas>
+
 
 
 
