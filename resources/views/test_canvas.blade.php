@@ -71,8 +71,8 @@ function canvasDraw() {
                         
             //imgタグに表示した画像をimageオブジェクトとして取得
             var image = new Image();
-            image.src = $("#preview").attr('src');
-                        
+            image.onload = function() {
+                                    
             //縦横比を維持した縮小サイズを取得
             var w = 800;
             var ratio = w / image.width;
@@ -83,8 +83,10 @@ function canvasDraw() {
             var ctx = canvas[0].getContext('2d');
             $("#canvas").attr("width", w);
             $("#canvas").attr("height", h);
-            ctx.drawImage(image, 0, 0, w, h);      
+            ctx.drawImage(image, 0, 0, w, h); };
+
         };
+        image.src = fr.result;
 
         fr.readAsDataURL(file);
     }
