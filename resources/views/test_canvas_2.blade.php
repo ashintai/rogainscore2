@@ -12,10 +12,6 @@
     <p>高さ: {{ $height }} px</p>
     <p>容量: {{ $filesize }} バイト</p>
 
-    <h2>アップロードされた画像</h2>
-    <img src="{{ $imageUrl }}" alt="アップロードされた画像" style="max-width: 100%; height: auto;">
-<br>
-
 <!-- 画像UP画面へ戻る  -->
 <a href="{{ route('canvas_test') }}" class="btn btn-primary">画像UP画面へ戻る</a>
 </body>

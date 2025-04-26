@@ -1096,15 +1096,8 @@ public function canvas_upload_test(Request $request)
     // 容量を取得
     $filesize = $file->getSize();
 
-    // 一時ファイルに保存
-    $tempFilePath = sys_get_temp_dir() . '/' . $file->getClientOriginalName();
-    $image->save($tempFilePath);
-
-    // 画像のURLを生成
-    $imageUrl = asset('storage/temp/' . $file->getClientOriginalName());
-
     // 結果をビューに渡す
-    return view('test_canvas_2', compact('width', 'height', 'filesize', 'imageUrl'));
+    return view('test_canvas_2', compact('width', 'height', 'filesize'));
 }
 
 }
