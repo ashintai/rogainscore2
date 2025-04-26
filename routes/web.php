@@ -96,3 +96,7 @@ Route::post('/team_update/{id}' , [HomeController::class , 'team_update'])->name
 Route::get('/point_history' , [HomeController::class , 'point_history'])->name('point_history');
 // でバグ用
 Route::get('/bug', [HomeController::class, 'bug'])->name('bug');
+
+// Canvas画像圧縮テスト
+Route::get('/canvas_test', [HomeController::class, 'canvas_test'])->name('canvas_test');
+Route::post('/canvas_upload_test', [HomeController::class, 'canvas_upload_test'])->name('canvas_upload_test');

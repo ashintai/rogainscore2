@@ -1075,4 +1075,9 @@ public function download_get_photo( Request $request )
     
 }
 
+// CSVファイル圧縮テスト画面
+public function canvas_test()
+{
+    return view('test_canvas');
+}
 }
