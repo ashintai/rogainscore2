@@ -1087,7 +1087,7 @@ public function canvas_upload_test(Request $request)
     $file = $request->file('image');
     // UPLOAD画像読み込み
     $manager = new ImageManager(new Driver());
-    $image = $manager->make($file);
+    $image = $manager->read($file);
 
     // 横幅と高さを取得
     $width = $image->width();
