@@ -1075,9 +1075,29 @@ public function download_get_photo( Request $request )
     
 }
 
-// CSVファイル圧縮テスト画面
+// CSVファイル圧縮テスト画面 ファイル選択
 public function canvas_test()
 {
     return view('test_canvas');
+}
+
+// 画像ファイルの受け取り
+public function canvas_upload_test(Request $request)
+{
+    $file = $request->file('image');
+    // UPLOAD画像読み込み
+    $manager = new ImageManager(new Driver());
+    $image = $manager->make($file);
+
+    // 横幅と高さを取得
+    $width = $image->width();
+    $height = $image->height(); 
+
+    // 容量を取得
+    $filesize = $file->getSize();
+
+    // 結果をビューに渡す
+    return view('test_canvas2', compact('width', 'height', 'filesize'));
+  
 }
 }
