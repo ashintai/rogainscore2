@@ -1097,7 +1097,7 @@ public function canvas_upload_test(Request $request)
     $filesize = $file->getSize();
 
     // 結果をビューに渡す
-    return view('test_canvas2', compact('width', 'height', 'filesize'));
+    return view('test_canvas_2', compact('width', 'height', 'filesize'));
   
 }
 }
