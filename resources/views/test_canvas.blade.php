@@ -64,8 +64,10 @@ console.log("canvasDraw()が実行されました。");
     if (file["type"] != "image/jpeg" && file["type"] != "image/png" && file["type"] != "image/gif") {
         alert("画像ファイルを選択してください");
         $("#imageSelect").val(''); //選択したファイルをクリア
+        return ;
+    }
 
-    } else {
+
         // FileReaderで　ローカルファイルをjavascriptで処理できるようになる
         var fr = new FileReader();
         // onloadはファイルが選択されてから処理する関数を定義
