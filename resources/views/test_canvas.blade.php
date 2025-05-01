@@ -54,7 +54,7 @@
 function canvasDraw() {
 
 // 実行を確認
-cosole.log("canvasDraw()が実行されました。");
+console.log("canvasDraw()が実行されました。");
 
     // id=imageSelect の特性propatyのfileの1番目[0]を変数fileへ取得
     var file = $("#imageSelect").prop("files")[0];
