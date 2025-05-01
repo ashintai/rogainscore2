@@ -100,7 +100,7 @@ function imageUpload() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "canvas_upload_test",
+            url: "{{ route('canvas_upload_test') }}",
             data: formData,
             dataType: "text",
             cache: false,
