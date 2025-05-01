@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Get_point;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManagerStatic as Image;
+// use Intervention\Image\ImageManagerStatic as Image;
 // use Intervention\Image\Facades\Image;
 use Intervention\Image\ImageManager;
 
@@ -1095,17 +1095,22 @@ public function canvas_upload_test(Request $request)
         // Base64デコード
         $data = base64_decode($data);
 
-        $image = Image::make($data);
-        $width = $image->width();
-        $height = $image->height();
-        $filesize = strlen($data); // データのサイズを取得 
+        // 一時ファイルに保存
+        $tempFilePath = sys_get_temp_dir() . '/temp_image';
+        file_put_contents($tempFilePath, $data);
+
+        // 画像情報を取得
+        $imageInfo = getimagesize($tempFilePath);
+        $width = $imageInfo[0]; // 横幅
+        $height = $imageInfo[1]; // 高さ
+        $filesize = strlen($data); // データサイズ（バイト単位）
 
 
 
 
         // ファイル名を生成して保存
-        $fileName = 'canvas_image_' . time() . '.jpg';
-        $filePath = public_path('uploads/' . $fileName);
+        // $fileName = 'canvas_image_' . time() . '.jpg';
+        // $filePath = public_path('uploads/' . $fileName);
 
         // // ディレクトリが存在しない場合は作成
         // if (!file_exists(public_path('uploads'))) {
