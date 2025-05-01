@@ -21,15 +21,16 @@
 <body>
 
 <!-- 原文のまま -->
-<form action="" method="post" id="imageForm">
+<form action="{{ route('canvas_upload_test') }}" method="post" id="imageForm"  enctype="multipart/form-data">
     @csrf
+    <input type="hidden" id="canvasImage" name="image"> <!-- 隠しフィールド -->
     <img src="" id="preview" />
     <!-- canvas要素の生成 -->
     <canvas id="canvas"></canvas>
     <!-- 画像ファイルの入力→onChangeでcanvasDraw()を実行 -->
     <input type="file" id="imageSelect" onChange="canvasDraw();" />
     <!-- ボタンクリックでimageUpload()を実行 -->
-    <input type="button" onClick="imageUpload();" value="アップロード" />
+    <input type="button" onClick="prepareAndSubmitForm();" value="アップロード" />
 </form>
 
 </body>
@@ -121,6 +122,26 @@ function imageUpload() {
         });
     },"image/jpeg", 0.9); // 画質を90%に圧縮
     } 
+}
+
+// アップロードガクリックされた時呼ばれる関数その２
+function prepareAndSubmitForm() {
+    // <canvas>要素を取得
+    var canvas = document.getElementById("canvas");
+
+    // canvas.toBlobを使用してBlobデータを生成
+    canvas.toBlob(function(blob) {
+        // BlobデータをBase64形式に変換
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            // 隠しフィールドにBase64データを設定
+            document.getElementById("canvasImage").value = reader.result;
+
+            // フォームを送信
+            document.getElementById("imageForm").submit();
+        };
+        reader.readAsDataURL(blob); // BlobをBase64形式に変換
+    }, "image/jpeg", 0.9); // JPEG形式で画質90%に圧縮
 }
 
 </script>
