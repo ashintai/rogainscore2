@@ -90,10 +90,8 @@ console.log("canvasDraw()が実行されました。");
             $("#canvas").attr("width", w);
             $("#canvas").attr("height", h);
             ctx.drawImage(image, 0, 0, w, h); };
-
+            image.src = fr.result;
         };
-        // image.src = fr.result;
-
         fr.readAsDataURL(file);
     }
 
