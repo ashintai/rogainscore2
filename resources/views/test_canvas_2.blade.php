@@ -17,4 +17,5 @@
 <a href="{{ route('canvas_test') }}" class="btn btn-primary">画像選択画面へ戻る</a>
 </body>
 
+
 </html>
