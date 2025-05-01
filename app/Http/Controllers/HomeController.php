@@ -1095,6 +1095,14 @@ public function canvas_upload_test(Request $request)
         // Base64デコード
         $data = base64_decode($data);
 
+        $image = Image::make($data);
+        $width = $image->width();
+        $height = $image->height();
+        $filesize = strlen($data); // データのサイズを取得 
+
+
+
+
         // ファイル名を生成して保存
         $fileName = 'canvas_image_' . time() . '.jpg';
         $filePath = public_path('uploads/' . $fileName);
@@ -1110,7 +1118,7 @@ public function canvas_upload_test(Request $request)
         // 成功レスポンスを返す
         $result = "成功しました";
 
-        return view('test_canvas_2', compact('result'));
+        return view('test_canvas_2', compact('result','width','height','filesize'));
         
     } catch (\Exception $e) {
         // エラーをログに記録
@@ -1121,7 +1129,13 @@ public function canvas_upload_test(Request $request)
         return view('test_canvas_2', compact('result'));
         
     }
-    // $file = $request->file('image');
+   
+}
+
+}
+
+
+ // $file = $request->file('image');
     // // UPLOAD画像読み込み
     // $manager = new ImageManager(new Driver());
     // $image = $manager->read($file);
@@ -1135,6 +1149,3 @@ public function canvas_upload_test(Request $request)
 
     // // 結果をビューに渡す
     // return view('test_canvas_2', compact('width', 'height', 'filesize'));
-}
-
-}
