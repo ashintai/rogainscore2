@@ -92,7 +92,7 @@ console.log("canvasDraw()が実行されました。");
             ctx.drawImage(image, 0, 0, w, h); };
 
         };
-        image.src = fr.result;
+        // image.src = fr.result;
 
         fr.readAsDataURL(file);
     }
