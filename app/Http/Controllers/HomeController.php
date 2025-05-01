@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Get_point;
 use Illuminate\Support\Str;
-// use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManagerStatic as Image;
 // use Intervention\Image\Facades\Image;
 use Intervention\Image\ImageManager;
 
