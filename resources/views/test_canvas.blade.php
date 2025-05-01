@@ -92,7 +92,7 @@ function imageUpload() {
         var canvasImage = $("#canvas").get(0);
                     
         //オリジナル容量(画質落としてない場合の容量)を取得
-        canvas.Blob(function(blob){
+        canvas.toBlob(function(blob){
             // Blobデータをアップロード用に追加
             formData.append("selectImage", blob, "image.jpg"); //アップロード用blobデータを取得
             //formDataをPOSTで送信
