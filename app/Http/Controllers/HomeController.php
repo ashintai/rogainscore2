@@ -1099,14 +1099,11 @@ public function canvas_upload_test(Request $request)
         $tempFilePath = sys_get_temp_dir() . '/temp_image';
         file_put_contents($tempFilePath, $data);
 
-        // 画像情報を取得
-        $imageInfo = getimagesize($tempFilePath);
+        // 画像情報を取得（メモリ上で処理）
+        $imageInfo = getimagesizefromstring($data);
         $width = $imageInfo[0]; // 横幅
         $height = $imageInfo[1]; // 高さ
         $filesize = strlen($data); // データサイズ（バイト単位）
-
-
-
 
         // ファイル名を生成して保存
         // $fileName = 'canvas_image_' . time() . '.jpg';
