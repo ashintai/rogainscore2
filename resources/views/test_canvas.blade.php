@@ -99,7 +99,7 @@ function imageUpload() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "canvas_upload_test.php",
+            url: "canvas_upload_test",
             data: formData,
             dataType: "text",
             cache: false,
