@@ -9,6 +9,10 @@
     <!-- ｊQueryの読み込み -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>canvasで画像圧縮してサーバーへ送信する、をテスト</title>
+    <style>
+    #preview {
+        display: none;}
+    </style>
 </head>
 
 <!-- javascriptで画像に圧縮をかける -->
@@ -53,9 +57,6 @@
     // 画像が選択された時に呼び出される関数
 function canvasDraw() {
 
-// 実行を確認
-console.log("canvasDraw()が実行されました。");
-
     // id=imageSelect の特性propatyのfileの1番目[0]を変数fileへ取得
     var file = $("#imageSelect").prop("files")[0];
                 
@@ -68,17 +69,17 @@ console.log("canvasDraw()が実行されました。");
     }
 
 
-        // FileReaderで　ローカルファイルをjavascriptで処理できるようになる
-        var fr = new FileReader();
-        // onloadはファイルが選択されてから処理する関数を定義
-        fr.onload = function() {
-            //選択した画像を一旦imgタグに表示
-            $("#preview").attr('src', fr.result);
-                        
-            //imgタグに表示した画像をimageオブジェクトとして取得
-            var image = new Image();
-            image.onload = function() {
-                                    
+    // FileReaderで　ローカルファイルをjavascriptで処理できるようになる
+    var fr = new FileReader();
+    // onloadはファイルが選択されてから処理する関数を定義
+    fr.onload = function() {
+        //選択した画像を一旦imgタグに表示
+        $("#preview").attr('src', fr.result);
+                    
+        //imgタグに表示した画像をimageオブジェクトとして取得
+        var image = new Image();
+        image.onload = function() {
+                                
             //縦横比を維持した縮小サイズを取得
             var w = 800;
             var ratio = w / image.width;
@@ -89,11 +90,12 @@ console.log("canvasDraw()が実行されました。");
             var ctx = canvas[0].getContext('2d');
             $("#canvas").attr("width", w);
             $("#canvas").attr("height", h);
-            ctx.drawImage(image, 0, 0, w, h); };
-            image.src = fr.result;
+            ctx.drawImage(image, 0, 0, w, h);
         };
-        fr.readAsDataURL(file);
-    }
+        image.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+}
 
 
 // <script>
