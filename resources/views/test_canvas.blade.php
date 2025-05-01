@@ -96,7 +96,6 @@ console.log("canvasDraw()が実行されました。");
 
         fr.readAsDataURL(file);
     }
-}
 
 
 // <script>
@@ -129,4 +128,4 @@ console.log("canvasDraw()が実行されました。");
 
 //         fr.readAsDataURL(file);
 
-// </script>
+</script>
