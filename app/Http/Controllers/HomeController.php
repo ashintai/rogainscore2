@@ -1095,9 +1095,7 @@ public function canvas_upload_test(Request $request)
         // Base64デコード
         $data = base64_decode($data);
 
-        // 一時ファイルに保存
-        $tempFilePath = sys_get_temp_dir() . '/temp_image';
-        file_put_contents($tempFilePath, $data);
+        
 
         // 画像情報を取得（メモリ上で処理）
         $imageInfo = getimagesizefromstring($data);
@@ -1105,6 +1103,9 @@ public function canvas_upload_test(Request $request)
         $height = $imageInfo[1]; // 高さ
         $filesize = strlen($data); // データサイズ（バイト単位）
 
+        // Base64形式の画像データを生成
+        $base64Image = 'data:' . $imageInfo['mime'] . ';base64,' . base64_encode($decodedData);
+        
         // ファイル名を生成して保存
         // $fileName = 'canvas_image_' . time() . '.jpg';
         // $filePath = public_path('uploads/' . $fileName);
@@ -1120,7 +1121,7 @@ public function canvas_upload_test(Request $request)
         // 成功レスポンスを返す
         $result = "成功しました";
 
-        return view('test_canvas_2', compact('result','width','height','filesize'));
+        return view('test_canvas_2', compact('result','width','height','filesize','base64Image'));
         
     } catch (\Exception $e) {
         // エラーをログに記録
