@@ -1104,7 +1104,7 @@ public function canvas_upload_test(Request $request)
         $filesize = strlen($data); // データサイズ（バイト単位）
 
         // Base64形式の画像データを生成
-        $base64Image = 'data:' . $imageInfo['mime'] . ';base64,' . base64_encode($decodedData);
+        $base64Image = 'data:' . $imageInfo['mime'] . ';base64,' . base64_encode($data);
         
         // ファイル名を生成して保存
         // $fileName = 'canvas_image_' . time() . '.jpg';
