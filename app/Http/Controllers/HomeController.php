@@ -1084,20 +1084,57 @@ public function canvas_test()
 // 画像ファイルの受け取り
 public function canvas_upload_test(Request $request)
 {
-    $file = $request->file('image');
-    // UPLOAD画像読み込み
-    $manager = new ImageManager(new Driver());
-    $image = $manager->read($file);
+    try {
+        // Base64データを取得
+        $imageData = $request->input('image');
 
-    // 横幅と高さを取得
-    $width = $image->width();
-    $height = $image->height(); 
+        // データURLからBase64部分を抽出
+        list($type, $data) = explode(';', $imageData);
+        list(, $data) = explode(',', $data);
 
-    // 容量を取得
-    $filesize = $file->getSize();
+        // Base64デコード
+        $data = base64_decode($data);
 
-    // 結果をビューに渡す
-    return view('test_canvas_2', compact('width', 'height', 'filesize'));
+        // ファイル名を生成して保存
+        $fileName = 'canvas_image_' . time() . '.jpg';
+        $filePath = public_path('uploads/' . $fileName);
+
+        // // ディレクトリが存在しない場合は作成
+        // if (!file_exists(public_path('uploads'))) {
+        //     mkdir(public_path('uploads'), 0777, true);
+        // }
+
+        // // ファイルを保存
+        // file_put_contents($filePath, $data);
+
+        // 成功レスポンスを返す
+        $result = "成功しました";
+
+        return view('test_canvas_2', compact('result'));
+        
+    } catch (\Exception $e) {
+        // エラーをログに記録
+        \Log::error($e->getMessage());
+
+        // エラーレスポンスを返す
+        $result = "エラーが発生しました。";
+        return view('test_canvas_2', compact('result'));
+        
+    }
+    // $file = $request->file('image');
+    // // UPLOAD画像読み込み
+    // $manager = new ImageManager(new Driver());
+    // $image = $manager->read($file);
+
+    // // 横幅と高さを取得
+    // $width = $image->width();
+    // $height = $image->height(); 
+
+    // // 容量を取得
+    // $filesize = $file->getSize();
+
+    // // 結果をビューに渡す
+    // return view('test_canvas_2', compact('width', 'height', 'filesize'));
 }
 
 }

@@ -8,9 +8,10 @@
 
 <body>
 <h1>画像情報</h1>
-    <p>横幅: {{ $width }} px</p>
+<p>結果：{{ $result }}</p>
+    <!-- <p>横幅: {{ $width }} px</p>
     <p>高さ: {{ $height }} px</p>
-    <p>容量: {{ $filesize }} バイト</p>
+    <p>容量: {{ $filesize }} バイト</p> -->
 
 <!-- 画像UP画面へ戻る  -->
 <a href="{{ route('canvas_test') }}" class="btn btn-primary">画像選択画面へ戻る</a>
