@@ -95,6 +95,7 @@ function imageUpload() {
         canvas.toBlob(function(blob){
             // Blobデータをアップロード用に追加
             formData.append("selectImage", blob, "image.jpg"); //アップロード用blobデータを取得
+            formData.append("_token", "{{ csrf_token() }}"); //CSRFトークンを追加
             //formDataをPOSTで送信
         $.ajax({
             async: false,
