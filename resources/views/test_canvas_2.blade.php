@@ -13,7 +13,7 @@
     <p>容量: {{ $filesize }} バイト</p>
 
 <!-- 画像UP画面へ戻る  -->
-<a href="{{ route('canvas_test') }}" class="btn btn-primary">画像UP画面へ戻る</a>
+<a href="{{ route('canvas_test') }}" class="btn btn-primary">画像選択画面へ戻る</a>
 </body>
 
 </html>

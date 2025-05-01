@@ -22,37 +22,19 @@
 
 <!-- 原文のまま -->
 <form action="" method="post" id="imageForm">
-        <img src="" id="preview" />
-        <!-- canvas要素の生成 -->
-        <canvas id="canvas"></canvas>
-        <!-- 画像ファイルの入力→onChangeでcanvasDraw()を実行 -->
-        <input type="file" id="imageSelect" onChange="canvasDraw();" />
-        <!-- ボタンクリックでimageUpload()を実行 -->
-        <input type="button" onClick="imageUpload();" value="アップロード" />
-    </form>
+    @csrf
+    <img src="" id="preview" />
+    <!-- canvas要素の生成 -->
+    <canvas id="canvas"></canvas>
+    <!-- 画像ファイルの入力→onChangeでcanvasDraw()を実行 -->
+    <input type="file" id="imageSelect" onChange="canvasDraw();" />
+    <!-- ボタンクリックでimageUpload()を実行 -->
+    <input type="button" onClick="imageUpload();" value="アップロード" />
+</form>
 
-
-<!-- 
-    <form id="upload-form" action="{{ route('canvas_upload_test') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <img src="" id="preview" />
-            <canvas id="canvas" ></canvas>
-            <div class="mb-3">
-                <label for="image" class="form-label">画像を選択または撮影し「アップロード」ボタンをタップしてください。</label>
-                <input type="file" class="form-control" id="imageSelect"  onChange="canvasDraw();" name="image" accept="image/*" required >
-            </div>
-            <input type="button" onClick="" value="アップロード" />
-        </form> -->
 </body>
-
-
-
-
-
 </html>
 
-
-<!-- 原文のまま -->
 <script>
     // 画像が選択された時に呼び出される関数
 function canvasDraw() {
@@ -81,7 +63,7 @@ function canvasDraw() {
         image.onload = function() {
                                 
             //縦横比を維持した縮小サイズを取得
-            var w = 800;
+            var w = 600;
             var ratio = w / image.width;
             var h = image.height * ratio;
                         
@@ -97,35 +79,47 @@ function canvasDraw() {
     fr.readAsDataURL(file);
 }
 
+// アップロードボタンがクリックされたときに呼ばれる関数
+function imageUpload() {
+    // <form>の要素を変数formへ代入し操作する
+    var form = $("#imageForm").get(0);
+    // <form>の入力内容を変数formDataへ読み込む
+    var formData = new FormData(form);
 
-// <script>
-//     function canvasDraw() {
-
-//     // id=imageSelect の特性propatyのfileの1番目[0]を変数fileへ取得
-//     var file = $("#imageSelect").prop("files")[0];
- 
-//     var fr = new FileReader();
-//     fr.onload = function() {
-//             //選択した画像を一旦imgタグに表示
-//             $("#preview").attr('src', fr.result);
-                        
-//             //imgタグに表示した画像をimageオブジェクトとして取得
-//             var image = new Image();
-//             image.src = $("#preview").attr('src');
-                        
-//             //縦横比を維持した縮小サイズを取得
-//             var w = 600;
-//             var ratio = w / image.width;
-//             var h = image.height * ratio;
-                        
-//             //canvasに描画
-//             var canvas = $("#canvas");
-//             var ctx = canvas[0].getContext('2d');
-//             $("#canvas").attr("width", w);
-//             $("#canvas").attr("height", h);
-//             ctx.drawImage(image, 0, 0, w, h);      
-//         };
-
-//         fr.readAsDataURL(file);
+    //画像処理してformDataに追加
+    if ($("#canvas").length) {
+        //canvasに描画したデータを取得
+        var canvasImage = $("#canvas").get(0);
+                    
+        //オリジナル容量(画質落としてない場合の容量)を取得
+        canvas.Blob(function(blob){
+            // Blobデータをアップロード用に追加
+            formData.append("selectImage", blob, "image.jpg"); //アップロード用blobデータを取得
+            //formDataをPOSTで送信
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "canvas_upload_test.php",
+            data: formData,
+            dataType: "text",
+            cache: false,
+            contentType: false,
+            processData: false,
+            error: function (XMLHttpRequest) {
+                console.log(XMLHttpRequest);
+                alert("アップロードに失敗しました");
+            },
+            success: function (res) {
+                if(res !== "OK") {
+                    console.log(res);
+                    alert("アップロードに失敗しました");
+                } else {
+                    alert("アップロードに成功しました");
+                }
+            }
+        });
+    },"image/jpeg", 0.9); // 画質を90%に圧縮
+    } 
+}
 
 </script>
