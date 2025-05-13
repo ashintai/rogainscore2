@@ -32,8 +32,6 @@ get_point_before: 前に登録された取得写真のGetテーブル
 </header>
 
 <!-- ポイント番号とポイント名 -->
-<h6 style="color: red;">{{$set_point_no}}：{{$set_point_name}}の見本写真は以下です。</h6>
-<!-- 設定ポイントの写真 -->
 <h6 style="color: red;">{{$set_point->point_no}}：{{$set_point->point_name}}の見本写真は以下です。</h6>
 <!-- 設定ポイントの写真 -->
 @if ( $set_photo_filename )
