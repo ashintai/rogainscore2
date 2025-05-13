@@ -781,10 +781,10 @@ public function confirm_get_point_2(Request $request)
     if($get_point_before){
         // ダブっている場合 仮登録
         $randomString = Str::random(5);
-        $filename = "get_" . $randomString . "_" . $team_no  . 'jpg';
+        $filename = "get_" . $randomString . "_" . $team_no  . ".jpg";
     }else{
         // ダブっていない場合　本登録
-        $filename = "get_" . $set_point_no . "_" . $team_no  . 'jpg';
+        $filename = "get_" . $set_point_no . "_" . $team_no  . ".jpg";
     }
 
     // S3へアップロード
