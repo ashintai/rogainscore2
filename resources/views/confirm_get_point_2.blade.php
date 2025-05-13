@@ -74,7 +74,7 @@ get_point_before: 前に登録された取得写真のGetテーブル
 
         <!-- 戻るボタン -->
         <!-- 変更せずにget_point画面で戻る　flag=1 取得写真が仮登録された状態 -->
-        <form action="{{ route('get_point') }}" method="POST">
+        <form action="{{ route('get_point' , ['flag' => 1]) }}" method="POST">
             @csrf
             <button type="submit" class="btn btn-primary" >変更せず戻る</button>
         </form>
