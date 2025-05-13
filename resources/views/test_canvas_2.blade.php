@@ -14,6 +14,7 @@
     <p>容量: {{ $filesize }}: バイト</p>
 
     <img src="{{ $base64Image }}" alt="pload">
+    <p>設定ポイント番号: {{ $set_point_no }}</p>
 <!-- 画像UP画面へ戻る  -->
 <a href="{{ route('canvas_test') }}" class="btn btn-primary">画像選択画面へ戻る</a>
 </body>

@@ -647,7 +647,8 @@ $set_points = Set_point::all();
 $user = Auth::user();
 
 // 参加者メイン画面を呼び出す
-return view('get_point', compact('flag' , 'set_point_no' ,'set_points', 'get_point_id' , 'get_photo_filename' , 'user' ));
+// 本番用改良画面を呼び出す
+return view('get_point_2', compact('flag' , 'set_point_no' ,'set_points', 'get_point_id' , 'get_photo_filename' , 'user' ));
 }
 
 /**
@@ -1088,6 +1089,9 @@ public function canvas_upload_test(Request $request)
         // Base64データを取得
         $imageData = $request->input('image');
 
+        // 設定番号を取得
+        $selected_point_no = $request->input('set_point_no');
+
         // データURLからBase64部分を抽出
         list($type, $data) = explode(';', $imageData);
         list(, $data) = explode(',', $data);
@@ -1121,7 +1125,7 @@ public function canvas_upload_test(Request $request)
         // 成功レスポンスを返す
         $result = "成功しました";
 
-        return view('test_canvas_2', compact('result','width','height','filesize','base64Image'));
+        return view('test_canvas_2', compact('result','width','height','filesize','base64Image', 'selected_point_no'));
         
     } catch (\Exception $e) {
         // エラーをログに記録
