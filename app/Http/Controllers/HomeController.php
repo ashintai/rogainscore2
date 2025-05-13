@@ -820,10 +820,11 @@ public function confirm_get_point_2(Request $request)
     // 次の画面へ
     if($get_point_before){
         // ダブっている場合 変更するか確認画面へ
-        // 受け渡しパラメータをセット $get_point_id ,$get_point_before_id 
-        $get_point_id = $get_point->id;
-        $get_point_before_id = $get_point_before->id;
-        return view('confirm_get_point_2' , compact( 'get_point_id' , 'get_point_before_id' , 'set_point_no'  ));
+        // 受け渡しパラメータをセット $get_point_id ,$get_point_before_id
+        $user = Auth::user(); 
+        $set_point = Set_point::where('point_no' , $set_point_no)->first();
+        $set_photo_filename = Storage::disk('s3')->url("set_" . $set_point_no . ".JPG");
+        return view('confirm_get_point_2' , compact( 'user','get_point' , 'get_point_before' , 'set_point', 'set_photo_filename' ));
     }else{
         // ダブっていない場合　取得写真登録画面へ戻る
         // flag=1で戻して、戻ったところで「登録しました」のメッセージを表示
@@ -832,7 +833,77 @@ public function confirm_get_point_2(Request $request)
     }
 }
 
+// 取得写真がダブっていて、前のGetを変更する場合
+public function exchange_get(Request $request)
+{
+    // パラメータとして以下を受け取る
+    // set_point_no：設定ポイント番号
+    // get_point_id：新しく登録しようとしているGetテーブルのid
+    // get_point_before_id：前に登録したGetテーブルのid
+    // 前に登録したGetテーブルのレコードを仮登録に変更
+    // S3のファイル名を仮登録名に変更
+    // 新しく登録しようとしているGetテーブルのレコードを本登録に変更
+    // S3のファイル名を本登録名に変更
+    // ここにくる前は、新しく登録しようとしている取得写真は仮登録されている
 
+    $set_point_no = $request->input('set_point_no');
+    $get_point_id = $request->input('get_point_id');    
+    $get_point_before_id = $request->input('get_point_before_id');
+
+    $get_point_before = Get_point::find($get_point_before_id);
+    $get_point = Get_point::find($get_point_id);
+    
+    // 前の写真を仮登録へ
+    // S3のファイル名を書き換え
+    // ファイル名の取得
+    if($get_point_before){
+        $oldfilename = basename($get_point_before->photo_filename);
+        // 拡張子の取得
+        $ext = pathinfo($oldfilename, PATHINFO_EXTENSION);
+        // 新しいファイル名を生成
+        $randomString = Str::random(5);
+        $newfilename = "get_" . $randomString . "_" . $get_point_before->team_no . "." . $ext;
+        // S3のファイル名を変更
+        
+        Storage::disk('s3')->copy($oldfilename, $newfilename);
+        // 古いファイルを削除
+        Storage::disk('s3')->delete($oldfilename);
+        // 新しいURLを取得
+        $newurl = Storage::disk('s3')->url($newfilename);
+
+        // 前の取得写真のGetテーブルを書き換え
+        $get_point_before->point_no = $set_point_no ;
+        $get_point_before->photo_filename = $newurl;
+        $get_point_before->checked = 4; // 仮登録
+        $get_point_before->save(); // データベースに保存
+    }
+    
+    // 新しい写真を本登録へ
+    if($get_point){
+        // S3のファイル名を書き換え
+        // ファイル名の取得
+        $oldfilename = basename($get_point->photo_filename);
+        // 拡張子の取得
+        $ext = pathinfo($oldfilename, PATHINFO_EXTENSION);
+        // 新しいファイル名を生成
+        $newfilename = "get_" . $set_point_no . "_" . $get_point->team_no . "." . $ext;
+        // S3のファイル名を変更
+        Storage::disk('s3')->copy($oldfilename, $newfilename);
+        // 古いファイルを削除
+        Storage::disk('s3')->delete($oldfilename);
+        // 新しいURLを取得
+        $newurl = Storage::disk('s3')->url($newfilename);
+
+        // あたらしいGetテーブルを書き換え
+        $get_point->point_no = $set_point_no ;
+        $get_point->photo_filename = $newurl;
+        $get_point->checked = 0; // 本登録
+        $get_point->save(); // データベースに保存
+    }
+    // 取得写真登録画面へ戻る
+    // flag=1で戻って、戻り先で「変更されました」を表示
+    return route( 'get_point' , [ 'flag' => 1] );
+}
 
 public function confirm_get_point(Request $request)
 {
