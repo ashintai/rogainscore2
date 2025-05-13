@@ -744,6 +744,96 @@ public function bug()
     return view('bug');
 }
 
+
+// 本番用の取得写真登録
+// 取得写真画面から圧縮したJPEG画像と設定ポイント番号が送られてくる　
+// ログインユーザーからチーム番号を割り出し、Getテーブルを検索
+// ダブっていなければ、そのまま本登録
+// ダブっていれば、ユーザーに変更するか問い合わせる画面へつなぐ
+
+public function confirm_get_point_2(Request $request)
+{
+    // ログインユーザーとチーム番号の取得
+    $user = Auth::user();
+    $team_no = $user->team_no;
+
+    // 入力パラメータの取得
+    // 設定ポイント番号
+    $set_point_no = $request->input('set_point_no');
+    // Base64データを取得
+    $imageData = $request->input('image');
+    // データURLからBase64部分を抽出
+    list($type, $data) = explode(';', $imageData);
+    list(, $data) = explode(',', $data);
+    // Base64デコードしバイナリデータへ変換
+    $data = base64_decode($data);
+    
+    // 同じチーム番号、設定ポイントで本登録されたレコードがないか検索
+    $get_point_before = Get_point::where('team_no', $team_no)->where('point_no', $set_point_no)->first();
+    // ダブっていない場合は、
+    // 本登録する。ファイル名は get_setpoinnto_temano.jpg S3にアップロード
+    // Getテーブルにチェック0未確認で追加
+    // ダブっている場合は、
+    // 仮登録する。ファイル名は　get_ramdom_temano.jpg S3にアップロード
+    // Getテーブルにチェック4仮登録で追加   
+
+  // ファイル名を生成
+    if($get_point_before){
+        // ダブっている場合 仮登録
+        $randomString = Str::random(5);
+        $filename = "get_" . $randomString . "_" . $team_no  . 'jpg';
+    }else{
+        // ダブっていない場合　本登録
+        $filename = "get_" . $set_point_no . "_" . $team_no  . 'jpg';
+    }
+
+    // S3へアップロード
+    // 画像を一旦tempフォルダへ保存
+    $tempFilePath = sys_get_temp_dir() . '/' . $filename;
+    file_put_contents($tempFilePath, $data);
+    // S3にアップロード
+    $path = Storage::disk('s3')->putFileAs('/', new File($tempFilePath) ,$filename);
+    // S3のファイルパスを返す
+    $url = Storage::disk('s3')->url($path );
+    // 一時ファイルを削除
+    unlink($tempFilePath);
+
+    // Get_point のテーブルに追記
+    if($get_point_before){
+        // ダブっている場合 仮登録
+        $get_point = Get_point::create([
+            'team_no' => $team_no,
+            'point_no' => 0,
+            'checked' => 4,
+            'photo_filename' => $url,
+        ]);
+    }else{
+        // ダブっていない場合　本登録
+        $get_point = Get_point::create([
+            'team_no' => $team_no,
+            'point_no' => $set_point_no,
+            'checked' => 0,
+            'photo_filename' => $url,
+        ]); 
+    }
+    
+    // 次の画面へ
+    if($get_point_before){
+        // ダブっている場合 変更するか確認画面へ
+        // 受け渡しパラメータをセット $get_point_id ,$get_point_before_id 
+        $get_point_id = $get_point->id;
+        $get_point_before_id = $get_point_before->id;
+        return view('confirm_get_point_2' , compact( 'get_point_id' , 'get_point_before_id' , 'set_point_no'  ));
+    }else{
+        // ダブっていない場合　取得写真登録画面へ戻る
+        // flag=1で戻して、戻ったところで「登録しました」のメッセージを表示
+        $flag = 1;
+        return redirect()->route('get_point',['flag' => $flag] )->with('message', '登録しました');
+    }
+}
+
+
+
 public function confirm_get_point(Request $request)
 {
 // 取得写真と設定ポイントを結びつける
