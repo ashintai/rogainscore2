@@ -44,7 +44,6 @@ get_point_before: 前に登録された取得写真のGetテーブル
 <!-- 前の写真 -->
 <h6 style="color: red;">このポイントにはすでに下の写真が登録されています！</h6>
 @if ( $get_point_before )
-    <!-- <p>前の写真: {{ $before_photo_filename }}</p> -->
     <div class="d-flex justify-content-center">
         <img src="{{ $get_point_before->photo_filename }}" alt="前の写真" style="max-width: 80%;">
     </div>
