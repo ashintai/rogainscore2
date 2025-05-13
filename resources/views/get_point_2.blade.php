@@ -98,12 +98,18 @@ user: ログインしているユーザー -->
         <input type="hidden" id="canvasImage" name="image"> <!-- 隠しフィールド -->
         <img src="" id="preview" />
         <!-- 画像ファイルの入力→onChangeでcanvasDraw()を実行 -->
-        <input type="file" id="imageSelect" onChange="canvasDraw();" />
+        <div class=mb-3>
+            <input type="file" id="imageSelect" onChange="canvasDraw();" />
+        </div>
         <!-- ボタンクリックでimageUpload()を実行 -->
         <!-- canvas要素の生成 -->
-        <canvas id="canvas"></canvas>
-        <input type="button" onClick="prepareAndSubmitForm();" value="登録" />
-    </form>
+        <div class="d-flex justify-content-center mt-3">
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+            <input type="button" onClick="prepareAndSubmitForm();" value="登録" />
+        </div>
+        </form>
 </div>
 
 
