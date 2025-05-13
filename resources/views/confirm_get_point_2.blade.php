@@ -69,14 +69,14 @@ get_point_before: 前に登録された取得写真のGetテーブル
             <input type="hidden" name="set_point_no" value="{{ $set_point->point_no }}">
             <input type="hidden" name="get_point_id" value="{{ $get_point->id }}">
             <input type="hidden" name="get_point_before_id" value="{{ $get_point_before->id }}">
-            <button type="submit" class="btn btn-primary" >このまま変更</button>
+            <button type="submit" class="btn btn-primary" >変更する</button>
         </form>
 
         <!-- 戻るボタン -->
         <!-- 変更せずにget_point画面で戻る　flag=1 取得写真が仮登録された状態 -->
-        <form action="{{ route('get_point' , ['flag' => 1]) }}" method="POST">
+        <form action="{{ route('get_point' , ['flag' => 1]) }}" method="GET">
             @csrf
-            <button type="submit" class="btn btn-primary" >変更せず戻る</button>
+            <button type="submit" class="btn btn-primary" >変更しない</button>
         </form>
     </div>
 </div>
