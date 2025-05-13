@@ -1106,7 +1106,7 @@ public function canvas_upload_test(Request $request)
         $width = $imageInfo[0]; // 横幅
         $height = $imageInfo[1]; // 高さ
         $filesize = strlen($data); // データサイズ（バイト単位）
-
+       
         // Base64形式の画像データを生成
         $base64Image = 'data:' . $imageInfo['mime'] . ';base64,' . base64_encode($data);
         

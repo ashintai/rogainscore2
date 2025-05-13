@@ -241,7 +241,7 @@ function imageUpload() {
     } 
 }
 
-// アップロードガクリックされた時呼ばれる関数その２
+// 登録がクリックされた時呼ばれる関数その２
 // こちらの関数が使われる
 function prepareAndSubmitForm() {
     // <canvas>要素を取得
