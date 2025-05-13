@@ -58,8 +58,9 @@ Route::post('/upload_image', [HomeController::class, 'upload_image'])->name('upl
 // 参加者ー取得写真一覧へのリンク
 Route::get('/all_images', [HomeController::class, 'all_images'])->name('all_images');
 //参加者ーポイント番号変更のルート
-Route::post('/confirm_get_point' , [HomeController::class , 'confirm_get_point'])->name('confirm_get_point');
-// 参加者の取得写真がダブった場合の変更
+// 本番用改良ー取得写真登録
+Route::post('/confirm_get_point' , [HomeController::class , 'confirm_get_point_2'])->name('confirm_get_point');
+// 本番用改良ー参加者の取得写真がダブった場合の変更
 Route::post('/exchange_get' , [HomeController::class , 'exchange_get'])->name('exchange_get');
 // 参加者ーリクエストからセッションに変換して参加者メイン画面へもどす
 Route::post('/store_session_data' , [HomeController::class , 'storeSessionData'])->name('store_session_data');

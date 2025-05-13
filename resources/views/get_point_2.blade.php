@@ -91,7 +91,7 @@ user: ログインしているユーザー -->
 <!-- 取得写真の読み込み -->
 <div class="container mt-1">
     <h6 style="color: blue;">撮影した写真の登録</h6>
-    <form action="{{ route('canvas_upload_test') }}" method="post" id="imageForm"  enctype="multipart/form-data">
+    <form action="{{ route('confirm_get_point') }}" method="post" id="imageForm"  enctype="multipart/form-data">
         @csrf
         <!-- 設定ポイント番号を送る -->
         <input type="hidden" id="selected_point" name="set_point_no" >
