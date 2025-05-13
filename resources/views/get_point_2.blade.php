@@ -89,21 +89,22 @@ user: ログインしているユーザー -->
 <hr>
 
 <!-- 取得写真の読み込み -->
-
-<form action="{{ route('canvas_upload_test') }}" method="post" id="imageForm"  enctype="multipart/form-data">
-    @csrf
-    <!-- 設定ポイント番号を送る -->
-    <input type="hidden" id="selected_point" name="set_point_no" >
-    <input type="hidden" id="canvasImage" name="image"> <!-- 隠しフィールド -->
-    <img src="" id="preview" />
-    <!-- canvas要素の生成 -->
-    <canvas id="canvas"></canvas>
-    <!-- 画像ファイルの入力→onChangeでcanvasDraw()を実行 -->
-    <input type="file" id="imageSelect" onChange="canvasDraw();" />
-    <!-- ボタンクリックでimageUpload()を実行 -->
-    <input type="button" onClick="prepareAndSubmitForm();" value="登録" />
-</form>
-
+<div class="container mt-1">
+    <h6 style="color: blue;">撮影した写真の登録</h6>
+    <form action="{{ route('canvas_upload_test') }}" method="post" id="imageForm"  enctype="multipart/form-data">
+        @csrf
+        <!-- 設定ポイント番号を送る -->
+        <input type="hidden" id="selected_point" name="set_point_no" >
+        <input type="hidden" id="canvasImage" name="image"> <!-- 隠しフィールド -->
+        <img src="" id="preview" />
+        <!-- 画像ファイルの入力→onChangeでcanvasDraw()を実行 -->
+        <input type="file" id="imageSelect" onChange="canvasDraw();" />
+        <!-- ボタンクリックでimageUpload()を実行 -->
+        <!-- canvas要素の生成 -->
+        <canvas id="canvas"></canvas>
+        <input type="button" onClick="prepareAndSubmitForm();" value="登録" />
+    </form>
+</div>
 
 
 <footer style="text-align: right;">
