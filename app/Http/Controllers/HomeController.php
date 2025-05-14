@@ -895,7 +895,7 @@ public function exchange_get(Request $request)
     }
     // 取得写真登録画面へ戻る
     // flag=2で戻って、戻り先で「変更されました」を表示
-    return route( 'get_point' , [ 'flag' => 2] );
+    return redirect()->route( 'get_point' , [ 'flag' => 2] );
 }
 
 public function confirm_get_point(Request $request)
