@@ -131,9 +131,6 @@ user: ログインしているユーザー -->
         return data.url;
     }
 
-    // セッションで渡される設定ポイント番号を変数に取得
-    const pointno = @json($set_point_no);
-
     function updateImage() {
         // 現在選択されている設定ポイントを取得
         const select = document.getElementById('point');
