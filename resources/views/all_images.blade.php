@@ -94,15 +94,16 @@
                     <form action="{{ route('###') }}" method="POST" class="mt-1">
                         @csrf
                         @if ($get_point->checked == 4)
-                        <!-- ポイント番号不明の場合はset_point_no=0でわたす -->
+                            <!-- ポイント番号不明の場合はset_point_no=0でわたす -->
                             <input type="hidden" name="set_point_no" value="0" >
                         @else
-                        <!-- それ以外は現在の設定ポイント番号うを渡す -->
+                            <!-- それ以外は現在の設定ポイント番号うを渡す -->
                             <input type="hidden" name="set_point_no" value="{{ $get_point->point_no }}" >
                         @endif
                         <input type="hidden" name="get_point_id" value="{{ $get_point->id }}">
                         <button type="submit" class="btn btn-primary ms-3" >ポイント番号変更</button>
                     </form> 
+                    @endif
                 @endif
             </div>
             <!-- ダウンロードボタンの表示 -->
