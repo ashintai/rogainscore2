@@ -738,7 +738,7 @@ public function all_images_change_photo(Request $request)
     $get_point->point_no = $set_point_no ;
         $get_point->photo_filename = $url;
         $get_point->checked = 2; // OKに変更（手入力段階で確認とれているという前提）
-        $get_point_before->save(); // データベースに保存    
+        $get_point->save(); // データベースに保存    
 
     //  flag=3で写真一覧へ戻る
     return redirect()->route('all_images' , ['flag' => 3] );   
