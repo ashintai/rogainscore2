@@ -623,6 +623,10 @@ return view('all_images_exchange', compact('set_point_no' , 'set_points', 'user'
 // 写真一覧からポイント番号変更画面から戻ってGetテーブルの変更
 public function all_images_change_get(Request $request)
 {
+    // パラメータの受け取り
+    $set_point_no = request('set_point_no');
+    $get_point_id = request('get_point_id');
+    $user = Auth::user();
     
     // ダブっていないか確認
 

@@ -35,10 +35,6 @@
 </head>
 <body>
 
-<p> get_point_id {{ $get_point_id }}</p>
-<p> get_photo_filename {{ $get_photo_filename }}</p>
-<p> set_point_no {{ $set_point_no }}</p>
-
 <header>
     <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　ポイント番号変更</h5>
     <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
@@ -74,6 +70,7 @@
 <hr>
 
 <!-- 取得写真の表示  -->
+<h6 style="color: blue;">ポイント番号を変更する写真</h6>
 @if ( $get_photo_filename )
     <div class="d-flex justify-content-center mt-3">
         <img src="{{ $get_photo_filename }}" alt="取得ポイント写真" style="max-width: 80%;" >
@@ -87,7 +84,7 @@
         @csrf
         <!-- 設定ポイント番号を送る -->
         <input type="hidden" id="selected_point" name="set_point_no" >
-        <input type="hidden" id="canvasImage" name="get_point_id"  value ="{{ $get_point_id }}">
+        <input type="hidden" id="get_point" name="get_point_id"  value ="{{ $get_point_id }}">
         <div class="d-flex justify-content-center mt-3">
             <input type="button" class="btn btn-primary ms-3"  value="ポイント番号変更" />
         </div>
