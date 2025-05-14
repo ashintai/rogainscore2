@@ -46,7 +46,7 @@ user: ログインしているユーザー -->
 @if( $flag == 2 )
     <script>
         // JavaScriptでアラートを表示
-        alert('ポイント番号が変更されました');
+        alert('写真が変更されました');
     </script>
 @endif
 

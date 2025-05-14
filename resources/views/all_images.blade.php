@@ -23,11 +23,11 @@
     <div style="display: flex; justify-content: space-between; align-items: center;">
     <!-- 戻るボタン -->
     <!-- get_point画面で戻る　flag=0で初期状態画面へ -->
-        <form action="{{ route('store_session_data') }}" method="POST" style="margin-left: 20px;">
+        <form action="{{ route('get_point' ['flag' => 0, ] ) }}" method="GET" style="margin-left: 20px;">
             @csrf
-            <input type="hidden" name="flag" value="0">
-            <input type="hidden" name="set_point_no" value="0">
-            <input type="hidden" name="get_point_id" value="0">
+            <!-- <input type="hidden" name="flag" value="0"> -->
+            <!-- <input type="hidden" name="set_point_no" value="0"> -->
+            <!-- <input type="hidden" name="get_point_id" value="0"> -->
             <button type="submit" class="btn btn-primary" >戻る</button>
         </form>
     <!-- ログアウトボタン -->
@@ -56,25 +56,48 @@
             <p class="btn btn-danger rounded-circle ms-3">NG</p>
         @elseif($get_point->checked == 4)
             <p class="btn btn-dark rounded-circle ms-3">ポイント番号不明</p>
+        @elseif($get_point->checked == 5)
+            <h6 class="ms-3">ポイント番号: {{ $get_point->point_no }} -  {{ $get_point->setPoint->point_name}}</h6>
+            <p class="btn btn-success rounded-circle ms-3">写真なし</p>
         @endif
         </div>
+        <!-- 取得写真の表示 -->
         <div class="image-container d-flex justify-content-center">
-            <img src="{{ $get_point->photo_filename }}" alt="取得写真">
+        @if($get_point->checked != 5)
+            <h6 style="color: red;">このポイントに手入力されています。写真はありません</h6>
+        @else
+            @if($_get_point->photo_fileneme)
+                <img src="{{ $get_point->photo_filename }}" alt="取得写真">
+            @endif
+        @endif    
         </div>
         
         <!-- ポイント番号入れ替えボタン -->
         <!-- get_point_id と　set_point_no をget_point画面へ行く -->
         <!-- 確認中は番号変更ボタンは表示しない -->
+        <!-- 写真なし（手入力）は写真登録ボタンを表示 -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-left:5px">
             <div>
+                <!-- 確認中は飛べるボタンを表示しない -->
                 @if($get_point->checked != 1)
-                    <form action="{{ route('store_session_data') }}" method="POST" class="mt-1">
-                    @csrf
-                        <input type="hidden" name="flag" value="0" >
+                <!-- 写真なし（手入力）は写真登録ボタンを表示 -->
+                    @if($get_point->checked == 5)
+                    <form action="{{ route('###') }}" method="POST" class="mt-1">
+                        @csrf
+                        <input type="hidden" name="set_point_no" value="{{ $get_point->point_no }}" >
+                        <input type="hidden" name="get_point_id" value="{{ $get_point->id }}">  
+                        <button type="submit" class="btn btn-primary ms-3" >写真登録</button>
+                    </form> 
+
+                    <!-- それ以外はポイント番号変更ボタンを表示 -->
+                    @else
+                    <form action="{{ route('###') }}" method="POST" class="mt-1">
+                        @csrf
                         @if ($get_point->checked == 4)
-                        <!-- ポイント番号不明の場合はset_point_no=0で、store_session_dataで第一レコードへ変換 -->
+                        <!-- ポイント番号不明の場合はset_point_no=0でわたす -->
                             <input type="hidden" name="set_point_no" value="0" >
                         @else
+                        <!-- それ以外は現在の設定ポイント番号うを渡す -->
                             <input type="hidden" name="set_point_no" value="{{ $get_point->point_no }}" >
                         @endif
                         <input type="hidden" name="get_point_id" value="{{ $get_point->id }}">
@@ -82,6 +105,7 @@
                     </form> 
                 @endif
             </div>
+            <!-- ダウンロードボタンの表示 -->
             <div>  
                 <form action="{{ route('download_get_photo') }}" method="POST" class="mt-1" style="margin-right: 10px;">
                     @csrf
@@ -97,11 +121,11 @@
 
 <!-- 戻るボタン -->
 <!-- get_point画面で戻る　flag=0で初期状態画面へ -->
-    <form action="{{ route('store_session_data') }}" method="POST" class="d-flex justify-content-center">
+    <form action="{{ route('get_point' ['flag' => 0, ] ) }}" method="GET" class="d-flex justify-content-center">
         @csrf
-        <input type="hidden" name="flag" value="0">
-        <input type="hidden" name="set_point_no" value="0">
-        <input type="hidden" name="get_point_id" value="0">
+        <!-- <input type="hidden" name="flag" value="0"> -->
+        <!-- <input type="hidden" name="set_point_no" value="0"> -->
+        <!-- <input type="hidden" name="get_point_id" value="0"> -->
         <button type="submit" class="btn btn-primary" >戻る</button>
     </form>
     <hr>
