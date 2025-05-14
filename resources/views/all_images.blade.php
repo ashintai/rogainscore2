@@ -23,7 +23,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center;">
     <!-- 戻るボタン -->
     <!-- get_point画面で戻る　flag=0で初期状態画面へ -->
-        <form action="{{ route('get_point' ['flag' => 0, ] ) }}" method="GET" style="margin-left: 20px;">
+        <form action="{{ route('get_point' , ['flag' => 0 ] ) }}" method="GET" style="margin-left: 20px;">
             @csrf
             <!-- <input type="hidden" name="flag" value="0"> -->
             <!-- <input type="hidden" name="set_point_no" value="0"> -->
@@ -121,7 +121,7 @@
 
 <!-- 戻るボタン -->
 <!-- get_point画面で戻る　flag=0で初期状態画面へ -->
-    <form action="{{ route('get_point' ['flag' => 0, ] ) }}" method="GET" class="d-flex justify-content-center">
+    <form action="{{ route('get_point' , ['flag' => 0 ] ) }}" method="GET" class="d-flex justify-content-center">
         @csrf
         <!-- <input type="hidden" name="flag" value="0"> -->
         <!-- <input type="hidden" name="set_point_no" value="0"> -->
