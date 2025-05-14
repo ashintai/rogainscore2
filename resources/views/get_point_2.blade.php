@@ -208,6 +208,8 @@ function canvasDraw() {
 function imageUpload() {
     // <form>の要素を変数formへ代入し操作する
     var form = $("#imageForm").get(0);
+    var actionUrl = form.action;
+    // <form>のaction属性を取得
     // <form>の入力内容を変数formDataへ読み込む
     var formData = new FormData(form);
 
@@ -225,7 +227,7 @@ function imageUpload() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "{{ route('canvas_upload_test') }}",
+            url: actionUrl,
             data: formData,
             dataType: "text",
             cache: false,

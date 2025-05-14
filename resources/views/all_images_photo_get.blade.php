@@ -61,7 +61,7 @@
     <form action="{{ route('confirm_get_point') }}" method="post" id="imageForm"  enctype="multipart/form-data">
         @csrf
         <!-- 設定ポイント番号を送る -->
-        <input type="hidden" id="selected_point" name="set_point_no" >
+        <input type="hidden" id="selected_point" name="set_point_no" value="{{ $set_point_no }}">
         <input type="hidden" id="canvasImage" name="image"> <!-- 隠しフィールド -->
         <img src="" id="preview" />
         <!-- 画像ファイルの入力→onChangeでcanvasDraw()を実行 -->
