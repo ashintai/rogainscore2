@@ -612,7 +612,7 @@ $set_points = Set_point::all();
 // 現在のポイント番号を渡す
 // 取得写真のurlを渡す
 
-$get_point = Get_point::find($get_point_id)->first();
+$get_point = Get_point::find($get_point_id);
 $get_photo_filename = $get_point ? $get_point->photo_filename : null ;
 
 // ポイント番号変更画面を呼び出す
