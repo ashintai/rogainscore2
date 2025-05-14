@@ -95,7 +95,7 @@
         @if($get_point->checked == 5)
             <h6 style="color: red;">このポイントは手入力されています。写真はありません</h6>
         @else
-            @if($_get_point->photo_fileneme)
+            @if( $get_point->photo_fileneme )
                 <img src="{{ $get_point->photo_filename }}" alt="取得写真">
             @endif
         @endif    
