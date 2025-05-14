@@ -69,6 +69,13 @@
     </script>
 @endif
 
+@if( $flag == 5 )
+    <script>
+        // JavaScriptでアラートを表示
+        alert('トラブルが発生し変更できませんでした。スタッフまで');
+    </script>
+@endif
+
     @foreach($get_points as $get_point)
         <div style="display: flex; align-items: center;">
         @if($get_point->checked == 0)

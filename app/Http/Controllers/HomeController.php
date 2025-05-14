@@ -627,15 +627,42 @@ public function all_images_change_get(Request $request)
     $set_point_no = request('set_point_no');
     $get_point_id = request('get_point_id');
     $user = Auth::user();
-    
+    $team_no = $user->team_no;
+
     // ダブっていないか確認
+    $get_point_before = Get_point::where('team_no', $team_no)->where('point_no', $set_point_no)->first();
 
     // ダブっている場合はflag=2 で一覧へ戻る
-
+    if( $get_point_before ){
+        return redirect()->route('all_images' , ['flag' => 2] );
+    }
     // ダブっていない場合はGetテーブルを書き換える
+    $get_point = Get_point::find($get_point_id);
+    if ($get_point) {
+        // S3のファイル名を変更
+        $oldfilename = basename($get_point->photo_filename);
+        // 拡張子の取得
+        $ext = pathinfo($oldfilename, PATHINFO_EXTENSION);
+        // 新しいファイル名を生成
+        $newfilename = "get_" . $set_point_no . "_" . $get_point->team_no . "." . $ext;
+        // S3のファイル名を変更
+        Storage::disk('s3')->copy($oldfilename, $newfilename);
+        // 古いファイルを削除
+        Storage::disk('s3')->delete($oldfilename);
+        // 新しいURLを取得
+        $newurl = Storage::disk('s3')->url($newfilename);
+
+        // 前の取得写真のGetテーブルを書き換え
+        $get_point->point_no = $set_point_no ;
+        $get_point->photo_filename = $newurl;
+        $get_point->checked = 0; // 確認待ちに変更
+        $get_point->save(); // データベースに保存
 
     // flg=1で写真一覧へ戻る
     return redirect()->route('all_images' , ['flag' => 1] );
+    }
+    // getテー物に対象¥対象レコードがなかった
+    return redirect()->route('all_images' , ['flag' => 5] );
 }
 
 
