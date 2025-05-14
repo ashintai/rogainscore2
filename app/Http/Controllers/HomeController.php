@@ -585,13 +585,31 @@ public function all_images()
     // 現在ログインしているuserのチーム番号を取得
     $user = Auth::user();
     $team_no = $user->team_no;
-
+    
     // get_pointテーブルから特定のteam_noのレコードをすべて取得
     $get_points = Get_point::where('team_no', $team_no)->with('setPoint')->get();
 
     // 一覧画面へ引き渡し
-    return view('all_images', compact('get_points' , 'user'));
+    return view('all_images', compact('flag' , 'get_points' , 'user'));
 
+}
+
+// 写真一覧からポイント番号の変更
+public function all_images_exchange(Request $request)
+{
+   
+    // とりあえず返す
+ return redirect()->route('all_images' , ['flag' => 1] );
+
+
+
+}
+
+// 写真一覧から写真の登録
+public function all_images_photo(Request $request)
+{
+    // とりあえず返す
+    return redirect()->route('all_images' , ['flag' => 3] );
 }
 
 

@@ -64,7 +64,7 @@ user: ログインしているユーザー -->
     <!-- 各ボタンを横並びに表示 -->
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <!-- すべての取得写真の一覧の表示・編集画面 -->
-        <a href="{{ route('all_images') }}" class="btn btn-primary" style="margin-left: 10px;">写真一覧&編集</a>
+        <a href="{{ route('all_images' , ['flag' => 0 ] ) }}" class="btn btn-primary" style="margin-left: 10px;">写真一覧&編集</a>
         <!-- 成績速報画面へのボタン -->
         <a href="{{ route('result') }}" class="btn btn-primary">成績速報</a>
         <br>

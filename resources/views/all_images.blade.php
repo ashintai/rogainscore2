@@ -40,6 +40,35 @@
 </header>
 
 <body>
+<!-- 前画面からのメッセージ表示 -->
+@if( $flag == 1 )
+    <script>
+        // JavaScriptでアラートを表示
+        alert('ポイント番号が変更されました');
+    </script>
+@endif
+
+@if( $flag == 2 )
+    <script>
+        // JavaScriptでアラートを表示
+        alert('このポイントにはすでに登録されています');
+    </script>
+@endif
+
+@if( $flag == 3 )
+    <script>
+        // JavaScriptでアラートを表示
+        alert('写真を登録しました');
+    </script>
+@endif
+
+@if( $flag == 4 )
+    <script>
+        // JavaScriptでアラートを表示
+        alert('現在スタッフが編集中です。すこしたってから再度操作してください');
+    </script>
+@endif
+
     @foreach($get_points as $get_point)
         <div style="display: flex; align-items: center;">
         @if($get_point->checked == 0)
@@ -82,7 +111,7 @@
                 @if($get_point->checked != 1)
                 <!-- 写真なし（手入力）は写真登録ボタンを表示 -->
                     @if($get_point->checked == 5)
-                    <form action="{{ route('###') }}" method="POST" class="mt-1">
+                    <form action="{{ route('all_images_exchange') }}" method="POST" class="mt-1">
                         @csrf
                         <input type="hidden" name="set_point_no" value="{{ $get_point->point_no }}" >
                         <input type="hidden" name="get_point_id" value="{{ $get_point->id }}">  
@@ -91,7 +120,7 @@
 
                     <!-- それ以外はポイント番号変更ボタンを表示 -->
                     @else
-                    <form action="{{ route('###') }}" method="POST" class="mt-1">
+                    <form action="{{ route('all_images_photo') }}" method="POST" class="mt-1">
                         @csrf
                         @if ($get_point->checked == 4)
                             <!-- ポイント番号不明の場合はset_point_no=0でわたす -->
