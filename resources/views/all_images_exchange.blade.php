@@ -86,7 +86,7 @@
         <input type="hidden" id="selected_point" name="set_point_no" >
         <input type="hidden" id="get_point" name="get_point_id"  value ="{{ $get_point_id }}">
         <div class="d-flex justify-content-center mt-3">
-            <input type="button" class="btn btn-primary ms-3"  value="ポイント番号変更" />
+            <input type="submit" class="btn btn-primary ms-3"  value="ポイント番号変更" />
         </div>
 </form>
 
