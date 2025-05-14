@@ -58,10 +58,11 @@
 <!-- 取得写真の読み込み -->
 <div class="container mt-1">
     <h6 style="color: blue;">撮影した写真の登録</h6>
-    <form action="{{ route('confirm_get_point') }}" method="post" id="imageForm"  enctype="multipart/form-data">
+    <form action="{{ route('all_images_change_photo') }}" method="post" id="imageForm"  enctype="multipart/form-data">
         @csrf
         <!-- 設定ポイント番号を送る -->
         <input type="hidden" id="selected_point" name="set_point_no" value="{{ $set_point_no }}">
+        <input type="hidden" id="get_point_id" name="get_point_id" value="{{ $get_point_id }}">
         <input type="hidden" id="canvasImage" name="image"> <!-- 隠しフィールド -->
         <img src="" id="preview" />
         <!-- 画像ファイルの入力→onChangeでcanvasDraw()を実行 -->
@@ -135,6 +136,8 @@ function canvasDraw() {
 function imageUpload() {
     // <form>の要素を変数formへ代入し操作する
     var form = $("#imageForm").get(0);
+    var actionUrl = form.action;
+    // <form>のaction属性を取得
     // <form>の入力内容を変数formDataへ読み込む
     var formData = new FormData(form);
 
@@ -152,7 +155,7 @@ function imageUpload() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "{{ route('canvas_upload_test') }}",
+            url: actionUrl ,
             data: formData,
             dataType: "text",
             cache: false,

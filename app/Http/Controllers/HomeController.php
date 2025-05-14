@@ -693,6 +693,57 @@ public function all_images_photo(Request $request)
 
 }
 
+// 写真一覧から写真の登録画面から戻って写真の登録、Getテーブルの変更
+public function all_images_change_photo(Request $request)
+{
+// ログインユーザーとチーム番号の取得
+    $user = Auth::user();
+    $team_no = $user->team_no;
+    $role = $user->role;
+    
+    if($role == 3){
+        // チーム番号が3の場合は、スタッフ編集中のためflag=4で戻す
+        return redirect()->route('all_images',['flag' => 4] );
+    }
+
+    // 入力パラメータの取得
+    // 設定ポイント番号
+    $set_point_no = $request->input('set_point_no');
+    // Getテーブルのid
+    $get_point_id = $request->input('get_point_id');
+    // Base64データを取得
+    $imageData = $request->input('image');
+    // データURLからBase64部分を抽出
+    list($type, $data) = explode(';', $imageData);
+    list(, $data) = explode(',', $data);
+    // Base64デコードしバイナリデータへ変換
+    $data = base64_decode($data);
+    
+    // ファイル名を生成
+    $filename = "get_" . $set_point_no . "_" . $team_no  . ".jpg";
+    
+    // S3へアップロード
+    // 画像を一旦tempフォルダへ保存
+    $tempFilePath = sys_get_temp_dir() . '/' . $filename;
+    file_put_contents($tempFilePath, $data);
+    // S3にアップロード
+    $path = Storage::disk('s3')->putFileAs('/', new File($tempFilePath) ,$filename);
+    // S3のファイルパスを返す
+    $url = Storage::disk('s3')->url($path );
+    // 一時ファイルを削除
+    unlink($tempFilePath);
+
+    // Get_point のテーブルの修正
+    $get_point = Get_point::find($get_point_id);
+    $get_point->point_no = $set_point_no ;
+        $get_point->photo_filename = $url;
+        $get_point->checked = 2; // OKに変更（手入力段階で確認とれているという前提）
+        $get_point_before->save(); // データベースに保存    
+
+    //  flag=3で写真一覧へ戻る
+    return redirect()->route('all_images' , ['flag' => 3] );   
+
+}
 
 
 

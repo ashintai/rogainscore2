@@ -68,7 +68,8 @@ Route::post('/all_images_exchange', [HomeController::class, 'all_images_exchange
 Route::post('/all_images_change_get', [HomeController::class, 'all_images_change_get'])->name('all_images_change_get');
 // 写真一覧から写真登録画面へ
 Route::post('/all_images_photo', [HomeController::class, 'all_images_photo'])->name('all_images_photo');
-
+// 写真一覧から写真登録画面より戻ってきて写真の登録Getテーブルの変更
+Route::post('/all_images_change_photo', [HomeController::class, 'all_images_change_photo'])->name('all_images_change_photo');
 // 参加者ーリクエストからセッションに変換して参加者メイン画面へもどす
 Route::post('/store_session_data' , [HomeController::class , 'storeSessionData'])->name('store_session_data');
 // 参加者＆スタッフー成績速報　
