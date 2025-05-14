@@ -92,8 +92,8 @@
         </div>
         <!-- 取得写真の表示 -->
         <div class="image-container d-flex justify-content-center">
-        @if($get_point->checked != 5)
-            <h6 style="color: red;">このポイントに手入力されています。写真はありません</h6>
+        @if($get_point->checked == 5)
+            <h6 style="color: red;">このポイントは手入力されています。写真はありません</h6>
         @else
             @if($_get_point->photo_fileneme)
                 <img src="{{ $get_point->photo_filename }}" alt="取得写真">
@@ -111,7 +111,7 @@
                 @if($get_point->checked != 1)
                 <!-- 写真なし（手入力）は写真登録ボタンを表示 -->
                     @if($get_point->checked == 5)
-                    <form action="{{ route('all_images_exchange') }}" method="POST" class="mt-1">
+                    <form action="{{ route('all_images_photo') }}" method="POST" class="mt-1">
                         @csrf
                         <input type="hidden" name="set_point_no" value="{{ $get_point->point_no }}" >
                         <input type="hidden" name="get_point_id" value="{{ $get_point->id }}">  
@@ -120,7 +120,7 @@
 
                     <!-- それ以外はポイント番号変更ボタンを表示 -->
                     @else
-                    <form action="{{ route('all_images_photo') }}" method="POST" class="mt-1">
+                    <form action="{{ route('all_images_exchange') }}" method="POST" class="mt-1">
                         @csrf
                         @if ($get_point->checked == 4)
                             <!-- ポイント番号不明の場合はset_point_no=0でわたす -->
