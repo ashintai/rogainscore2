@@ -689,7 +689,7 @@ public function all_images_photo(Request $request)
 
     
     // 手入力対応の写真登録画面を呼び出す
-    return view( 'all_images_photo_get' , compact('set_point_no' ,'set_point_name' , 'set_point_name' , 'user' , 'get_point_id'  ));
+    return view( 'all_images_photo_get' , compact('set_point_no' ,'set_point_name' , 'set_point_name' , 'user' , 'get_point_id' ,'url' ));
 
 }
 
