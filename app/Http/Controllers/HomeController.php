@@ -580,7 +580,7 @@ public function team_update(Request $request){
 }
 
 // 取得写真一覧画面の作成
-public function all_images()
+public function all_images($flag)
 {
     // 現在ログインしているuserのチーム番号を取得
     $user = Auth::user();
