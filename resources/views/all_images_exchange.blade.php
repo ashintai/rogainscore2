@@ -89,7 +89,7 @@
         <input type="hidden" id="selected_point" name="set_point_no" >
         <input type="hidden" id="canvasImage" name="get_point_id"  value ="{{ $get_point_id }}">
         <div class="d-flex justify-content-center mt-3">
-            <input type="button"  value="ポイント番号変更" />
+            <input type="button" class="btn btn-primary ms-3"  value="ポイント番号変更" />
         </div>
 </form>
 
@@ -125,12 +125,22 @@
             });
     }
 
-    // ページロード時にSetポイント番号をはじめにする
-        document.addEventListener('DOMContentLoaded', function() {
+    // ページロード時にSetポイント番号を現在の設定にする
+    document.addEventListener('DOMContentLoaded', function() {
         const select = document.getElementById('point');
-        select.selectedIndex = 0;
+        const initialValue = "{{ $set_point_no }}"; // サーバーから渡された値
+
+        // optionsをループして一致するvalueを選択
+        for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value == initialValue) {
+                select.selectedIndex = i;
+                break;
+            }
+        }
         updateImage();
     });
+
+    
 </script>
 
 
