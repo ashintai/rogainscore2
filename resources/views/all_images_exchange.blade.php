@@ -68,9 +68,18 @@
     </select>
     <!-- 選択されたポイント写真の表示 -->
     <div class="d-flex justify-content-center mt-3">
-        <img id="point-image" src="{{ $get_photo_filename }}" alt="ポイント画像" style="max-width: 80%;">
+        <img id="point-image" src="" alt="ポイント画像" style="max-width: 80%;">
     </div>
 </div>
+<hr>
+
+<!-- 取得写真の表示  -->
+@if ( $get_photo_filename )
+    <div class="d-flex justify-content-center mt-3">
+        <img src="{{ $get_photo_filename }}" alt="取得ポイント写真" style="max-width: 80%;" >
+    </div>
+@endif
+
 <hr>
 
 <!-- 変更ボタン -->
