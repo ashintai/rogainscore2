@@ -748,7 +748,7 @@ public function confirm_get_point_2(Request $request)
     
     if($role == 3){
         // チーム番号が3の場合は、スタッフ編集中のためflag=3で戻す
-        return route('get_point',['flag' => 3] );
+        return redirect()->route('get_point',['flag' => 3] );
     }
 
     // 入力パラメータの取得
