@@ -594,16 +594,46 @@ public function all_images($flag)
 
 }
 
-// 写真一覧からポイント番号の変更
+// 写真一覧からポイント番号画面の呼び出し
 public function all_images_exchange(Request $request)
 {
-   
-    // とりあえず返す
- return redirect()->route('all_images' , ['flag' => 1] );
+// パラメータを受け取る
+$set_point_no = request('set_point_no');
+$get_point_id = request('get_point_id');
 
+$user = Auth::user();
+// スタッフ編集中の場合はflag=4 で戻る
+if ( $user->role == 3){
+    return redirect()->route('all_images' , ['flag' => 4] );
+}
 
+// 設定ポイントのリストを渡す準備
+$set_points = Set_point::all();
+// 現在のポイント番号を渡す
+// 取得写真のurlを渡す
+
+$get_point = Get_point::find($get_point_id)->first();
+$get_photo_filename = $get_point ? $get_point->photo_filename : null ;
+
+// ポイント番号変更画面を呼び出す
+return view('all_images_exchange', compact('set_point_no' , 'set_points', 'user' , 'get_point_id' , 'get_photo_filename' ));
 
 }
+
+// 写真一覧からポイント番号変更画面から戻ってGetテーブルの変更
+public function all_images_change_get(Request $request)
+{
+    
+    // ダブっていないか確認
+
+    // ダブっている場合はflag=2 で一覧へ戻る
+
+    // ダブっていない場合はGetテーブルを書き換える
+
+    // flg=1で写真一覧へ戻る
+    return redirect()->route('all_images' , ['flag' => 1] );
+}
+
 
 // 写真一覧から写真の登録
 public function all_images_photo(Request $request)

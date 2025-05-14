@@ -64,6 +64,8 @@ Route::post('/confirm_get_point' , [HomeController::class , 'confirm_get_point_2
 Route::post('/exchange_get' , [HomeController::class , 'exchange_get'])->name('exchange_get');
 // 写真一覧からポイント番号変更画面へ
 Route::post('/all_images_exchange', [HomeController::class, 'all_images_exchange'])->name('all_images_exchange');
+// 写真一覧からポイント変更画面より戻ってきてGetテーブルの変更
+Route::post('/all_images_change_get', [HomeController::class, 'all_images_change_get'])->name('all_images_change_get');
 // 写真一覧から写真登録画面へ
 Route::post('/all_images_photo', [HomeController::class, 'all_images_photo'])->name('all_images_photo');
 
