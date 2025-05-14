@@ -77,11 +77,6 @@ user: ログインしているユーザー -->
     <hr>
 </header>
 
-<!-- 入力確認 -->
-<!-- <p>フラグ: {{ $flag }}</p>
-<p>設定ポイント番号: {{ $set_point_no }}</p>
-<p>取得ポイントid: {{ $get_point_id }}</p>
-<p>写真ファイル名:{{ $get_photo_filename}} </p> -->
 <div class="container mt-1">
     <h6 style="color: blue;">登録するポイントをリストから選択してください</h6>
     <!-- 設定ポイントの選択リスト生成 -->
