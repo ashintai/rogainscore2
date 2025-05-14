@@ -35,6 +35,9 @@
 </head>
 <body>
 
+<p> get_point_id {{ $get_point_id }}</p>
+<p> get_photo_filename {{ $get_photo_filename }}</p>
+<p> set_point_no {{ $set_point_no }}</p>
 
 <header>
     <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　ポイント番号変更</h5>
