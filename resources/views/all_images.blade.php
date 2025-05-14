@@ -136,6 +136,8 @@
                 @endif
             </div>
             <!-- ダウンロードボタンの表示 -->
+            <!-- 写真なしは表示しない -->
+            @if($get_point->checked != 5)
             <div>  
                 <form action="{{ route('download_get_photo') }}" method="POST" class="mt-1" style="margin-right: 10px;">
                     @csrf
@@ -144,6 +146,7 @@
                 </form>
                     <!-- <a href="{{ route('download_get_photo', ['filename' => urlencode( $get_point->photo_filename ) ]) }}" class="btn btn-primary">この写真をダウンロード</a> -->
             </div>
+            @endif
         </div>
         <hr>
 
