@@ -3,11 +3,7 @@
 
 <!-- View:get_point> -->
 <!-- このViewはController:get_pointから以下のパラメータを受け取る
-flag:0 前に写真の登録なし　1:前に写真登録ありで入る　$get_point_id,$get_photo_filenameがあることが前提
-set_point_no:表示すべき設定ポイント番号　何もなければ０
 set_points:設定ポイント一覧データ
-get_point_id:ロックオンされているget_point_id なにもなければ　０
-get_photo_filename:ロックオンされている取得写真ファイル名　何もなければnull
 user: ログインしているユーザー -->
 
 <!DOCTYPE html>
@@ -39,13 +35,28 @@ user: ログインしているユーザー -->
 </head>
 <body>
 
-<!-- 取得写真が登録された場合の確認メッセージ -->
+<!-- 前画面からのメッセージ表示 -->
 @if( $flag == 1 )
     <script>
         // JavaScriptでアラートを表示
         alert('写真が登録されました');
     </script>
 @endif
+
+@if( $flag == 2 )
+    <script>
+        // JavaScriptでアラートを表示
+        alert('ポイント番号が変更されました');
+    </script>
+@endif
+
+@if( $flag == 3 )
+    <script>
+        // JavaScriptでアラートを表示
+        alert('現在スタッフが編集中です。すこしたってから再度操作してください');
+    </script>
+@endif
+
 
 <header>
     <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　ポイント通過登録</h5>
@@ -147,13 +158,10 @@ user: ログインしているユーザー -->
             });
     }
 
-    // ページロード時に最初の画像を表示
-    document.addEventListener('DOMContentLoaded', function() {
+    // ページロード時にSetポイント番号をはじめにする
+        document.addEventListener('DOMContentLoaded', function() {
         const select = document.getElementById('point');
-        if (pointno){
-            // セッションに設定ポイントが存在する場合、その値
-            select.value = pointno;
-        }
+        select.selectedIndex = 0;
         updateImage();
     });
 </script>

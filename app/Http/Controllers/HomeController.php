@@ -72,10 +72,10 @@ class HomeController extends Controller
         // 役割が０（それ以外）、参加者メイン画面のコントローラーへ
         // flag=0で渡して、ログイン直後であることを伝える
         // set_point_no は　最初レコードの番号を渡す
-        $set_point = Set_point::first();
-        session(['set_point_no' => $set_point->point_no]);
+        // $set_point = Set_point::first();
+        // session(['set_point_no' => $set_point->point_no]);
         // $get_point_id はログイン直後はなし
-        session(['get_point_id' => 0]);
+        // session(['get_point_id' => 0]);
         // ログイン直後はflag=0 前で写真登録なしで入る
         return redirect()->route('get_point',['flag' => 0]);
     }
@@ -608,37 +608,24 @@ public function all_images()
 public function get_point($flag ,Request $request)
 {
 
-// ルートパラメータに$flagをいれる
-// ０.ログイン直後
-// １．取得写真のアップロード後
-// ２．写真一覧から変更要請
-// ３．新規登録して戻る
-// ４．だぶりあったが変更せず戻る
-// ５．だぶって変更して戻る
-
-// セッションに以下２つを入れる
-// set_point_no ここに入ったときに最初に表示する設定ポイント番号　何もなければ１
-// get_point_id 現在アップロード（ロックオンされている）get_point の　id 何もなければ　０
+// ルートパラメータに$flagをいれる メッセージ表示の制御
+// ０.メッセージなし（ログイン直後、戻る、ほか）
+// １．「登録しました」
+// ２．「変更しました」
+// ３．「現在、スタッフが編集中」る
 
 // これを受け、get_point コントローラは以下の動作を行う
 // set_pointの選択肢を渡す準備
-// アップされているget_point の写真フィル名（AWS）
-// 次のパラメータをcompactでView:get_point へ渡す
-// flag set_point_no set_points[] get_point_id get_photo_filename user 
-
-// 前提として、アップロードされた写真はすぐにget_pointテーブルに仮名で登録されている
-// ユーザーが指定した設定ポイント番号がすでに登録済みの場合や
-// 写真一覧から変更要請があった場合も、対象のget_point_id が渡される
-// ログイン直後はget_point_id は０。その場合は　flag=0
-
+// 次のパラメータをcompactでView:get_point_2 へ渡す
+// flag set_points[] user 
 
 // セッションからデータを取り出し
-$set_point_no = session('set_point_no');
-$get_point_id = session('get_point_id');
+// $set_point_no = session('set_point_no');
+// $get_point_id = session('get_point_id');
 
 // get_photo_filenameをテーブルから引き出す
-$get_point = Get_point::find($get_point_id);
-$get_photo_filename = $get_point ? $get_point->photo_filename : null ;
+// $get_point = Get_point::find($get_point_id);
+// $get_photo_filename = $get_point ? $get_point->photo_filename : null ;
 
 // 設定ポイントのリストを渡す準備
 $set_points = Set_point::all();
@@ -648,7 +635,7 @@ $user = Auth::user();
 
 // 参加者メイン画面を呼び出す
 // 本番用改良画面を呼び出す
-return view('get_point_2', compact('flag' , 'set_point_no' ,'set_points', 'get_point_id' , 'get_photo_filename' , 'user' ));
+return view('get_point_2', compact('flag' , 'set_points', 'user' ));
 }
 
 /**
@@ -747,7 +734,8 @@ public function bug()
 
 // 本番用の取得写真登録
 // 取得写真画面から圧縮したJPEG画像と設定ポイント番号が送られてくる　
-// ログインユーザーからチーム番号を割り出し、Getテーブルを検索
+// ログインユーザーからチーム番号を割り出し、Lockされていれば何もせず戻る
+// Getテーブルを検索
 // ダブっていなければ、そのまま本登録
 // ダブっていれば、ユーザーに変更するか問い合わせる画面へつなぐ
 
@@ -756,6 +744,11 @@ public function confirm_get_point_2(Request $request)
     // ログインユーザーとチーム番号の取得
     $user = Auth::user();
     $team_no = $user->team_no;
+    
+    if($team_no == 3){
+        // チーム番号が3の場合は、スタッフ編集中のためflag=3で戻す
+        return route('get_point',['flag' => 3] );
+    }
 
     // 入力パラメータの取得
     // 設定ポイント番号
@@ -901,8 +894,8 @@ public function exchange_get(Request $request)
         $get_point->save(); // データベースに保存
     }
     // 取得写真登録画面へ戻る
-    // flag=1で戻って、戻り先で「変更されました」を表示
-    return route( 'get_point' , [ 'flag' => 1] );
+    // flag=2で戻って、戻り先で「変更されました」を表示
+    return route( 'get_point' , [ 'flag' => 2] );
 }
 
 public function confirm_get_point(Request $request)
