@@ -661,16 +661,36 @@ public function all_images_change_get(Request $request)
     // flg=1で写真一覧へ戻る
     return redirect()->route('all_images' , ['flag' => 1] );
     }
-    // getテー物に対象¥対象レコードがなかった
+    // getテー物に対象¥対象レコードがなかった-エラー
     return redirect()->route('all_images' , ['flag' => 5] );
 }
 
 
-// 写真一覧から写真の登録
+// 写真一覧から写真の登録画面の呼び出し-手入力対応
 public function all_images_photo(Request $request)
 {
-    // とりあえず返す
-    return redirect()->route('all_images' , ['flag' => 3] );
+    $user = Auth::user();
+    // スタッフ編集中の場合はflag=4 で戻る
+    if ( $user->role == 3){
+        return redirect()->route('all_images' , ['flag' => 4] );
+    }
+    
+    // パラメータの受け取り
+    $set_point_no = request('set_point_no');
+    $get_point_id = request('get_point_id');
+
+    // 受け渡し準備
+    // 設定場所名
+    $set_point = Set_point::where('point_no', $set_point_no)->first();
+    $set_point_name = $set_point->point_name;
+    // Setファイル名
+    $key = "set_" . $set_point_no . ".JPG";
+    $url = Storage::disk('s3')->url($key);
+
+    
+    // 手入力対応の写真登録画面を呼び出す
+    return view( 'all_images_photo_get' , compact('set_point_no' ,'set_point_name' , 'set_point_name' , 'user' , 'get_point_id'  ));
+
 }
 
 
