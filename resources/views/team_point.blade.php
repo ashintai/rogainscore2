@@ -27,13 +27,12 @@
     <br>
     <hr>
 </header>
-<p>チーム番号：{{ $user->team_no }}</p>
+<p>チーム番号：{{ $user->team_no }}:{{ $user->name }}</p>
 @foreach ($get_points as $point)
-<p>
-<p>通過ポイント番号：{{ $point->point_no }}</p>
 @if ($point->setPoint && $point->setPoint->point_name)
-<p>ポイント名：{{ $point->setPoint->point_name }}</p>
+    <p>{{ $point->point_no }}:{{ $point->setPoint->point_name }}</p>
 @endif
+<hr>
 @endforeach
 
     </body>
