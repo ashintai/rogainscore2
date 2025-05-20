@@ -30,10 +30,9 @@
 <p>チーム番号：{{ $user->team_no }}</p>
 @foreach ($get_points as $point)
 
-<p>通過ポイント番号：{{ $point->set_point_no }}</p>
-<p>ポイント名：{{ $point->set_point_name }}</p>
+<p>通過ポイント番号：{{ $point->point_no }}</p>
+<p>ポイント名：{{ $point->point_name }}</p>
 @endforeach
 
     </body>
     </html>
-    
