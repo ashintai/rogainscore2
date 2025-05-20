@@ -9,7 +9,6 @@
     
     <style>
         .user-info {
-            display: flex;
             justify-content: space-between;
             align-items: center;
         }
