@@ -83,7 +83,7 @@
 <!-- 手入力 -->
 <!-- ポイント番号を手入力する -->
 
-<form action="{{ route('team_point_input' , ['id => $point->team_no ] ) }}" method="POST" >
+<form action="{{ route('team_point_input' , ['id' => $point->team_no, ] ) }}" method="POST" >
     @csrf
     <div class="form-group">
         <label for="point_no">ポイント番号:</label>
