@@ -7,8 +7,7 @@
     </script>
         <style>
         .form-group {
-            display: flex;
-            align-items: center;
+            display: block;
         }
         .form-group label {
             margin-right: 10px;
