@@ -110,7 +110,7 @@ Route::get('/team_point_photo/{id}' , [HomeController::class , 'team_point_photo
 // ポイント編集画面から削除
 Route::post('/team_point_delete' , [HomeController::class , 'team_point_delete'])->name('team_point_delete');
 // ポイント編集画面から未確認へ
-Route::post('/team_point_change_mikaku' , [HomeController::class , 'team_point_ng'])->name('team_point_ng');
+Route::post('/team_point_change_mikaku' , [HomeController::class , 'team_point_mikaku'])->name('team_point_mikaku');
 // ポイント編集画面からOKへ
 Route::post('/team_point_change_ok' , [HomeController::class , 'team_point_ok'])->name('team_point_ok');
 // ポイント編集画面からNGへ
