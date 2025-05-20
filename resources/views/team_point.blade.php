@@ -31,8 +31,8 @@
 @foreach ($get_points as $point)
 <p>
 <p>通過ポイント番号：{{ $point->point_no }}</p>
-@if ($point->set_Point && $point->set_Point->point_name)
-<p>ポイント名：{{ $point->set_Point->point_name }}</p>
+@if ($point->setPoint && $point->setPoint->point_name)
+<p>ポイント名：{{ $point->setPoint->point_name }}</p>
 @endif
 @endforeach
 
