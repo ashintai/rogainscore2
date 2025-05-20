@@ -52,7 +52,7 @@
     </div>
     
         <!-- 編集ボタンを表示 -->
-    <div class="d-flex align-items-right mb-2" style="gap: 8px";>
+    <div class="d-flex ms-auto mb-2" style="gap: 8px;">
     <!-- 写真 または　削除　-->
     <!-- cheked=5 の手入力の場合は　削除、写真がある場合は　写真を表示 -->
         @if($point->checked == 5)
