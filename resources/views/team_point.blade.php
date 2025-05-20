@@ -12,6 +12,10 @@
         .form-group label {
             margin-right: 10px;
         }
+        hr {
+            margin-top: 4px !important;
+            margin-bottom: 4px !important;
+        }
     </style>
     <title>モリコロロゲイン</title>
 </head>
@@ -30,7 +34,7 @@
 </header>
 @foreach ($get_points as $point)
     @if ($point->setPoint && $point->setPoint->point_name)
-    <div class="d-flex align-items-left " style="gap: 8px;">
+    <div class="d-flex align-items-left " style="gap: 8px; margin-bottom: 0;">
     <!-- 状態を表示 -->
     <!-- $point->checked 0 未確認 1確認中 2OK 3NG 4仮登録 5手入力＝OK -->
         @if($point->checked == 0)
@@ -44,7 +48,7 @@
         @elseif($point->checked == 4)
             <p class="btn btn-dark rounded-circle ms-3">ポイント番号不明</p>
         @elseif($point->checked == 5)
-            <p class="btn btn-success rounded-circle ms-3">手入力し</p>
+            <p class="btn btn-success rounded-circle ms-3">手入力</p>
         @endif
     <!-- ポイント番号とポイント名を表示 -->
         <h6 style="margin-left: 8px;">{{ $point->point_no }}:{{ $point->setPoint->point_name }}</h6>
