@@ -89,10 +89,11 @@
         <label for="point_no">ポイント番号:</label>
         <input type="text" id="point_no" name="point_no" required maxlength="4" inputmode="numeric" pattern="\d*">
         <button type="button" id = "button_input" class="btn btn-primary">入力</button>
-        <br>
-        <label for="point_name_disp">ポイント名:</label>
-        <p id="point_name_disp" >  ポイント名 </p>
-        <button type="submit" id = "button_submit" class="btn btn-secondary">登録</button>
+        <div>
+            <label for="point_name_disp" class="align-middle">ポイント名:</label>
+            <p id="point_name_disp" class="align-middle">  ポイント名 </p>
+            <button type="submit" id = "button_submit" class="btn btn-success">登録</button>
+        </div>
     </div>
 </form>
 
