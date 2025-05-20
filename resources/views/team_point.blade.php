@@ -93,7 +93,9 @@
         <div style="display:flex;" >
             <label for="point_name_disp" class="align-middle">ポイント名:</label>
             <p id="point_name_disp" class="align-middle">  ポイント名 </p>
-            <button type="submit" id = "button_submit" class="btn btn-success">登録</button>
+            <button type="submit" id = "button_submit" class="btn btn-success" class="ms-4" >登録</button>
+        </div>
+        <div>
             <p class="align-middle">手入力のポイント番号は、OKとして登録されます。</p>
         </div>
     </div>
