@@ -86,7 +86,7 @@
 <form class="ms-4" action="{{ route('team_point_input' , ['id' => $point->team_no, ] ) }}" method="POST" >
     @csrf
     <div class="form-group">
-        <div>
+        <div class="mb-3">
             <label for="point_no">ポイント番号:</label>
             <input type="text" id="point_no" name="point_no" required maxlength="4" inputmode="numeric" pattern="\d*" size="5">
             <button type="button" id = "button_input" class="btn btn-primary">入力</button>
@@ -94,7 +94,7 @@
         <div style="display:flex;" >
             <label for="point_name_disp" class="align-middle">ポイント名:</label>
             <p id="point_name_disp" class="align-middle">  ポイント名 </p>
-            <button type="submit" id = "button_submit" class="btn btn-success" class="ms-4" style="disply:none;" >登録</button>
+            <button type="submit" id = "button_submit" class="btn btn-success ms-4" style="display:none;" >登録</button>
         </div>
         <div>
             <p class="align-middle">手入力のポイント番号は、OKとして登録されます。</p>
