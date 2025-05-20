@@ -583,7 +583,7 @@ public function team_update(Request $request){
 public function team_point($id){
     $user = User::find($id);
     // Getテーブル情報を渡す
-    $get_points = Get_point::where('team_no', $user->team_no)->with('setPoint')->get();
+    $get_points = Get_point::where('team_no', $user->team_no)->with('setPoint')->orderByRaw('CASE WHEN point_no = 0 THEN 1 ELSE 0 END, point_no ASC')->get();
     return view('team_point', compact('user', 'get_points'));
 }
 
