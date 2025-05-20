@@ -97,8 +97,8 @@
 
 <script>
     // PHPからポイント番号とポイント名の対応表をJavaScriptに渡す
-    const pointList = @json($set_point_list->mapWithKeys(fn($p) => [$p->point_no => $p->point_name ?? ''])->toArray());
-
+    const pointList = @json($set_point_list);
+    
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('button_input').addEventListener('click', function() {
             const inputNo = document.getElementById('point_no').value;
