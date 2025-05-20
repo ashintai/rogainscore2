@@ -48,11 +48,11 @@
             <p class="btn btn-success rounded-circle ms-3">手入力し</p>
         @endif
     <!-- ポイント番号とポイント名を表示 -->
-        <p style="margin-left: 8px;">{{ $point->point_no }}:{{ $point->setPoint->point_name }}</p>
+        <h6 style="margin-left: 8px;">{{ $point->point_no }}:{{ $point->setPoint->point_name }}</h6>
     </div>
     
         <!-- 編集ボタンを表示 -->
-    <div class="d-flex ms-auto mb-2" style="gap: 8px;">
+    <div class="d-flex justify-content-end mb-2" style="gap: 8px;">
     <!-- 写真 または　削除　-->
     <!-- cheked=5 の手入力の場合は　削除、写真がある場合は　写真を表示 -->
         @if($point->checked == 5)
