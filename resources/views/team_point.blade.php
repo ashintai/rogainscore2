@@ -94,7 +94,7 @@
         <div style="display:flex;" >
             <label for="point_name_disp" class="align-middle">ポイント名:</label>
             <p id="point_name_disp" class="align-middle">  ポイント名 </p>
-            <button type="submit" id = "button_submit" class="btn btn-success" class="ms-4" >登録</button>
+            <button type="submit" id = "button_submit" class="btn btn-success" class="ms-4" style="disply:none;" >登録</button>
         </div>
         <div>
             <p class="align-middle">手入力のポイント番号は、OKとして登録されます。</p>
@@ -120,7 +120,13 @@
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('button_input').addEventListener('click', function() {
             const inputNo = document.getElementById('point_no').value;
-            const name = pointList[inputNo] || '該当なし';
+            if(pointList[inputNo]){
+                name = pointList[inputNo];
+                document.getElementById('button_submit').style.display = 'inline-block'; // 表示
+            }else{
+                name = '該当なし';
+                document.getElementById('button_submit').style.display = 'none'; // 非表示
+            }
             document.getElementById('point_name_disp').textContent = name;
         });
     });
