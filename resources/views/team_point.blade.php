@@ -30,7 +30,7 @@
 </header>
 @foreach ($get_points as $point)
     @if ($point->setPoint && $point->setPoint->point_name)
-    <div class="d-flex align-items-left mb-2" style="gap: 8px;">
+    <div class="d-flex align-items-left " style="gap: 8px;">
     <!-- 状態を表示 -->
     <!-- $point->checked 0 未確認 1確認中 2OK 3NG 4仮登録 5手入力＝OK -->
         @if($point->checked == 0)
@@ -51,7 +51,7 @@
     </div>
     
         <!-- 編集ボタンを表示 -->
-    <div class="d-flex justify-content-end mb-2" style="gap: 8px;">
+    <div class="d-flex justify-content-end " style="gap: 8px;">
     <!-- 写真 または　削除　-->
     <!-- cheked=5 の手入力の場合は　削除、写真がある場合は　写真を表示 -->
         @if($point->checked == 5)
