@@ -81,13 +81,14 @@
 
 <!-- 手入力 -->
 <!-- ポイント番号を手入力する -->
+<h5>手入力でポイント番号を追加したい場合はポイント番号を入れ、「入力」をタップ後、ポイント名を確認して「登録」をタップ</h5>
 
 <form class="ms-4" action="{{ route('team_point_input' , ['id' => $point->team_no, ] ) }}" method="POST" >
     @csrf
     <div class="form-group">
         <div>
             <label for="point_no">ポイント番号:</label>
-            <input type="text" id="point_no" name="point_no" required maxlength="4" inputmode="numeric" pattern="\d*">
+            <input type="text" id="point_no" name="point_no" required maxlength="4" inputmode="numeric" pattern="\d*" size="5">
             <button type="button" id = "button_input" class="btn btn-primary">入力</button>
         </div>
         <div style="display:flex;" >
