@@ -613,6 +613,12 @@ public function team_point_change_ng($id){
     return redirect()->route('team_point', ['id' => $id]);
 }
 
+// ポイント手入力
+public function team_point_input($id , Request $request){
+    // ルートパラメーidはチーム番号　$request->input('point_no')はポイント番号
+    return view('team_point_input', compact('user', 'categories'));
+}
+
 
 // 取得写真一覧画面の作成
 public function all_images($flag)

@@ -115,6 +115,9 @@ Route::post('/team_point_change_mikaku' , [HomeController::class , 'team_point_c
 Route::post('/team_point_change_ok' , [HomeController::class , 'team_point_change_ok'])->name('team_point_change_ok');
 // ポイント編集画面からNGへ
 Route::post('/team_point_change_ng' , [HomeController::class , 'team_point_change_ng'])->name('team_point_change_ng');
+// ポイント手入力　
+Route::post('/team_point_input/{id}' , [HomeController::class , 'team_point_input'])->name('team_point_input');
+
 
 // ポイント履歴一覧
 Route::get('/point_history' , [HomeController::class , 'point_history'])->name('point_history');

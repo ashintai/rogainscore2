@@ -80,5 +80,18 @@
     <hr>
 @endforeach
 
-    </body>
-    </html>
+<!-- 手入力 -->
+<!-- ポイント番号を手入力する -->
+
+<form action="{{ route('team_point_input' , ['id => $point->team_no ] ) }}" method="POST" >
+    @csrf
+    <div class="form-group">
+        <label for="point_no">ポイント番号:</label>
+        <input type="text" id="point_no" name="point_no" required>
+        <button type="input" id = "button_input" class="btn btn-primary">入力</button>
+        <p > ポイント名　<p>
+        <button type="submit" id = "button_submit" class="btn btn-secondary">登録</button>
+</form>
+
+</body>
+</html>
