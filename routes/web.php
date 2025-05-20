@@ -101,6 +101,8 @@ Route::get('/reset_ng' , [HomeController::class , 'reset_ng'])->name('reset_ng')
 Route::get('/team_index' , [HomeController::class , 'team_index'])->name('team_index');
 // チーム情報編集画面
 Route::get('/team_edit/{id}' , [HomeController::class , 'team_edit'])->name('team_edit');
+// チーム通過ポイント編集画面
+Route::get('/team_point/{id}' , [HomeController::class , 'team_point'])->name('team_point');
 // チーム情報編集のDBへの登録
 Route::post('/team_update/{id}' , [HomeController::class , 'team_update'])->name('team_update');
 // ポイント履歴一覧

@@ -579,6 +579,16 @@ public function team_update(Request $request){
     return redirect()->route('team_index');
 }
 
+// チームの通過ポイント編集＆減点入力
+public function team_point($id){
+    $user = User::find($id);
+    // Getテーブル情報を渡す
+    $get_points = Get_point::where('team_no', $user->team_no)->with('setPoint')->get();
+    return view('team_point', compact('user', 'get_points'));
+}
+
+
+
 // 取得写真一覧画面の作成
 public function all_images($flag)
 {
