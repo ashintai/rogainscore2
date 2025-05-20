@@ -19,6 +19,8 @@
 <body>
 <header>
     <h5 style="color: blue;">モリコロロゲイニング　通過ポイント編集</h5>
+    <!-- チーム番号とチーム名を表示 -->
+    <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
     <!-- ログアウトボタン -->
     <form action="{{ route('logout') }}" method="POST" >
         @csrf
