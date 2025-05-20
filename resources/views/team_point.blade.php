@@ -88,10 +88,26 @@
     <div class="form-group">
         <label for="point_no">ポイント番号:</label>
         <input type="text" id="point_no" name="point_no" required>
-        <button type="input" id = "button_input" class="btn btn-primary">入力</button>
-        <p > ポイント名　<p>
+        <button type="button" id = "button_input" class="btn btn-primary">入力</button>
+        <p id="point_name_disp" > ポイント名　</p>
         <button type="submit" id = "button_submit" class="btn btn-secondary">登録</button>
 </form>
 
 </body>
+
+<script>
+    // PHPからポイント番号とポイント名の対応表をJavaScriptに渡す
+    const pointList = @json($set_point_list->mapWithKeys(fn($p) => [$p->point_no => $p->point_name ?? ''])->toArray());
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('button_input').addEventListener('click', function() {
+            const inputNo = document.getElementById('point_no').value;
+            const name = pointList[inputNo] || '該当なし';
+            document.getElementById('point_name_disp').textContent = name;
+        });
+    });
+</script>
+
+
+
 </html>
