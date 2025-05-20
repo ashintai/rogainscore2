@@ -51,7 +51,7 @@
             <p class="btn btn-success rounded-circle ms-3">手入力</p>
         @endif
     <!-- ポイント番号とポイント名を表示 -->
-        <h6 style="margin-left: 8px;">{{ $point->point_no }}:{{ $point->setPoint->point_name }}</h6>
+        <h6 style="margin-left: 8px; margin-bottom: 0;">{{ $point->point_no }}:{{ $point->setPoint->point_name }}</h6>
     </div>
     
         <!-- 編集ボタンを表示 -->
