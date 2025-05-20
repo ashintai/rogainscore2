@@ -29,12 +29,52 @@
     <br>
     <hr>
 </header>
-<p>チーム番号：{{ $user->team_no }}:{{ $user->name }}</p>
 @foreach ($get_points as $point)
-@if ($point->setPoint && $point->setPoint->point_name)
-    <p>{{ $point->point_no }}:{{ $point->setPoint->point_name }}</p>
-@endif
-<hr>
+    @if ($point->setPoint && $point->setPoint->point_name)
+    <!-- 通過ポイント番号とポイント名を表示 -->
+    <!-- 状態を表示 -->
+    <!-- $point->checked 0 未確認 1確認中 2OK 3NG 4仮登録 5手入力＝OK -->
+        @if($point->checked == 0)
+            <p class="btn btn-secondary rounded-circle ms-3" >確認待ち</p>
+        @elseif($point->checked == 1)
+            <p class="btn btn-warning rounded-circle ms-3"> 確認作業中</p>
+        @elseif($point->checked == 2)
+            <p class="btn btn-success rounded-circle ms-3" >OK</p>
+        @elseif($point->checked == 3)
+            <p class="btn btn-danger rounded-circle ms-3">NG</p>
+        @elseif($point->checked == 4)
+            <p class="btn btn-dark rounded-circle ms-3">ポイント番号不明</p>
+        @elseif($point->checked == 5)
+            <p class="btn btn-success rounded-circle ms-3">手入力し</p>
+        @endif
+<!-- ポイント番号とポイント名を表示 -->
+        <p style="margin-left: 8px;">{{ $point->point_no }}:{{ $point->setPoint->point_name }}</p>
+        <!-- 編集ボタンを表示 -->
+        <!-- 写真 または　削除　-->
+        <!-- cheked=5 の手入力の場合は　削除、写真がある場合は　写真を表示 -->
+        @if($point->checked == 5)
+            <a href="{{ route('team_point_delete', ['get_point_id' => $point->id, ]) }}" class="btn btn-danger">削除</a>
+        @else
+            <a href="{{ route('team_point_photo', ['get_point_id' => $point->id, ]) }}" class="btn btn-success">写真</a>
+        @endif
+        <!-- 状態変更 -->
+        @if($point->checked == 0)
+            <a href="{{ route('team_point_change_ok', ['get_point_id' => $point->id, ]) }}" class="btn btn-primary">okに変更</a>
+            <a href="{{ route('team_point_change_ng', ['get_point_id' => $point->id, ]) }}" class="btn btn-danger">NGに変更</a>            
+        @elseif($point->checked == 1)
+            <p>確認中のため編集不可<p>
+        @elseif($point->checked == 2)    
+            <a href="{{ route('team_point_change_mikaku', ['get_point_id' => $point->id, ]) }}" class="btn btn-primary">未確認に変更</a>
+            <a href="{{ route('team_point_change_ng', ['get_point_id' => $point->id, ]) }}" class="btn btn-danger">NGに変更</a>
+        @elseif($point->checked == 3)
+            <a href="{{ route('team_point_change_mikaku', ['get_point_id' => $point->id, ]) }}" class="btn btn-primary">未確認に変更</a>
+            <a href="{{ route('team_point_change_ng', ['get_point_id' => $point->id, ]) }}" class="btn btn-success">NGに変更</a>
+        @elseif($point->checked == 4)
+            <p>ポイント番号不明のため編集不可</p>
+        @endif
+        </div> 
+    @endif
+    <hr>
 @endforeach
 
     </body>

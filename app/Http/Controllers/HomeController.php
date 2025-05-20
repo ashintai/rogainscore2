@@ -587,6 +587,31 @@ public function team_point($id){
     return view('team_point', compact('user', 'get_points'));
 }
 
+// ポイント編集画面からの各種編集
+// 写真の表示
+public function team_point_photo($id){
+    return redirect()->route('team_point', ['id' => $id]);
+}
+
+// 手入力の削除
+public function team_point_delete($id){
+    return redirect()->route('team_point', ['id' => $id]);
+}
+
+// 未確認へ変更
+public function team_point_change_mikaku($id){
+    return redirect()->route('team_point', ['id' => $id]);
+}
+
+// OKへ変更
+public function team_point_change_ok($id){
+    return redirect()->route('team_point', ['id' => $id]);
+}
+
+// NGへ変更
+public function team_point_change_ng($id){
+    return redirect()->route('team_point', ['id' => $id]);
+}
 
 
 // 取得写真一覧画面の作成

@@ -105,6 +105,17 @@ Route::get('/team_edit/{id}' , [HomeController::class , 'team_edit'])->name('tea
 Route::get('/team_point/{id}' , [HomeController::class , 'team_point'])->name('team_point');
 // チーム情報編集のDBへの登録
 Route::post('/team_update/{id}' , [HomeController::class , 'team_update'])->name('team_update');
+// ポイント編集画面から写真を表示
+Route::get('/team_point_photo/{id}' , [HomeController::class , 'team_point_photo'])->name('team_point_photo');
+// ポイント編集画面から削除
+Route::post('/team_point_delete' , [HomeController::class , 'team_point_delete'])->name('team_point_delete');
+// ポイント編集画面から未確認へ
+Route::post('/team_point_change_mikaku' , [HomeController::class , 'team_point_ng'])->name('team_point_ng');
+// ポイント編集画面からOKへ
+Route::post('/team_point_change_ok' , [HomeController::class , 'team_point_ok'])->name('team_point_ok');
+// ポイント編集画面からNGへ
+Route::post('/team_point_change_ng' , [HomeController::class , 'team_point_ng'])->name('team_point_ng');
+
 // ポイント履歴一覧
 Route::get('/point_history' , [HomeController::class , 'point_history'])->name('point_history');
 // でバグ用
