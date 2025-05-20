@@ -35,8 +35,10 @@
 @foreach($users as $user)
     <div class="user-info">
         <p>{{ $user->team_no }}:{{ $user->name }}({{ $user->member_num }}名)-{{ $user->category->category_name }}/{{$user->category->class_name}}-{{$user->email}}</p>
-        <a href="{{ route('team_edit', $user->id) }}" class="btn btn-primary">登録情報編集</a>
-        <a href="{{ route('team_point', $user->id) }}" class="btn btn-primary">通過ポイント編集</a>
+        <div class="ms-auto" style ="dispaly: flex; gap: 8px;">
+            <a href="{{ route('team_edit', $user->id) }}" class="btn btn-primary">登録情報編集</a>
+            <a href="{{ route('team_point', $user->id) }}" class="btn btn-success">通過ポイント編集</a>
+        </div>
     </div>
     <hr>
 @endforeach
