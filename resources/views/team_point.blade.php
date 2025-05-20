@@ -83,15 +83,27 @@
 <!-- 手入力 -->
 <!-- ポイント番号を手入力する -->
 
-<form action="{{ route('team_point_input' , ['id' => $point->team_no, ] ) }}" method="POST" >
+<form class="ms-4" action="{{ route('team_point_input' , ['id' => $point->team_no, ] ) }}" method="POST" >
     @csrf
     <div class="form-group">
         <label for="point_no">ポイント番号:</label>
-        <input type="text" id="point_no" name="point_no" required>
+        <input type="text" id="point_no" name="point_no" required maxlength="4" inputmode="numeric" pattern="\d*">
         <button type="button" id = "button_input" class="btn btn-primary">入力</button>
-        <p id="point_name_disp" > ポイント名　</p>
+        <br>
+        <label for="point_name_disp">ポイント名:</label>
+        <p id="point_name_disp" >  ポイント名 </p>
         <button type="submit" id = "button_submit" class="btn btn-secondary">登録</button>
+    </div>
 </form>
+
+<!-- 戻る -->
+<div class="ms-3">
+    <a href="{{ route('staff_main') }}" class="btn btn-primary">戻る</a>
+</div>
+<hr>
+<footer style="text-align: right;">
+    <h8>© 2025 (特非)愛知県オリエンテーリング協会</h8>
+</footer>
 
 </body>
 
