@@ -62,6 +62,21 @@
     <p>チーム番号: {{ $team_no }}：{{ $team_name }}<br>
     ポイント番号: {{ $point_no }}：{{ $point_name }}</p>
     
+        <!-- 状態表示 -->
+        @if($checked == 0)
+            <p class="btn btn-secondary rounded-circle ms-3" >確認待ち</p>
+        @elseif($checked == 1)
+            <p class="btn btn-warning rounded-circle ms-3"> 確認作業中</p>
+        @elseif($checked == 2)
+            <p class="btn btn-success rounded-circle ms-3" >OK</p>
+        @elseif($checked == 3)
+            <p class="btn btn-danger rounded-circle ms-3">NG</p>
+        @elseif($checked == 4)
+            <p class="btn btn-dark rounded-circle ms-3">ポイント番号不明</p>
+        @elseif($checked == 5)
+            <p class="btn btn-success rounded-circle ms-3">手入力</p>
+        @endif
+
     <div style="display: flex">
         <div style="width: 45%; margin-left:5px;">
             <p>取得写真</p>
@@ -90,12 +105,12 @@
     <hr>
     <!-- 判定ボタン -->
 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-    <form action="{{ route('team_point_change') }}" method="POST" style="flex: 1; text-align: left;">
+    <form action="{{ route('team_point_change') }}" method="POST" style="flex: 1; text-align: left; margin: 0 16px;">
         @csrf
         <input type="hidden" name="user_id" value="{{ $user_id }}">
         <input type="hidden" name="get_id" value="{{ $get_id }}">
         <input type="hidden" name="flag" value=2 >
-        <button type="submit" name="result" value="ok" class="btn btn-primary" >ＯＫ</button>
+        <button type="submit" name="result" value="ok" class="btn btn-success" >ＯＫ</button>
     </form>
     
     <form action="{{ route('team_point_change') }}" method="POST" style="flex: 1; text-align: center;">
@@ -106,12 +121,12 @@
         <button type="submit" name="result" value="ok" class="btn btn-primary" >未確認</button>
     </form>
 
-    <form action="{{ route('team_point_change') }}" method="POST" style="flex: 1; text-align: right;">
+    <form action="{{ route('team_point_change') }}" method="POST" style="flex: 1; text-align: right; margin: 0 16px;">
         @csrf
         <input type="hidden" name="user_id" value="{{ $user_id }}">
         <input type="hidden" name="get_id" value="{{ $get_id }}">
         <input type="hidden" name="flag" value=3 >
-        <button type="submit" name="result" value="ok" class="btn btn-primary" >ＮＧ</button>
+        <button type="submit" name="result" value="ok" class="btn btn-danger" >ＮＧ</button>
     </form>
 
     </div>
