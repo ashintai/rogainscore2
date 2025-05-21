@@ -30,18 +30,18 @@
     <br><br>
     <!-- 成績速報ボタン -->
     <a href="{{ route('result') }}" class="btn btn-primary">成績速報</a>
-    <br><br>
+    <!-- <br><br> -->
     <!-- 減点入力ボタン -->
-    <a href="{{ route('input_penalty') }}" class="btn btn-primary">減点入力</a>
-    <br><br>
+    <!-- <a href="{{ route('input_penalty') }}" class="btn btn-primary">減点入力</a> -->
+    <!-- <br><br> -->
     <!-- 確認中リセットボタン -->
-    <a href="{{ route('reset_checking') }}" class="btn btn-primary">確認中リセット</a>
-    <br><br>
+    <!-- <a href="{{ route('reset_checking') }}" class="btn btn-primary">確認中リセット</a> -->
+    <!-- <br><br> -->
     <!-- NGリセットボタン -->
-    <a href="{{ route('reset_ng') }}" class="btn btn-primary">NGリセット</a>
-    <br><br>
+    <!-- <a href="{{ route('reset_ng') }}" class="btn btn-primary">NGリセット</a> -->
+    <!-- <br><br> -->
     <!-- チーム情報一覧＆編集 -->
-    <a href="{{ route('team_index') }}" class="btn btn-primary">チーム情報一覧・編集</a>
+    <a href="{{ route('team_index') }}" class="btn btn-primary">チーム情報・減点・ポイント修正</a>
     <br><br>
     <!-- ポイント履歴一覧 -->
     <a href="{{ route('point_history') }}" class="btn btn-primary">ポイント履歴一覧</a>
