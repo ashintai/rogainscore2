@@ -168,7 +168,13 @@ function canvasDraw() {
                 
     //画像ファイルかチェック
     // file["type"]はファイルの種類を表すプロパティ
-    if (file["type"] != "image/jpeg" && file["type"] != "image/png" && file["type"] != "image/gif") {
+    if (
+        file["type"] != "image/jpeg" && 
+        file["type"] != "image/png" && 
+        file["type"] != "image/gif" &&
+        file["type"] != "image/heif" &&
+        file["type"] != "image/heic"
+    ){
         alert("画像ファイルを選択してください");
         $("#imageSelect").val(''); //選択したファイルをクリア
         return ;
