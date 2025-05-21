@@ -106,7 +106,7 @@ Route::get('/team_point/{id}' , [HomeController::class , 'team_point'])->name('t
 // チーム情報編集のDBへの登録
 Route::post('/team_update/{id}' , [HomeController::class , 'team_update'])->name('team_update');
 // ポイント編集画面から写真を表示
-Route::get('/team_point_photo/{id}' , [HomeController::class , 'team_point_photo'])->name('team_point_photo');
+Route::get('/team_point_photo/{get_id}/{user_id}' , [HomeController::class , 'team_point_photo'])->name('team_point_photo');
 // ポイント編集画面から削除
 Route::post('/team_point_delete/{get_id}/{user_id}' , [HomeController::class , 'team_point_delete'])->name('team_point_delete');
 // ポイント編集画面から未確認へ

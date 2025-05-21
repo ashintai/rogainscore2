@@ -591,12 +591,6 @@ public function team_point($id){
     return view('team_point', compact('user', 'get_points' , 'set_point_list'));
 }
 
-// ポイント編集画面からの各種編集
-// 写真の表示
-public function team_point_photo($id){
-    return redirect()->route('team_point', ['id' => $id]);
-}
-
 // 手入力の削除
 public function team_point_delete($get_id , $user_id){
     // 手入力の削除
@@ -611,20 +605,61 @@ public function team_point_delete($get_id , $user_id){
     return redirect()->route( 'team_point' , [ 'id' => $user_id ]);
 }
 
-// 未確認へ変更
-public function team_point_change_mikaku($id){
-    return redirect()->route('team_point', ['id' => $id]);
+// ポイント一覧から写真を選んで状態を変化させる
+public function team_point_photo($get_id , $user_id){
+    // $user_id で指定されたユーザの情報を取得
+    $user = User::find($user_id);
+    if($user){
+        $team_no = $user->team_no;
+        $team_name = $user->name;
+        $user_id = $user->id;
+    }
+    else{
+        return redirect()->back()->with('message' , 'システムエラーですteam_point_photo');
+    }
+    // $get_id で指定されたGetテーブルのレコードを取得
+    $get_point = Get_point::with('setPoint')->find($get_id);
+    if($get_point){
+        $point_no = $get_point->point_no;
+        $point_name = $get_point->setPoint->point_name;
+        $get_photo_url = $get_point->photo_filename;
+        $checked = $get_point->checked;
+        $set_photo_url = "https://rogain.s3.amazonaws.com/set_" . $point_no . ".JPG";
+    }
+    else{
+        return redirect()->back()->with('message' , 'システムエラーですteam_point_photo');
+    }
+
+    return view('team_point_photo', compact('user_id' , 'get_id' , 'checked' , 'team_no' , 'team_name' , 'point_no' , 'point_name' , 'get_photo_url' , 'set_photo_url'));
+    }
+
+    // ポイント状態の変更
+public function team_point_change(Request $request){
+// user-id get_id flag がパラメータ
+// flag = 0 戻る　1 未確認　2 OK 3 NG
+$user_id = $request->input('user_id');
+$get_id = $request->input('get_id');
+$flag = $request->input('flag');
+
+$get_point = Get_point::find($get_id);
+if ($get_point) {
+    // チェック結果を更新
+    if ($flag == 1) {
+        $get_point->checked = 0; // 未確認
+    } elseif ($flag == 2) {
+        $get_point->checked = 2; // OK
+    } elseif ($flag == 3) {
+        $get_point->checked = 3; // NG
+    }
+    // データベースに保存
+    $get_point->save();
+} else {
+    return redirect()->back()->with('message', 'エラーが発生しましたteam_point_change');
+}
+return redirect()->route('team_point' , [ 'id' => $user_id ]);
+
 }
 
-// OKへ変更
-public function team_point_change_ok($id){
-    return redirect()->route('team_point', ['id' => $id]);
-}
-
-// NGへ変更
-public function team_point_change_ng($id){
-    return redirect()->route('team_point', ['id' => $id]);
-}
 
 // ポイント手入力
 public function team_point_input($id , Request $request){

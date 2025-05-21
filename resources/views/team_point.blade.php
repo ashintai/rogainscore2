@@ -72,7 +72,7 @@
                 <button type="submit" class="btn btn-danger">削除</button>
             </form>
         @else
-            <a href="{{ route('team_point_photo', ['id' => $point->id, ]) }}" class="btn btn-success">写真</a>
+            <a href="{{ route('team_point_photo', ['get_id' => $point->id, 'user_id' => $user->id]) }}" class="btn btn-success">写真</a>
         @endif
             <!-- 状態変更 -->
             <!-- @if($point->checked == 0)
