@@ -57,30 +57,31 @@
 
     <!-- 写真 または　削除　-->
     <!-- cheked=5 の手入力の場合は　削除、写真がある場合は　写真を表示 -->
-    <div class="ms-auto">    
-    @if($point->checked == 5)
-            <a href="{{ route('team_point_delete', ['id' => $point->id, ]) }}" class="btn btn-danger">削除</a>
-        @else
-            <a href="{{ route('team_point_photo', ['id' => $point->id, ]) }}" class="btn btn-success">写真</a>
-        @endif
-        <!-- 状態変更 -->
-        <!-- @if($point->checked == 0)
-            <a href="{{ route('team_point_change_ok', ['id' => $point->id, ]) }}" class="btn btn-primary">okに変更</a>
-            <a href="{{ route('team_point_change_ng', ['id' => $point->id, ]) }}" class="btn btn-danger">NGに変更</a>            
-        @elseif($point->checked == 1)
-            <p>確認中のため編集不可<p>
-        @elseif($point->checked == 2)    
-            <a href="{{ route('team_point_change_mikaku', ['id' => $point->id, ]) }}" class="btn btn-primary">未確認に変更</a>
-            <a href="{{ route('team_point_change_ng', ['id' => $point->id, ]) }}" class="btn btn-danger">NGに変更</a>
-        @elseif($point->checked == 3)
-            <a href="{{ route('team_point_change_mikaku', ['id' => $point->id, ]) }}" class="btn btn-primary">未確認に変更</a>
-            <a href="{{ route('team_point_change_ng', ['id' => $point->id, ]) }}" class="btn btn-success">NGに変更</a>
-        @elseif($point->checked == 4)
-            <p>ポイント番号不明のため編集不可</p>
-        @endif -->
+        <div class="ms-auto">    
+        @if($point->checked == 5)
+                <a href="{{ route('team_point_delete', ['id' => $point->id, ]) }}" class="btn btn-danger">削除</a>
+            @else
+                <a href="{{ route('team_point_photo', ['id' => $point->id, ]) }}" class="btn btn-success">写真</a>
+            @endif
+            <!-- 状態変更 -->
+            <!-- @if($point->checked == 0)
+                <a href="{{ route('team_point_change_ok', ['id' => $point->id, ]) }}" class="btn btn-primary">okに変更</a>
+                <a href="{{ route('team_point_change_ng', ['id' => $point->id, ]) }}" class="btn btn-danger">NGに変更</a>            
+            @elseif($point->checked == 1)
+                <p>確認中のため編集不可<p>
+            @elseif($point->checked == 2)    
+                <a href="{{ route('team_point_change_mikaku', ['id' => $point->id, ]) }}" class="btn btn-primary">未確認に変更</a>
+                <a href="{{ route('team_point_change_ng', ['id' => $point->id, ]) }}" class="btn btn-danger">NGに変更</a>
+            @elseif($point->checked == 3)
+                <a href="{{ route('team_point_change_mikaku', ['id' => $point->id, ]) }}" class="btn btn-primary">未確認に変更</a>
+                <a href="{{ route('team_point_change_ng', ['id' => $point->id, ]) }}" class="btn btn-success">NGに変更</a>
+            @elseif($point->checked == 4)
+                <p>ポイント番号不明のため編集不可</p>
+            @endif -->
+        </div>
     </div>
-    @endif
     <hr>
+    @endif
 @endforeach
 
 <!-- 手入力 -->
