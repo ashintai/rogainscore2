@@ -584,11 +584,19 @@ public function team_point($id){
     $user = User::find($id);
     // Getテーブル情報を渡す
     $get_points = Get_point::where('team_no', $user->team_no)->with('setPoint')->orderByRaw('CASE WHEN point_no = 0 THEN 1 ELSE 0 END, point_no ASC')->get();
-    
-     // set_pointsテーブルからpoint_noをキー、point_nameを値とする配列を作成
+         // set_pointsテーブルからpoint_noをキー、point_nameを値とする配列を作成
     $set_point_list = Set_point::pluck('point_name', 'point_no')->toArray();
-
-    return view('team_point', compact('user', 'get_points' , 'set_point_list'));
+    // 得点、減点の計算
+    $penalty = $user->penalty;
+    // checkedが2または5のレコードだけ抽出し、setPointが存在するもののscoreを合計
+    $score = $get_points
+    ->filter(function($point) {
+        return in_array($point->checked, [2, 5]) && $point->setPoint;
+    })
+    ->sum(function($point) {
+        return $point->setPoint->score;
+    });
+    return view('team_point', compact('user', 'get_points' , 'set_point_list' , 'score' , 'penalty'));
 }
 
 // 手入力の削除
