@@ -64,7 +64,7 @@
             <a href="{{ route('team_point_photo', ['id' => $point->id, ]) }}" class="btn btn-success">写真</a>
         @endif
         <!-- 状態変更 -->
-        @if($point->checked == 0)
+        <!-- @if($point->checked == 0)
             <a href="{{ route('team_point_change_ok', ['id' => $point->id, ]) }}" class="btn btn-primary">okに変更</a>
             <a href="{{ route('team_point_change_ng', ['id' => $point->id, ]) }}" class="btn btn-danger">NGに変更</a>            
         @elseif($point->checked == 1)
@@ -77,7 +77,7 @@
             <a href="{{ route('team_point_change_ng', ['id' => $point->id, ]) }}" class="btn btn-success">NGに変更</a>
         @elseif($point->checked == 4)
             <p>ポイント番号不明のため編集不可</p>
-        @endif
+        @endif -->
     </div> 
     @endif
     <hr>
