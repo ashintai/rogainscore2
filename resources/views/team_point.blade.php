@@ -83,14 +83,15 @@
 
 <!-- 得点、減点の表示と入力 -->
 <div style="display: flex; align-items: center;">
-    <p class="ms-3" >取得点:{{ "$score" }}点</p>
+    <p class="ms-3" >取得点:{{ "$score" }}点 減点入力</p>
     <form action="{{ route('team_penalty_input' , ['user_id' => $user->id] ) }}" method="POST" class="ms-4">
         @csrf
         <input type = "text" name="penalty" id="penalty" value="{{ $penalty }}" required maxlength="5" inputmode="numeric" pattern="-?\d*" size="8">
         <button type="submit" class="btn btn-primary">減点入力</button>
     </form>
+    <p>減点に[10]を入力すると10点減点、[-10]を入力すると10点加点されます。</p>
 </div>
-<p>合計点:{{ $score - $penalty }}点</p>
+<p class="ms-3" >合計点:{{ $score - $penalty }}点</p>
 
 <hr>
 
