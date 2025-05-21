@@ -619,8 +619,28 @@ public function team_point_change_ng($id){
 
 // ポイント手入力
 public function team_point_input($id , Request $request){
-    // ルートパラメーidはチーム番号　$request->input('point_no')はポイント番号
-    return view('team_point_input', compact('user', 'categories'));
+    // ルートパラメーidはUser_id  $request->input('point_no')はポイント番号
+    $user = User::find($id);
+    // チーム番号を取得
+    $team_no = $user->team_no;
+    // 入力されたポイント番号を取得
+    $point_no = $request->input('point_no');
+    // すでに登録済みか調べる
+    $exits = Get_point::where('team_no', $team_no)->where('point_no', $point_no)->exists();
+    
+    // あたらしくGet_pointテーブルにレコードを追加
+    if ($exits){
+        return redirect()->bcak()->with('message', 'すでに登録済みのポイントです');
+    }else{
+    Get_point::create([
+        'team_no' => $team_no,
+        'point_no' => $point_no,
+        'checked' => 5,
+        'photo_filename' => null
+        ]);
+    }
+    // ポイント番号入力画面で戻る
+    return redirect()->route( 'team_point' , [ 'id' => $id ]);
 }
 
 

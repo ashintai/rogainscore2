@@ -20,6 +20,14 @@
     <title>モリコロロゲイン</title>
 </head>
 <body>
+
+<!-- アラームの表示 -->
+@if(session('message'))
+    <script>
+        alert("{{ session('message') }}");
+    </script>
+@endif
+
 <header>
     <h5 style="color: blue;">モリコロロゲイニング　通過ポイント編集</h5>
     <!-- チーム番号とチーム名を表示 -->
@@ -88,7 +96,7 @@
 <!-- ポイント番号を手入力する -->
 <h5>手入力でポイント番号を追加したい場合はポイント番号を入れ、「入力」をタップ後、ポイント名を確認して「登録」をタップ</h5>
 
-<form class="ms-4" action="{{ route('team_point_input' , ['id' => $point->team_no, ] ) }}" method="POST" >
+<form class="ms-4" action="{{ route('team_point_input' , ['id' => $user->id ] ) }}" method="POST" >
     @csrf
     <div class="form-group">
         <div class="mb-3">
