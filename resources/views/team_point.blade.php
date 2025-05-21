@@ -67,10 +67,13 @@
     <!-- cheked=5 の手入力の場合は　削除、写真がある場合は　写真を表示 -->
         <div class="ms-auto">    
         @if($point->checked == 5)
-                <a href="{{ route('team_point_delete', ['get_id' => $point->id, 'user_id' => $user->id  ]) }}" class="btn btn-danger">削除</a>
-            @else
-                <a href="{{ route('team_point_photo', ['id' => $point->id, ]) }}" class="btn btn-success">写真</a>
-            @endif
+            <form action="{{ route('team_point_delete', ['get_id' => $point->id, 'user_id' => $user->id]) }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit" class="btn btn-danger">削除</button>
+            </form>
+        @else
+            <a href="{{ route('team_point_photo', ['id' => $point->id, ]) }}" class="btn btn-success">写真</a>
+        @endif
             <!-- 状態変更 -->
             <!-- @if($point->checked == 0)
                 <a href="{{ route('team_point_change_ok', ['id' => $point->id, ]) }}" class="btn btn-primary">okに変更</a>
