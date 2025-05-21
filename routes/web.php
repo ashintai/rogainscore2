@@ -109,12 +109,8 @@ Route::post('/team_update/{id}' , [HomeController::class , 'team_update'])->name
 Route::get('/team_point_photo/{get_id}/{user_id}' , [HomeController::class , 'team_point_photo'])->name('team_point_photo');
 // ポイント編集画面から削除
 Route::post('/team_point_delete/{get_id}/{user_id}' , [HomeController::class , 'team_point_delete'])->name('team_point_delete');
-// ポイント編集画面から未確認へ
-Route::post('/team_point_change_mikaku' , [HomeController::class , 'team_point_change_mikaku'])->name('team_point_change_mikaku');
-// ポイント編集画面からOKへ
-Route::post('/team_point_change_ok' , [HomeController::class , 'team_point_change_ok'])->name('team_point_change_ok');
-// ポイント編集画面からNGへ
-Route::post('/team_point_change_ng' , [HomeController::class , 'team_point_change_ng'])->name('team_point_change_ng');
+// ポイント編集画面から状態変更へ
+Route::post('/team_point_change' , [HomeController::class , 'team_point_change'])->name('team_point_change');
 // ポイント手入力　
 Route::post('/team_point_input/{id}' , [HomeController::class , 'team_point_input'])->name('team_point_input');
 
