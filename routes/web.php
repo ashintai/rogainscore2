@@ -115,7 +115,8 @@ Route::post('/team_point_change' , [HomeController::class , 'team_point_change']
 Route::post('/team_point_input/{id}' , [HomeController::class , 'team_point_input'])->name('team_point_input');
 // 減点入力
 Route::post('/team_penalty_input/{user_id}' , [HomeController::class , 'team_penalty_input'])->name('team_penalty_input');
-
+// チームロックを解除して戻る
+Route::post('/team_point_unlock/{user_id}' , [HomeController::class , 'team_point_unlock'])->name('team_point_unlock');
 // ポイント履歴一覧
 Route::get('/point_history' , [HomeController::class , 'point_history'])->name('point_history');
 // でバグ用

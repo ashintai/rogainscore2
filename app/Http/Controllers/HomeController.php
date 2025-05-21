@@ -582,6 +582,7 @@ public function team_update(Request $request){
 // チームの通過ポイント編集＆減点入力
 public function team_point($id){
     $user = User::find($id);
+    
     // Getテーブル情報を渡す
     $get_points = Get_point::where('team_no', $user->team_no)->with('setPoint')->orderByRaw('CASE WHEN point_no = 0 THEN 1 ELSE 0 END, point_no ASC')->get();
          // set_pointsテーブルからpoint_noをキー、point_nameを値とする配列を作成
@@ -596,7 +597,29 @@ public function team_point($id){
     ->sum(function($point) {
         return $point->setPoint->score;
     });
+    // このチームをlockするため、userのroleを3に変更
+    if($user){
+        $user->role = 3;
+        $user->save();
+    }else{
+        return redirect()->back()->with('message' , 'システムエラーですteam_point');
+    }
+
     return view('team_point', compact('user', 'get_points' , 'set_point_list' , 'score' , 'penalty'));
+}
+
+// チームのロックを解除してチーム一覧へ戻る
+public function team_point_unlock($user_id){
+    // チームのロックを解除してチーム一覧へ戻る
+    $user = User::find($id);
+    if($user){
+        $user->role = 0;
+        $user->save();
+    }else{
+        return redirect()->back()->with('message' , 'システムエラーですteam_point_unlock');
+    }
+    return view('team_index', compact('users'));
+
 }
 
 // 減点の入力

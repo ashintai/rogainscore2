@@ -32,10 +32,10 @@
     <h5 style="color: blue;">モリコロロゲイニング　通過ポイント編集</h5>
     <!-- チーム番号とチーム名を表示 -->
     <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
-    <!-- ログアウトボタン -->
-    <form action="{{ route('logout') }}" method="POST" >
+    <!-- 戻るボタン -->
+    <form action="{{ route('team_point_unlock' , ['id' => $user->id ] ) }}" method="POST" >
         @csrf
-            <button type="submit" style="float: right;">ログアウト</button>
+            <button type="submit" style="float: right;">戻る</button>
     </form>
     <br>
     <hr>
@@ -115,11 +115,12 @@
         </div>
     </div>
 </form>
+<!-- 戻るボタン -->
+    <form action="{{ route('team_point_unlock' , ['id' => $user->id ] ) }}" method="POST" >
+        @csrf
+            <button type="submit" style="float: right;">戻る</button>
+    </form>
 
-<!-- 戻る -->
-<div class="ms-3">
-    <a href="{{ route('staff_main') }}" class="btn btn-primary">戻る</a>
-</div>
 <hr>
 <footer style="text-align: right;">
     <h8>© 2025 (特非)愛知県オリエンテーリング協会</h8>

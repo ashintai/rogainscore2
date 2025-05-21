@@ -20,6 +20,14 @@
     <title>モリコロロゲイン</title>
 </head>
 <body>
+
+<!-- アラームの表示 -->
+@if(session('message'))
+    <script>
+        alert("{{ session('message') }}");
+    </script>
+@endif
+
 <header>
     <h5 style="color: blue;">モリコロロゲイニング　スタッフ操作</h5>
     <!-- ログアウトボタン -->
