@@ -113,7 +113,8 @@ Route::post('/team_point_delete/{get_id}/{user_id}' , [HomeController::class , '
 Route::post('/team_point_change' , [HomeController::class , 'team_point_change'])->name('team_point_change');
 // ポイント手入力　
 Route::post('/team_point_input/{id}' , [HomeController::class , 'team_point_input'])->name('team_point_input');
-
+// 減点入力
+Route::post('/team_penalty_input/{user_id}' , [HomeController::class , 'team_penalty_input'])->name('team_penalty_input');
 
 // ポイント履歴一覧
 Route::get('/point_history' , [HomeController::class , 'point_history'])->name('point_history');

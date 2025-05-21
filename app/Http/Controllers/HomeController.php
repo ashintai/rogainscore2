@@ -599,6 +599,22 @@ public function team_point($id){
     return view('team_point', compact('user', 'get_points' , 'set_point_list' , 'score' , 'penalty'));
 }
 
+// 減点の入力
+public function team_penalty_input($user_id , Request $request){
+//    $user_idに対象のユーザーのid
+$user= User::find($user_id);
+// 入力された減点
+$penalty = $request->input('penalty');
+if($user){
+    $user->penalty =$penalty;
+    $user->save(); // データベースに保存}
+    }else{
+        return redirect()->back()->with('message' , 'システムエラーですteam_penalty_input');
+    }
+    return redirect()->route('team_point' , [ 'id' => $user_id ]);
+    
+}
+
 // 手入力の削除
 public function team_point_delete($get_id , $user_id){
     // 手入力の削除

@@ -82,9 +82,13 @@
 @endforeach
 
 <!-- 得点、減点の表示と入力 -->
-<p>取得点:{{ "$score" }}</p>
-<p>減点:{{ "$penalty" }}</p>
-<p>合計点:{{ "$score - $penalty "}}</p>
+<p class="ms-3" >取得点:{{ "$score" }}</p>
+
+<form action="{{ route('team_penalty_input' , ['user_id' => $user->id] ) }}" method="POST" class="ms-4">
+    <input type = "text" name="penalty" id="penalty" value="{{ $penalty }}" required maxlength="5" inputmode="numeric" pattern="\d*" size="8">
+    <button type="submit" class="btn btn-primary">減点入力</button>
+</form>
+<p>合計点:{{ $score - $penalty }}</p>
 
 <hr>
 
