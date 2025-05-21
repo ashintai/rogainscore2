@@ -30,7 +30,7 @@
     <br><br>
     <!-- 成績速報ボタン -->
     <a href="{{ route('result') }}" class="btn btn-primary">成績速報</a>
-    <!-- <br><br> -->
+    <br><br>
     <!-- 減点入力ボタン -->
     <!-- <a href="{{ route('input_penalty') }}" class="btn btn-primary">減点入力</a> -->
     <!-- <br><br> -->
