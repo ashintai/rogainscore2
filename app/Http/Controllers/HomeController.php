@@ -630,7 +630,7 @@ public function team_point_photo($get_id , $user_id){
         return redirect()->back()->with('message' , 'システムエラーですteam_point_photo');
     }
 
-    return view('team_point_photo', compact('user_id' , 'get_id' , 'checked' , 'team_no' , 'team_name' , 'point_no' , 'point_name' , 'get_photo_url' , 'set_photo_url'));
+    return view('team_point_change', compact('user_id' , 'get_id' , 'checked' , 'team_no' , 'team_name' , 'point_no' , 'point_name' , 'get_photo_url' , 'set_photo_url'));
     }
 
     // ポイント状態の変更
