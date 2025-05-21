@@ -34,7 +34,7 @@
 </header>
 @foreach ($get_points as $point)
     @if ($point->setPoint && $point->setPoint->point_name)
-    <div class="d-flex align-item2-center" style="gap: 8px;" >
+    <div class="d-flex align-items-center" style="gap: 8px;" >
     
     <!-- 状態を表示 -->
     <!-- $point->checked 0 未確認 1確認中 2OK 3NG 4仮登録 5手入力＝OK -->
