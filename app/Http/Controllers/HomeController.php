@@ -611,7 +611,7 @@ public function team_point($id){
 // チームのロックを解除してチーム一覧へ戻る
 public function team_point_unlock($user_id){
     // チームのロックを解除してチーム一覧へ戻る
-    $user = User::find($id);
+    $user = User::find($user_id);
     if($user){
         $user->role = 0;
         $user->save();
