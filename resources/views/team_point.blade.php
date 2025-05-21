@@ -33,7 +33,7 @@
     <!-- チーム番号とチーム名を表示 -->
     <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
     <!-- 戻るボタン -->
-    <form action="{{ route('team_point_unlock' , ['id' => $user->id ] ) }}" method="POST" >
+    <form action="{{ route('team_point_unlock' , ['user_id' => $user->id ] ) }}" method="POST" >
         @csrf
             <button type="submit" style="float: right;">戻る</button>
     </form>
@@ -116,7 +116,7 @@
     </div>
 </form>
 <!-- 戻るボタン -->
-    <form action="{{ route('team_point_unlock' , ['id' => $user->id ] ) }}" method="POST" >
+    <form action="{{ route('team_point_unlock' , ['user_id' => $user->id ] ) }}" method="POST" >
         @csrf
             <button type="submit" style="float: right;">戻る</button>
     </form>
