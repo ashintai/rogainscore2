@@ -630,7 +630,7 @@ public function team_point_input($id , Request $request){
     
     // あたらしくGet_pointテーブルにレコードを追加
     if ($exits){
-        return redirect()->bcak()->with('message', 'すでに登録済みのポイントです');
+        return redirect()->back()->with('message', 'すでに登録済みのポイントです');
     }else{
     Get_point::create([
         'team_no' => $team_no,
