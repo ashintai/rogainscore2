@@ -598,8 +598,17 @@ public function team_point_photo($id){
 }
 
 // 手入力の削除
-public function team_point_delete($id){
-    return redirect()->route('team_point', ['id' => $id]);
+public function team_point_delete($get_id , $user_id){
+    // 手入力の削除
+    // $get_id で指定されたGetテーブルのレコードを無効化
+    // 実際にはteam_no を０に変更する
+    $get_point = Get_point::find($id);
+    if ($get_point) {
+        $get_point->team_no = 0; // 無効化
+        $get_point->save(); // データベースに保存
+    }
+    // ポイント一覧に戻るときに、user_idを渡す
+    return redirect()->route( 'team_point' , [ 'id' => $user_id ]);
 }
 
 // 未確認へ変更

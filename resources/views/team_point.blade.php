@@ -67,7 +67,7 @@
     <!-- cheked=5 の手入力の場合は　削除、写真がある場合は　写真を表示 -->
         <div class="ms-auto">    
         @if($point->checked == 5)
-                <a href="{{ route('team_point_delete', ['id' => $point->id, ]) }}" class="btn btn-danger">削除</a>
+                <a href="{{ route('team_point_delete', ['get_id' => $point->id, 'user_id' => $user->id  ]) }}" class="btn btn-danger">削除</a>
             @else
                 <a href="{{ route('team_point_photo', ['id' => $point->id, ]) }}" class="btn btn-success">写真</a>
             @endif
