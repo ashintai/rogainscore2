@@ -34,7 +34,7 @@
 </header>
 @foreach ($get_points as $point)
     @if ($point->setPoint && $point->setPoint->point_name)
-    <div class="display: flex;" >
+    <div class="d-flex align-item2-center" style="gap: 8px;" >
     
     <!-- 状態を表示 -->
     <!-- $point->checked 0 未確認 1確認中 2OK 3NG 4仮登録 5手入力＝OK -->
@@ -52,12 +52,13 @@
             <p class="btn btn-success rounded-circle ms-3">手入力</p>
         @endif
     <!-- ポイント番号とポイント名を表示 -->
-        <h6 style="margin-left: 8px; margin-bottom: 0;">{{ $point->point_no }}:{{ $point->setPoint->point_name }}</h6>
+        <h6 class="mb-0" style="margin-left: 8px;" >{{ $point->point_no }}:{{ $point->setPoint->point_name }}</h6>
     
 
     <!-- 写真 または　削除　-->
     <!-- cheked=5 の手入力の場合は　削除、写真がある場合は　写真を表示 -->
-        @if($point->checked == 5)
+    <div class="ms-auto">    
+    @if($point->checked == 5)
             <a href="{{ route('team_point_delete', ['id' => $point->id, ]) }}" class="btn btn-danger">削除</a>
         @else
             <a href="{{ route('team_point_photo', ['id' => $point->id, ]) }}" class="btn btn-success">写真</a>
@@ -77,7 +78,7 @@
         @elseif($point->checked == 4)
             <p>ポイント番号不明のため編集不可</p>
         @endif -->
-   
+    </div>
     @endif
     <hr>
 @endforeach
