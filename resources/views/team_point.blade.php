@@ -34,6 +34,7 @@
 </header>
 @foreach ($get_points as $point)
     @if ($point->setPoint && $point->setPoint->point_name)
+    <div display: flex;>
     <div class="d-flex align-items-left " style="gap: 8px; margin-bottom: 0;">
     <!-- 状態を表示 -->
     <!-- $point->checked 0 未確認 1確認中 2OK 3NG 4仮登録 5手入力＝OK -->
@@ -79,6 +80,7 @@
             <p>ポイント番号不明のため編集不可</p>
         @endif -->
     </div> 
+    </div>
     @endif
     <hr>
 @endforeach
