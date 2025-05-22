@@ -618,7 +618,7 @@ public function team_point_unlock($user_id){
     }else{
         return redirect()->back()->with('message' , 'システムエラーですteam_point_unlock');
     }
-    return redirect()->route('team_index');
+    return redirect()->route('team_index' );
 
 }
 

@@ -61,6 +61,11 @@ user: ログインしているユーザー -->
 <header>
     <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　ポイント通過登録</h5>
     <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}</h6>
+    <!-- スタッフ編集中を表示 -->
+    @if($user->role != 0)
+        <h6 style="color: red; margin-left: 8px;">只今スタッフ編集中につき操作できません。</h6>
+    @endif    
+    
     <!-- 各ボタンを横並びに表示 -->
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <!-- すべての取得写真の一覧の表示・編集画面 -->
