@@ -55,7 +55,7 @@
 @if( $flag == 2 )
     <script>
         // JavaScriptでアラートを表示
-        alert('このポイントにはすでに登録されています');
+        alert('このポイントはすでに登録されています');
     </script>
 @endif
 
@@ -118,6 +118,8 @@
         <!-- 写真なし（手入力）は写真登録ボタンを表示 -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-left:5px">
             <div>
+                <!-- スタッフ編集中は編集ボタンを表示しない -->
+                @if($user->role == 0)
                 <!-- 確認中は飛べるボタンを表示しない -->
                 @if($get_point->checked != 1)
                 <!-- 写真なし（手入力）は写真登録ボタンを表示 -->
@@ -144,6 +146,7 @@
                         <button type="submit" class="btn btn-primary ms-3" >ポイント番号変更</button>
                     </form> 
                     @endif
+                @endif
                 @endif
             </div>
             <!-- ダウンロードボタンの表示 -->
