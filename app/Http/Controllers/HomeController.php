@@ -1171,8 +1171,8 @@ public function exchange_get(Request $request)
         // 新しいURLを取得
         $newurl = Storage::disk('s3')->url($newfilename);
 
-        // 前の取得写真のGetテーブルを書き換え
-        $get_point_before->point_no = $set_point_no ;
+        // 前の取得写真のGetテーブルを仮登録に書き換え
+        $get_point_before->point_no = 0 ;
         $get_point_before->photo_filename = $newurl;
         $get_point_before->checked = 4; // 仮登録
         $get_point_before->save(); // データベースに保存

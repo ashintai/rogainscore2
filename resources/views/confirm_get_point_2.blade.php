@@ -2,9 +2,10 @@
 ダブったときだけ呼ばれる
 次のパラメータを受け取る
 user:ユーザ情報
-set_point:Setテーブル
-get_point:あたらしく登録しようとしている取得写真のGetテーブル
-get_point_before: 前に登録された取得写真のGetテーブル
+set_point:登録しようとしているSetテーブルのレコード
+get_point:あたらしく登録しようとしている取得写真のGetテーブルのレコード
+get_point_before: 前に登録された取得写真のGetテーブルのレコード
+set_photo_filename:設定ポイントの写真ファイル名
 -->    
 
 <!DOCTYPE html>
@@ -51,7 +52,7 @@ get_point_before: 前に登録された取得写真のGetテーブル
 <hr>
 
 <!-- 新しい取得ポイントの写真 -->
-<h6 style="color: red;">{{$set_point->point_no}}：{{$set_point->point_name}}として新しくこの写真を登録しますか？</h6>
+<h6 style="color: red;">{{$set_point->point_no}}：{{$set_point->point_name}}として新しくこの写真に変更しますか？</h6>
 @if ( $get_point )
     <div class="d-flex justify-content-center"> 
         <img src="{{ $get_point->photo_filename }}" alt="取得写真" style="max-width: 80%;">
