@@ -57,14 +57,16 @@
 
 <!-- 取得写真の読み込み -->
 <div class="container mt-1">
-    <h6 style="color: blue;">撮影した写真の登録</h6>
+    <!-- 画像の一時置き場 -->
+    <img src="" id="preview" />
+    <h6 style="color: blue;">撮影した写真の登録（注）すでに一度登録した場合でもここには表示されません。</h6>
     <form action="{{ route('all_images_change_photo') }}" method="post" id="imageForm"  enctype="multipart/form-data">
         @csrf
         <!-- 設定ポイント番号を送る -->
         <input type="hidden" id="selected_point" name="set_point_no" value="{{ $set_point_no }}">
         <input type="hidden" id="get_point_id" name="get_point_id" value="{{ $get_point_id }}">
         <input type="hidden" id="canvasImage" name="image"> <!-- 隠しフィールド -->
-        <img src="" id="preview" />
+        
         <!-- 画像ファイルの入力→onChangeでcanvasDraw()を実行 -->
         <div class=mb-3>
             <input type="file" id="imageSelect" onChange="canvasDraw();" />
@@ -72,10 +74,10 @@
         <!-- ボタンクリックでimageUpload()を実行 -->
         <!-- canvas要素の生成 -->
         <div class="d-flex justify-content-center mt-3">
-            <canvas id="canvas"></canvas>
+            <canvas id="canvas" style="max-width: 80%; margin-left: 10px;" ></canvas>
         </div>
         <div class="d-flex justify-content-center mt-3">
-            <input type="button" onClick="prepareAndSubmitForm();" value="登録" />
+            <input type="button" id="touroku" onClick="prepareAndSubmitForm();" value="登録" class="btn btn-primary" style="display: none;"/>
         </div>
         </form>
 </div>
@@ -96,8 +98,14 @@ function canvasDraw() {
                 
     //画像ファイルかチェック
     // file["type"]はファイルの種類を表すプロパティ
-    if (file["type"] != "image/jpeg" && file["type"] != "image/png" && file["type"] != "image/gif") {
-        alert("画像ファイルを選択してください");
+    if (
+        file["type"] != "image/jpeg" && 
+        file["type"] != "image/png" && 
+        file["type"] != "image/gif" &&
+        file["type"] != "image/heif" &&
+        file["type"] != "image/heic"
+    ){
+        alert("画像ファイルを選択してください。(jpeg, png, gif, heif, heic)");
         $("#imageSelect").val(''); //選択したファイルをクリア
         return ;
     }
@@ -125,6 +133,9 @@ function canvasDraw() {
             $("#canvas").attr("width", w);
             $("#canvas").attr("height", h);
             ctx.drawImage(image, 0, 0, w, h);
+
+            // 登録ボタンを表示
+            document.getElementById("toroku").style.display = "inline-block";
         };
         image.src = fr.result;
     };

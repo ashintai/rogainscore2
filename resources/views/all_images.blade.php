@@ -98,18 +98,22 @@
             <p class="btn btn-dark rounded-circle ms-3">ポイント番号不明</p>
         @elseif($get_point->checked == 5)
             <h6 class="ms-3">ポイント番号: {{ $get_point->point_no }} -  {{ $get_point->setPoint->point_name}}</h6>
-            <p class="btn btn-success rounded-circle ms-3">写真なし</p>
+            <p class="btn btn-success rounded-circle ms-3">手入力OK</p>
         @endif
         </div>
         <!-- 取得写真の表示 -->
+        <!-- もし$get_point->photo_filenameがなければメッセージを表示 -->
         <div class="image-container d-flex justify-content-center">
-        @if($get_point->checked == 5)
-            <h6 style="color: red;">このポイントは手入力されています。写真はありません</h6>
-        @else
-            @if( $get_point->photo_filename )
-                <img src="{{ $get_point->photo_filename }}" alt="取得写真">
+
+        @if( $get_point->photo_filename == null )
+            @if($get_point->checked == 5)
+                <h6 style="color: red;">このポイントは手入力されています。写真はありません</h6>
+            @else
+                <h6 style="color: red;">写真の登録がありません。再度登録してください。</h6>
             @endif
-        @endif    
+        @else
+                <img src="{{ $get_point->photo_filename }}" alt="取得写真">
+        @endif
         </div>
         
         <!-- ポイント番号入れ替えボタン -->

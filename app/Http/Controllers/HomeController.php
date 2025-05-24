@@ -792,6 +792,13 @@ public function all_images_change_get(Request $request)
     if( $get_point_before ){
         return redirect()->route('all_images' , ['flag' => 2] );
     }
+
+    // なんらかの理由でset_point_noがない場合はシステムエラー
+    $set_point = Set_point::where('point_no', $set_point_no)->first();
+    if (!$set_point) {
+        return redirect()->route('all_images' , ['flag' => 5] );
+    }
+    
     // ダブっていない場合はGetテーブルを書き換える
     $get_point = Get_point::find($get_point_id);
     if ($get_point) {
@@ -845,7 +852,7 @@ public function all_images_photo(Request $request)
 
     
     // 手入力対応の写真登録画面を呼び出す
-    return view( 'all_images_photo_get' , compact('set_point_no' ,'set_point_name' , 'set_point_name' , 'user' , 'get_point_id' ,'url' ));
+    return view( 'all_images_photo_get' , compact('set_point_no' ,'set_point_name' ,  'user' , 'get_point_id' ,'url' ));
 
 }
 
@@ -890,12 +897,12 @@ public function all_images_change_photo(Request $request)
     unlink($tempFilePath);
 
     // Get_point のテーブルの修正
+    // get_point_id のレコードが存在する場合のみ、filenameを書き換える
     $get_point = Get_point::find($get_point_id);
-    $get_point->point_no = $set_point_no ;
+    if($get_point){
         $get_point->photo_filename = $url;
-        $get_point->checked = 2; // OKに変更（手入力段階で確認とれているという前提）
         $get_point->save(); // データベースに保存    
-
+        }
     //  flag=3で写真一覧へ戻る
     return redirect()->route('all_images' , ['flag' => 3] );   
 
