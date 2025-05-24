@@ -53,7 +53,7 @@
     <!-- 設定ポイントの写真表示 -->
     <div class="d-flex justify-content-center mt-3">
         <img src="{{ $url }}"  alt="ポイント画像" style="max-width: 80%; ">
-    </div">
+    </div>
 <hr>
 
 <!-- 取得写真の読み込み -->
