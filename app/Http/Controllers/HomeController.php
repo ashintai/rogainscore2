@@ -1496,13 +1496,14 @@ public function point_history()
         $point_no = $set_point->point_no;
         // ポイント名
         $point_name = $set_point->point_name;
-        // そのポイントを通過したチーム番号を取得し１列の文字列にする
-        $get_points = Get_point::where('point_no', $point_no)->where('checked', 2)->get();
+        // そのポイントを通過したチーム番号OKと手入力を取得し１列の文字列にする
+        $get_points = Get_point::where('point_no', $point_no)->whereIn('checked', [2,5])->get();
         // ポイント毎の通過チーム番号を文字列に
         $result_str = "";
         foreach ($get_points as $get_point) {
             $team_no = $get_point->team_no;
-            $team_name = User::where('team_no', $team_no)->first()->name;
+            $user = User::where('team_no', $team_no)->first();
+            $team_name = $user ? $user->name :  '不明' ;
             $result_str .= $team_no . ":" . $team_name . "ー";
         }
         $results[] = [
