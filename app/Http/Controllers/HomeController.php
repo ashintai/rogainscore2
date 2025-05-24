@@ -547,8 +547,8 @@ public function change_penalty(Request $request){
 
 // チーム情報一覧＆編集
 public function team_index(){
-    // 参加者のみの情報を取得
-    $users = User::with('category')->where('role', 0)->get();
+    // 参加者のみの情報を取得 通常状態とロック状態の両方
+    $users = User::with('category')->whereIn('role', [ 0 , 3 ])->get();
     // チーム情報を渡す
     return view('team_index', compact('users'));
 }

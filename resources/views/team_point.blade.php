@@ -35,7 +35,7 @@
     <!-- 戻るボタン -->
     <form action="{{ route('team_point_unlock' , ['user_id' => $user->id ] ) }}" method="POST" >
         @csrf
-            <button type="submit" style="float: right;">戻る</button>
+            <button type="submit" style="float: right;" class="btn btn-primary" >戻る</button>
     </form>
     <br>
     <hr>
