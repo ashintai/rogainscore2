@@ -35,7 +35,7 @@
     <!-- 戻るボタン -->
     <form action="{{ route('team_point_unlock' , ['user_id' => $user->id ] ) }}" method="POST" >
         @csrf
-            <button type="submit" style="float: right;" class="btn btn-primary" >戻る</button>
+            <button type="submit"  style="margin-left: 20px;" class="btn btn-primary" >戻る</button>
     </form>
     <br>
     <hr>
@@ -116,9 +116,9 @@
     </div>
 </form>
 <!-- 戻るボタン -->
-    <form action="{{ route('team_point_unlock' , ['user_id' => $user->id ] ) }}" method="POST" >
+    <form action="{{ route('team_point_unlock' , ['user_id' => $user->id ] ) }}" method="POST" style="text-align: center;">
         @csrf
-            <button type="submit" style="float: right;">戻る</button>
+            <button type="submit" class="btn btn-primary">戻る</button>
     </form>
 
 <hr>
