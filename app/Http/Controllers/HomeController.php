@@ -1401,9 +1401,6 @@ public function getResults(Request $request)
 
     // カテゴリIDに基づいて該当するチームデータを取得
     $results = User::where('category_id', $categoryId)->get();
-
-    
-    
     
     // 結果を入れる配列を準備
     $resultArray = [];
@@ -1412,8 +1409,8 @@ public function getResults(Request $request)
         
         // 減点を取得
         $penalty = $result->penalty;
-        // 巡ったポイントのうち、OKがでているポイントを取得
-        $get_points = Get_point::where('team_no', $result->team_no)->where('checked', 2)->get();
+        // 巡ったポイントのうち、OKまたは手入力のポイントを取得
+        $get_points = Get_point::where('team_no', $result->team_no)->whereIn('checked', [2,5])->get();
         // 未確認待ちのポイント数をカウント
         $checking_num = Get_point::where('team_no', $result->team_no)->where('checked', 0)->count();
         // NGのポイント数をカウント
@@ -1429,7 +1426,7 @@ public function getResults(Request $request)
                 $result_str .= $get_point->point_no . ":" . $get_point->setPoint->point_name . "ー";
                 $total_score += $get_point->setPoint->score;
             }else{
-                $result_str .= $get_point->point_no . ":未設定" . "ー";
+                $result_str .= $get_point->point_no . ":不明" . "ー";
             }
             
         }
