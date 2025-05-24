@@ -83,24 +83,40 @@
     @foreach($get_points as $get_point)
         <div style="display: flex; align-items: center;">
         @if($get_point->checked == 0)
-            <h6 class="ms-3">ポイント番号: {{ $get_point->point_no }} -  {{ $get_point->setPoint->point_name}}</h6>
+            <h6 class="ms-3">
+                ポイント番号: {{ $get_point->point_no }} -  
+                {{ $get_point->setPoint ? $get_point->setPoint->point_name : '不明' }}
+            </h6>
             <p class="btn btn-secondary rounded-circle ms-3" >確認待ち</p>
         @elseif($get_point->checked == 1)
-            <h6 class="ms-3">ポイント番号: {{ $get_point->point_no }} -  {{ $get_point->setPoint->point_name}}</h6>
+            <h6 class="ms-3">
+                ポイント番号: {{ $get_point->point_no }} -  
+                {{ $get_point->setPoint ? $get_point->setPoint->point_name : '不明' }}
+            </h6>
             <p class="btn btn-warning rounded-circle ms-3"> 確認作業中</p>
         @elseif($get_point->checked == 2)
-            <h6 class="ms-3">ポイント番号: {{ $get_point->point_no }} -  {{ $get_point->setPoint->point_name}}</h6>
+            <h6 class="ms-3">
+                ポイント番号: {{ $get_point->point_no }} -  
+                {{  $get_point->setPoint ? $get_point->setPoint->point_name : '不明' }}
+            </h6>
             <p class="btn btn-success rounded-circle ms-3" >OK</p>
         @elseif($get_point->checked == 3)
-            <h6 class="ms-3">ポイント番号: {{ $get_point->point_no }} -  {{ $get_point->setPoint->point_name}}</h6>
-            <p class="btn btn-danger rounded-circle ms-3">NG</p>
+        <h6 class="ms-3">
+            ポイント番号: {{ $get_point->point_no }} -  
+            {{ $get_point->setPoint ? $get_point->setPoint->point_name : '不明' }}
+        </h6>
+        <p class="btn btn-danger rounded-circle ms-3">NG</p>
         @elseif($get_point->checked == 4)
             <p class="btn btn-dark rounded-circle ms-3">ポイント番号不明</p>
         @elseif($get_point->checked == 5)
-            <h6 class="ms-3">ポイント番号: {{ $get_point->point_no }} -  {{ $get_point->setPoint->point_name}}</h6>
+            <h6 class="ms-3">
+                ポイント番号: {{ $get_point->point_no }} -  
+                {{  $get_point->setPoint ? $get_point->setPoint->point_name : '不明' }}
+            </h6>
             <p class="btn btn-success rounded-circle ms-3">手入力OK</p>
         @endif
         </div>
+        
         <!-- 取得写真の表示 -->
         <!-- もし$get_point->photo_filenameがなければメッセージを表示 -->
         <div class="image-container d-flex justify-content-center">
