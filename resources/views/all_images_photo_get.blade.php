@@ -51,8 +51,9 @@
     <h6 style="color: blue;">手入力されたポイント</h6>
     <h6>{{ $set_point_no}} : {{ $set_point_name }}</h6>
     <!-- 設定ポイントの写真表示 -->
-    <img src="{{ $url }}"  alt="ポイント画像" style="max-width: 80%; margin-left: 10px;">
-    
+    <div class="d-flex justify-content-center mt-3">
+        <img src="{{ $url }}"  alt="ポイント画像" style="max-width: 80%; ">
+    </div">
 <hr>
 
 <!-- 取得写真の読み込み -->
@@ -77,12 +78,12 @@
             <canvas id="canvas" style="max-width: 80%; margin-left: 10px;" ></canvas>
         </div>
         <div class="d-flex justify-content-center mt-3">
-            <input type="button" id="touroku" onClick="prepareAndSubmitForm();" value="登録" class="btn btn-primary" style="display: none;"/>
+            <input type="button" id="toroku" onClick="prepareAndSubmitForm();" value="登録" class="btn btn-primary" style="display: none;"/>
         </div>
         </form>
 </div>
 
-
+<hr>
 <footer style="text-align: right;">
     <h8>© 2025 (特非)愛知県オリエンテーリング協会</h8>
 </footer>
