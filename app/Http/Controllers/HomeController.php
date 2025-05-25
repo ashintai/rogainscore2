@@ -431,15 +431,14 @@ public function next_get_point()
 {
     // 最初の未チェック写真を探す
 //  Get_pointテーブルのchekckedが０（確認中）でかつリレーションするuserテーブルのroleが3（ロック中）以外のものを取得
-    $next_point = Get_point::where('checked', 0)
-    ->whereHas('user', function($query) {
-        $query->where('role', '!=', 3);
-    })
-    ->first();
+    // $next_point = Get_point::where('checked', 0)
+    // ->whereHas('user', function($query) {
+    //     $query->where('role', '!=', 3);
+    // })
+    // ->first();
 
-    // $next_point = Get_point::where('checked', 0)->first();
+    $next_point = Get_point::where('checked', 0)->first();
 
-    \Log::debug($next_point);
     // チームがロック中role=3 の場合は、チェックできない
     
     // チェック中フラグを立てる
