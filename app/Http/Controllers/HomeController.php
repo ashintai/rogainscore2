@@ -451,7 +451,8 @@ public function next_get_point()
         $key = "set_" . $next_point->point_no . ".JPG";
         $set_photo_url = Storage::disk('s3')->url($key);
         $set_point = Set_point::where('point_no', $next_point->point_no)->first();
-        $set_point_name = $set_point->point_name;
+        $set_point_name = '仮の姿';
+        // $set_point_name = $set_point->point_name;
         
         // $set_photo_url = "https://rogain.s3.amazonaws.com/set_" . $next_point->point_no . ".JPG"; 
         // 取得写真のURL
