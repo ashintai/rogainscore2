@@ -431,13 +431,14 @@ public function next_get_point()
 {
     // 最初の未チェック写真を探す
 //  Get_pointテーブルのchekckedが０（確認中）でかつリレーションするuserテーブルのroleが3（ロック中）以外のものを取得
-    // $next_point = Get_point::where('checked', 0)
-    // ->whereHas('user', function($query) {
-    //     $query->where('role', '!=', 3);
-    // })
-    // ->first();
+    $next_point = Get_point::where('checked', 0)
+    ->where('point_no', '!=', 0) // point_noが0のものは除外
+    ->whereHas('user', function($query) {
+        $query->where('role', '!=', 3);
+    })
+    ->first();
 
-    $next_point = Get_point::where('checked', 0)->first();
+    // $next_point = Get_point::where('checked', 0)->first();
 
     // チームがロック中role=3 の場合は、チェックできない
     
@@ -450,10 +451,14 @@ public function next_get_point()
         // 設定写真のURLを生成
         $key = "set_" . $next_point->point_no . ".JPG";
         $set_photo_url = Storage::disk('s3')->url($key);
+        // 設定ポイントの名前
         $set_point = Set_point::where('point_no', $next_point->point_no)->first();
-        $set_point_name = '仮の姿';
-        // $set_point_name = $set_point->point_name;
-        
+        if($set_point){
+            $set_point_name = $set_point->point_name;
+        } else {
+            $set_point_name = '不明'; // 設定ポイントが見つからない場合のデフォルト値
+        }
+                
         // $set_photo_url = "https://rogain.s3.amazonaws.com/set_" . $next_point->point_no . ".JPG"; 
         // 取得写真のURL
         $get_photo_url = $next_point->photo_filename ;
