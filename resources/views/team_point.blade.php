@@ -57,7 +57,7 @@
         @elseif($point->checked == 4)
             <p class="btn btn-dark rounded-circle ms-3">ポイント番号不明</p>
         @elseif($point->checked == 5)
-            <p class="btn btn-success rounded-circle ms-3">手入力</p>
+            <p class="btn btn-success rounded-circle ms-3">手入力OK</p>
         @endif
     <!-- ポイント番号とポイント名を表示 -->
         <h6 class="mb-0" style="margin-left: 8px;" >{{ $point->point_no }}:{{ $point->setPoint->point_name }}</h6>

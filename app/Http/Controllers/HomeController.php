@@ -668,7 +668,7 @@ public function team_point_photo($get_id , $user_id){
     $get_point = Get_point::with('setPoint')->find($get_id);
     if($get_point){
         $point_no = $get_point->point_no;
-        $point_name = $get_point->setPoint->point_name;
+        $point_name = $get_point->setPoint ? $get_point->setPoint->point_name : '不明';
         $get_photo_url = $get_point->photo_filename;
         $checked = $get_point->checked;
         $set_photo_url = "https://rogain.s3.amazonaws.com/set_" . $point_no . ".JPG";

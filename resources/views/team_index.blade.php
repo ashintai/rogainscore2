@@ -35,6 +35,10 @@
         @csrf
             <button type="submit" style="float: right;">ログアウト</button>
     </form>
+    <!-- 戻る -->
+    <div class="ms-3">
+        <a href="{{ route('staff_main') }}" class="btn btn-primary">戻る</a>
+    </div>
     <br>
     <hr>
 </header>

@@ -74,20 +74,20 @@
         @elseif($checked == 4)
             <p class="btn btn-dark rounded-circle ms-3">ポイント番号不明</p>
         @elseif($checked == 5)
-            <p class="btn btn-success rounded-circle ms-3">手入力</p>
+            <p class="btn btn-success rounded-circle ms-3">手入力OK</p>
         @endif
 
     <div style="display: flex">
         <div style="width: 45%; margin-left:5px;">
             <p>取得写真</p>
             <div >
-                <img src="{{ $get_photo_url }}" alt="取得写真" style="width: 100%; height:auto;">
+                <img src="{{ $get_photo_url }}" alt="取得写真がありません" style="width: 100%; height:auto;">
             </div>
         </div>
         <div style="width: 45%; margin-left:5px;" >
             <p>見本写真</p>
             <div >
-                <img src="{{ $set_photo_url }}" alt="正解写真" style="width: 100%; height:auto;">
+                <img src="{{ $set_photo_url }}" alt="正解写真がありません" style="width: 100%; height:auto;">
             </div>
         </div>
     </div>
