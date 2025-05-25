@@ -439,6 +439,8 @@ public function next_get_point()
 
     // $next_point = Get_point::where('checked', 0)->first();
 
+    dd($next_point); // ここで中身を確認
+    
     // チームがロック中role=3 の場合は、チェックできない
     
     // チェック中フラグを立てる
