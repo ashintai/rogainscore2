@@ -430,7 +430,17 @@ return redirect()->route('index');
 public function next_get_point()
 {
     // 最初の未チェック写真を探す
-    $next_point = Get_point::where('checked', 0)->first();
+//  Get_pointテーブルのchekckedが０（確認中）でかつリレーションするuserテーブルのroleが3（ロック中）以外のものを取得
+    $next_point = Get_point::where('checked', 0)
+    ->whereHas('user', function($query) {
+        $query->where('role', '!=', 3);
+    })
+    ->first();
+
+    // $next_point = Get_point::where('checked', 0)->first();
+
+    // チームがロック中role=3 の場合は、チェックできない
+    
     // チェック中フラグを立てる
     if ($next_point) {
         // checkedカラムの内容を書き換える
@@ -448,8 +458,8 @@ public function next_get_point()
         $get_photo_url = $next_point->photo_filename ;
         // チーム番号とチーム名,メンバー数を準備する
         $team_no = $next_point->team_no;
-        $team_name = $next_point->user->name; //リレーションでUsrからチーム名を取得
-        $member_num = $next_point->user->member_num;
+        $team_name = $next_point->user ? $next_point->user->name : '不明';//リレーションでUsrからチーム名を取得
+        $member_num = $next_point->user ? $next_point->user->member_num : '0'; // リレーションでUsrからメンバー数を取得 
 
         // Bladeへ渡す
         return view('check_point', compact('next_point','team_no' , 'team_name' , 'member_num' ,'set_point_name' ,'set_photo_url' , 'get_photo_url'));
