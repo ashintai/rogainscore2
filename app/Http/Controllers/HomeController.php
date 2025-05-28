@@ -136,7 +136,6 @@ public function clear_get(){
 // 取得写真のダウンロード
 public function get_photo_download(Request $request)
 {
-   {
     $team_no = $request->input('team_no');
     if (!$team_no) {
         return back()->withErrors(['ini' => 'チーム番号が指定されていません。']);
@@ -169,14 +168,10 @@ public function get_photo_download(Request $request)
     }
     $zip->close();
 
-    // ZIPファイルの存在とサイズをログに出力
-\Log::debug('ZIPファイル存在確認: ' . ($exists = file_exists($zipFilePath) ? 'あり' : 'なし'));
-if ($exists) {
-    \Log::debug('ZIPファイルサイズ: ' . filesize($zipFilePath) . ' バイト');
-}
+
 
     return response()->download($zipFilePath, $zipFileName)->deleteFileAfterSend(true);
-}
+
 }
 
 /**

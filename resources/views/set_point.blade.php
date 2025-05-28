@@ -9,6 +9,13 @@
     <title>Document</title>
 </head>
 <body>
+<!-- エラーメッセージを表示 -->
+    @if ($errors->has('ini'))
+        <script>
+            alert('{{ $errors->first('ini') }}');
+        </script>
+    @endif
+    
     <header>
         <h5>モリコロロゲイニング　ポイント設定画面（管理者）</h5>
     <form action="{{ route('logout') }}" method="POST" >
