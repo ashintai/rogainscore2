@@ -55,7 +55,10 @@ class HomeController extends Controller
             }else{
                 $flag = 1;
             }
-            return view( 'set_point' , compact('flag'));
+
+            // 取得写真DL用にチームデータも渡す
+            $users = User::where('role', 0)->get();
+            return view( 'set_point' , compact('flag' , 'users') );
         }
         
         // 役割が２：スタッフの場合、チェック画面へ直リンク
@@ -130,6 +133,47 @@ public function clear_get(){
     return redirect()->route('index');
 }
 
+// 取得写真のダウンロード
+public function get_photo_download(Request $request)
+{
+    // チーム番号を取得
+    $team_no = $request->input('team_no');
+    // チーム番号が指定されていない場合はエラー
+    if (!$team_no) {
+        return back()->withErrors(['ini' => 'チーム番号が指定されていません。']);
+    }
+    
+    // 指定されたチームの取得写真を取得
+    $get_points = Get_point::where('team_no', $team_no)->get();
+    
+    // 取得写真がない場合はエラー
+    if ($get_points->isEmpty()) {
+        return back()->withErrors(['ini' => '指定されたチームの取得写真がありません。']);
+    }
+
+    // ZIPファイル名を生成
+    $zipFileName = 'get_photos_team_' . $team_no . '.zip';
+    
+    // ZIPファイルを作成
+    $zip = new \ZipArchive();
+    if ($zip->open(public_path($zipFileName), \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
+        return back()->withErrors(['ini' => 'ZIPファイルの作成に失敗しました。']);
+    }
+
+    // 取得写真をZIPに追加
+    foreach ($get_points as $get_point) {
+        $filePath = public_path('storage/' . basename($get_point->photo_filename));
+        if (file_exists($filePath)) {
+            $zip->addFile($filePath, basename($filePath));
+        }
+    }
+
+    // ZIPファイルを閉じる
+    $zip->close();
+
+    // ZIPファイルをダウンロード
+    return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
+}
 
 /**
  * ポイント設定ファイル（CSV）を読み込んでDBのテーブルにセットする

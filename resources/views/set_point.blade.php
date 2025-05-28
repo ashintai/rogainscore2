@@ -73,6 +73,17 @@
     </form>
     <br>
 
+    <form action="{{ url('/get_photo_download') }}" method="POST" class="ms-3">
+    <select name="team_no" class="form-select ms-3" id="team_no">
+        <option value="">チームを選択</option>
+        @foreach ($users as $user)
+            <option value="{{ $user->team_no }}">{{ $user->team_no }}:{{ $user->name }}</option>
+        @endforeach
+    </select>
+    <button class="btn btn-primary">取得写真のダウンロード</button> 
+    </form>
+    <br>
+
     取得写真データの消去（getテーブルの全データおよびAWS-S3のget写真を消去）<br>
     <form action="{{ url('/clear_get') }}" method="POST" class="ms-3">
     @csrf

@@ -35,6 +35,8 @@ Route::get('/index', [HomeController::class, 'index'])->name('index');
 Route::post('/login_wait', [HomeController::class, 'login_wait'])->name('login_wait');
 // Userテーブルの消去
 Route::post('/clear_user', [HomeController::class, 'clear_user'])->name('clear_user');
+// 取得写真のDL
+Route::post('/get_photo_download', [HomeController::class, 'get_photo_download'])->name('download_get');
 // 取得写真データの消去とAWS-S3のget写真消去
 Route::post('/clear_get', [HomeController::class, 'clear_get'])->name('clear_get');
 // 非同期でS3no画像URLを取得するためのルートを追加
