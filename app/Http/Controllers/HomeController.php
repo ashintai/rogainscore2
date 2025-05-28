@@ -142,6 +142,11 @@ public function get_photo_download(Request $request)
         return back()->withErrors(['ini' => 'チーム番号が指定されていません。']);
     }
     $get_points = Get_point::where('team_no', $team_no)->get();
+
+    return view ('debug_test', compact('get_points', 'team_no'));
+
+
+
     if ($get_points->isEmpty()) {
         return back()->withErrors(['ini' => '指定されたチームの取得写真がありません。']);
     }
