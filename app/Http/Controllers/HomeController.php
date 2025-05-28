@@ -1552,10 +1552,16 @@ public function download_get_photo( Request $request )
 
     // S3からファイルを取得
     $disk = Storage::disk('s3');
-    if (!$disk->exists($filename)) {
+
+    try{
+        if (!$disk->exists($filename)) {
+            return redirect()->back()->with('message', '写真ファイルがありません');
+        }
+        $file = $disk->get($filename);
+    }catch(\Exception $e){
+        // エラーが発生した場合はログに記録し、エラーメッセージを表示
         return redirect()->back()->with('message', '写真ファイルがありません');
     }
-    $file = $disk->get($filename);
 
     // ファイルをダウンロード
     return response($file, 200)
