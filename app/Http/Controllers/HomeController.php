@@ -163,14 +163,18 @@ public function get_photo_download(Request $request)
         } else {
             $s3path = $s3url;
         }
-        if ($disk->exists($s3path)) {
-            $fileContent = $disk->get($s3path);
-            $zip->addFromString(basename($s3path), $fileContent);
+
+        try {
+            if ($disk->exists($s3path)) {
+                $fileContent = $disk->get($s3path);
+                $zip->addFromString(basename($s3path), $fileContent);
+            }
+        } catch (\Exception $e) {
+        // エラー時は何もしない、continue; で次のファイルへ
+        continue;
         }
     }
     $zip->close();
-
-
 
     return response()->download($zipFilePath, $zipFileName)->deleteFileAfterSend(true);
 
