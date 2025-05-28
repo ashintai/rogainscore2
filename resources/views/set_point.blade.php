@@ -79,17 +79,19 @@
         <button class="btn btn-danger ">Userテーブルの消去</button>
     </form>
     <br>
-
+    取得写真のダウンロード（チーム毎のZipファイルでダウンロードされます）<br>
     <form action="{{ url('/get_photo_download') }}" method="POST" class="ms-3">
     @csrf
-    <select name="team_no" class="form-select ms-3" id="team_no" style="width: 200px;">
-        <option value="">チームを選択</option>
-        <option value="0">全チーム一括ダウンロード</option>
-        @foreach ($users as $user)
-            <option value="{{ $user->team_no }}">{{ $user->team_no }}:{{ $user->name }}</option>
-        @endforeach
-    </select>
-    <button class="btn btn-primary">取得写真のダウンロード</button> 
+        <div style="display: flex; align-items: center;">
+            <select name="team_no" class="form-select ms-3" id="team_no" style="width: 200px;">
+                <option value="">チームを選択</option>
+            
+                @foreach ($users as $user)
+                    <option value="{{ $user->team_no }}">{{ $user->team_no }}:{{ $user->name }}</option>
+                @endforeach
+            </select>
+            <button class="btn btn-primary">取得写真のダウンロード</button> 
+        </div>
     </form>
     <br>
 
