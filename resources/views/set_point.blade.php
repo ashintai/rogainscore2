@@ -74,6 +74,7 @@
     <br>
 
     <form action="{{ url('/get_photo_download') }}" method="POST" class="ms-3">
+    @csrf
     <select name="team_no" class="form-select ms-3" id="team_no">
         <option value="">チームを選択</option>
         @foreach ($users as $user)
