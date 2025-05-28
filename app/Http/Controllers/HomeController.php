@@ -1544,10 +1544,16 @@ public function download_get_photo( Request $request )
         $filename = ltrim($parsedUrl['path'], '/');
     }
 
+    // ファイル名がnullや拡張子がない場合をはじく
+    if (empty($filename) || !pathinfo($filename, PATHINFO_EXTENSION)) {
+        // ファイル名が空、または拡張子がない場合は404エラー
+        return redirect()->back()->with('message', '写真ファイルがありません');
+    }
+
     // S3からファイルを取得
     $disk = Storage::disk('s3');
     if (!$disk->exists($filename)) {
-        abort(404, 'File not found');
+        return redirect()->back()->with('message', '写真ファイルがありません');
     }
     $file = $disk->get($filename);
 

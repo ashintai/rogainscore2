@@ -16,6 +16,14 @@
     <title>モリコロロゲイン</title>
 </head>
 <body>
+<!-- エラーメッセージの表示 -->
+@if (session('message'))
+<script>
+        alert('{{ session('message') }}');
+    </script>
+@endif
+
+
 <header>
     <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　通過ポイント一覧</h5>
     <h6 style="margin-left: 20px;">チーム番号:{{ $user->team_no }} {{ $user->name }}<h6>
