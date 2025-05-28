@@ -136,44 +136,41 @@ public function clear_get(){
 // 取得写真のダウンロード
 public function get_photo_download(Request $request)
 {
-    // チーム番号を取得
+   {
     $team_no = $request->input('team_no');
-    // チーム番号が指定されていない場合はエラー
     if (!$team_no) {
         return back()->withErrors(['ini' => 'チーム番号が指定されていません。']);
     }
-    
-    // 指定されたチームの取得写真を取得
     $get_points = Get_point::where('team_no', $team_no)->get();
-    
-    // 取得写真がない場合はエラー
     if ($get_points->isEmpty()) {
         return back()->withErrors(['ini' => '指定されたチームの取得写真がありません。']);
     }
 
-    // ZIPファイル名を生成
     $zipFileName = 'team_no_' . $team_no . '.zip';
-    
-    // ZIPファイルを作成
+    $zipFilePath = public_path($zipFileName);
     $zip = new \ZipArchive();
-    if ($zip->open(public_path($zipFileName), \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
+    if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
         return back()->withErrors(['ini' => 'ZIPファイルの作成に失敗しました。']);
     }
 
-    // 取得写真をZIPに追加
+    $disk = Storage::disk('s3');
     foreach ($get_points as $get_point) {
-        $filePath = public_path('storage/' . basename($get_point->photo_filename));
-        if (file_exists($filePath)) {
-            $zip->addFile($filePath, basename($filePath));
+        $s3url = $get_point->photo_filename;
+        if (filter_var($s3url, FILTER_VALIDATE_URL)) {
+            $parsedUrl = parse_url($s3url);
+            $s3path = ltrim($parsedUrl['path'], '/');
+        } else {
+            $s3path = $s3url;
+        }
+        if ($disk->exists($s3path)) {
+            $fileContent = $disk->get($s3path);
+            $zip->addFromString(basename($s3path), $fileContent);
         }
     }
-
-    // ZIPファイルを閉じる
     $zip->close();
 
-    // ZIPファイルをダウンロード
     return response()->download($zipFilePath, $zipFileName)->deleteFileAfterSend(true);
-    
+}
 }
 
 /**
