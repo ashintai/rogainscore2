@@ -152,7 +152,7 @@ public function get_photo_download(Request $request)
     }
 
     // ZIPファイル名を生成
-    $zipFileName = 'get_photos_team_' . $team_no . '.zip';
+    $zipFileName = 'team_no_' . $team_no . '.zip';
     
     // ZIPファイルを作成
     $zip = new \ZipArchive();
@@ -172,7 +172,8 @@ public function get_photo_download(Request $request)
     $zip->close();
 
     // ZIPファイルをダウンロード
-    return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
+    return response()->download($zipFilePath, $zipFileName)->deleteFileAfterSend(true);
+    
 }
 
 /**
