@@ -133,6 +133,8 @@ public function clear_get(){
     return redirect()->route('index');
 }
 
+
+
 // 取得写真のダウンロード
 public function get_photo_download(Request $request)
 {
@@ -146,7 +148,7 @@ public function get_photo_download(Request $request)
     if ($get_points->isEmpty()) {
         return back()->withErrors(['ini' => '指定されたチームの取得写真がありません。']);
     }
-
+    
     $zipFileName = 'team_no_' . $team_no . '.zip';
     $zipFilePath = public_path($zipFileName);
     $zip = new \ZipArchive();
@@ -175,7 +177,7 @@ public function get_photo_download(Request $request)
         }
     }
     $zip->close();
-
+    
     return response()->download($zipFilePath, $zipFileName)->deleteFileAfterSend(true);
 
 }

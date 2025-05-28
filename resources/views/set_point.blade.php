@@ -15,7 +15,7 @@
             alert('{{ $errors->first('ini') }}');
         </script>
     @endif
-    
+
     <header>
         <h5>モリコロロゲイニング　ポイント設定画面（管理者）</h5>
     <form action="{{ route('logout') }}" method="POST" >
@@ -82,8 +82,9 @@
 
     <form action="{{ url('/get_photo_download') }}" method="POST" class="ms-3">
     @csrf
-    <select name="team_no" class="form-select ms-3" id="team_no">
+    <select name="team_no" class="form-select ms-3" id="team_no" style="width: 200px;">
         <option value="">チームを選択</option>
+        <option value="0">全チーム一括ダウンロード</option>
         @foreach ($users as $user)
             <option value="{{ $user->team_no }}">{{ $user->team_no }}:{{ $user->name }}</option>
         @endforeach
