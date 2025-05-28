@@ -169,6 +169,12 @@ public function get_photo_download(Request $request)
     }
     $zip->close();
 
+    // ZIPファイルの存在とサイズをログに出力
+\Log::debug('ZIPファイル存在確認: ' . ($exists = file_exists($zipFilePath) ? 'あり' : 'なし'));
+if ($exists) {
+    \Log::debug('ZIPファイルサイズ: ' . filesize($zipFilePath) . ' バイト');
+}
+
     return response()->download($zipFilePath, $zipFileName)->deleteFileAfterSend(true);
 }
 }
