@@ -137,6 +137,11 @@ public function clear_get(){
 public function get_photo_download(Request $request)
 {
     $team_no = $request->input('team_no');
+
+    return back()->withErrors(['ini' => $team_no ]);
+    
+
+
     if (!$team_no) {
         return back()->withErrors(['ini' => 'チーム番号が指定されていません。']);
     }
