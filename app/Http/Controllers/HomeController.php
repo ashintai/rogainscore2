@@ -621,8 +621,20 @@ public function change_penalty(Request $request){
 public function team_index(){
     // 参加者のみの情報を取得 通常状態とロック状態の両方
     $users = User::with('category')->whereIn('role', [ 0 , 3 ])->get();
+    // チームのポイント状態を生成
+    $state = [];
+    foreach ($users as $user) {
+        // このチームの取得ポイント情報をgetテーブルから拾う
+        // このチームでまだ未確認になっているポイント数を取得
+        $uncheck_point = Get_point::where('team_no', $user->team_no)
+            ->where('checked', 0)->where('point_no', '!=', 0)
+            ->count();
+        $state[$user->team_no] = [
+            "未確認数：$uncheck_point"];
+    }
+    
     // チーム情報を渡す
-    return view('team_index', compact('users'));
+    return view('team_index', compact('users' , 'state'));
 }
 
 // チーム情報編集画面へ
