@@ -132,7 +132,7 @@
     </div>
 
     <hr>
-        <form action="{{ route('team_point' , ['id' => $user_id] ) }}" method="POST" style="text-align: center;">
+        <form action="{{ route('team_point' , ['id' => $user_id] ) }}" method="GET" style="text-align: center;">
         @csrf
         <input type="hidden" name="user_id" value="{{ $user_id }}">
         <input type="hidden" name="get_id" value="{{ $get_id }}">
