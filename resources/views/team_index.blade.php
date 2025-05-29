@@ -49,9 +49,11 @@
         <div class="ms-auto" style ="display: flex; justify-content: flex-end ; gap: 8px;">
             <a href="{{ route('team_edit', $user->id) }}" class="btn btn-primary">登録情報編集</a>
             @if($user->role == 0)
-                <a href="{{ route('team_point', $user->id) }}" class="btn btn-success">通過ポイント編集</a>
+                <a href="{{ route('team_point_unlock', $user->id) }}" class="btn btn-success">通過ポイント編集</a>
             @elseif($user->role == 3)
-                <a href="{{ route('team_point', $user->id) }}" class="btn btn-danger">強制ロック解除</a>
+                <!-- 強制ロック解除は 確認してから-->
+                <a href="{{ route('team_point_unlock', $user->id) }}" class="btn btn-success" onclick="return confirm('この操作は行わないでください。本当に強制ロック解除しますか？');">
+                強制ロック解除</a>
             @endif
         </div>
     </div>
