@@ -123,12 +123,12 @@ public function clear_get(){
     \App\Models\Get_point::truncate();
 
     // 'get'で始まるファイルをリストアップ
-    // $prefix = 'get';
-    // $files = Storage::disk('s3')->files($prefix);
+    $prefix = 'get';
+    $files = Storage::disk('s3')->files($prefix);
     // リストアップされたファイルをすべて削除
-    // foreach ($files as $file) {
-    //     Storage::disk('s3')->delete($file);
-    // }
+    foreach ($files as $file) {
+        Storage::disk('s3')->delete($file);
+    }
     // 管理者画面へ戻る
     return redirect()->route('index');
 }
