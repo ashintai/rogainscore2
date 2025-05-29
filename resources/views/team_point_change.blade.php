@@ -51,6 +51,17 @@
     </style>
 </head>
 <body>
+
+<!-- デバッグ中 -->
+@if(session('message'))
+    <script>
+        alert("{{ session('message') }}");
+    </script>
+    @endif
+
+
+
+
 <header>
     <h5 style="color: blue; margin-left: 20px;">モリコロロゲイニング　判定変更</h5>
     <!-- チェック中はログアウトや他のページに遷移しない -->
