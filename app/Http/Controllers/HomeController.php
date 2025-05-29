@@ -1125,14 +1125,14 @@ public function upload_image(Request $request)
     return redirect()->route('get_point',['flag' => 0] )->withErrors(['image' => '画像のアップロードに失敗しました。']);
 }
 
-public function debug($id , Request $request)
+public function bug($id , Request $request)
 {
    
     $user_id = $request->input('user_id');
     $get_id = $request->input('get_id');
     $flag = $request->input('flag');
 
-    return view('bug', compact('id' , 'user_id' , 'get_id' , 'flag'));
+    return view('debug', compact('id' , 'user_id' , 'get_id' , 'flag'));
 }
 
 
