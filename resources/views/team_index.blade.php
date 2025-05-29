@@ -52,8 +52,10 @@
                 <a href="{{ route('team_point_unlock', $user->id) }}" class="btn btn-success">通過ポイント編集</a>
             @elseif($user->role == 3)
                 <!-- 強制ロック解除は 確認してから-->
-                <a href="{{ route('team_point_unlock', $user->id) }}" class="btn btn-success" onclick="return confirm('この操作は行わないでください。本当に強制ロック解除しますか？');">
-                強制ロック解除</a>
+                <form action="{{ route('team_point_unlock', $user->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('この操作は行わないでください。本当に強制ロック解除しますか？');">
+                    @csrf
+                    <button type="submit" class="btn btn-success">強制ロック解除</button>
+                </form>
             @endif
         </div>
     </div>
