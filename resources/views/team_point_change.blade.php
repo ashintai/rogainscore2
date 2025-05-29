@@ -143,13 +143,16 @@
     </div>
 
     <hr>
-    <!-- デバッグ中 -->
-     <a href="{{ route('team_point', $user_id) }}" class="btn btn-primary" style="text-align: center;">戻る</a>
-        <!-- <form action="{{ route('team_point' , ['id' => $user_id] ) }}" method="GET" style="text-align: center;">
-            <button type="submit" name="result" value="ok" class="btn btn-primary" >戻る</button>
-        </form>
-         -->
-    <hr>
+    <!-- 戻るボタン -->
+    <form action="{{ route('team_point_change' ) }}" method="POST" style="text-align: center;">
+    @csrf
+        <input type="hidden" name="user_id" value="{{ $user_id }}">
+        <input type="hidden" name="get_id" value="{{ $get_id }}">
+        <input type="hidden" name="flag" value=0 >        
+        <button type="submit" name="result" value="back" class="btn btn-primary" >戻る</button>
+    </form>
+
+    <hr> 
     <footer style="text-align: right;">
         <h8>© 2025 (特非)愛知県オリエンテーリング協会</h8>
     </footer>

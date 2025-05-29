@@ -789,6 +789,14 @@ if ($get_point) {
 } else {
     return redirect()->back()->with('message', 'エラーが発生しましたteam_point_change');
 }
+// team_pointへ戻る前にLockを一旦解除
+$user = User::find($user_id);
+if ($user) {
+    $user->role = 0; // ロック解除
+    $user->save(); // データベースに保存
+} else {
+    return redirect()->back()->with('message', 'システムエラーですteam_point_change');
+}
 return redirect()->route('team_point' , [ 'id' => $user_id ]);
 
 }
