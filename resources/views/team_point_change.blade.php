@@ -133,13 +133,9 @@
 
     <hr>
     <!-- デバッグ中 -->
-        <form action="{{ route('bug' , ['id' => $user_id] ) }}" method="GET" style="text-align: center;">
-        @csrf
-        <input type="hidden" name="user_id" value="{{ $user_id }}">
-        <input type="hidden" name="get_id" value="{{ $get_id }}">
-        <input type="hidden" name="flag" value=0 >
-        <button type="submit" name="result" value="ok" class="btn btn-primary" >戻る</button>
-    </form>
+        <form action="{{ route('team_point' , ['id' => $user_id] ) }}" method="GET" style="text-align: center;">
+            <button type="submit" name="result" value="ok" class="btn btn-primary" >戻る</button>
+        </form>
         
     <hr>
     <footer style="text-align: right;">
