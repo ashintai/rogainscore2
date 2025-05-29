@@ -629,8 +629,7 @@ public function team_index(){
         $uncheck_point = Get_point::where('team_no', $user->team_no)
             ->where('checked', 0)->where('point_no', '!=', 0)
             ->count();
-        $state[$user->team_no] = [
-            "未確認数：$uncheck_point"];
+        $state[$user->team_no] = "未確認数：$uncheck_point";
     }
     
     // チーム情報を渡す
