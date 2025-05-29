@@ -73,7 +73,7 @@
     </form>
     <br>
     Userテーブルの消去（admin@gmail.com 1234は残す）<br>
-    <form action="{{ url('/clear_user') }}" method="POST" class="ms-3">
+    <form action="{{ url('/clear_user') }}" method="POST" class="ms-3" onsubmit="return confirm('本当にUserテーブルを消去しますか？');">
     @csrf
     <!-- CSVファイルの選択 -->
         <button class="btn btn-danger ">Userテーブルの消去</button>
@@ -96,7 +96,7 @@
     <br>
 
     取得写真データの消去（getテーブルの全データおよびAWS-S3のget写真を消去）<br>
-    <form action="{{ url('/clear_get') }}" method="POST" class="ms-3">
+    <form action="{{ url('/clear_get') }}" method="POST" class="ms-3" onsubmit="return confirm('本当に取得写真データを消去しますか？');">
     @csrf
         <button class="btn btn-danger ">取得写真の消去</button>
     </form>
