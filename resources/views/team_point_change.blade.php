@@ -133,10 +133,11 @@
 
     <hr>
     <!-- デバッグ中 -->
-        <form action="{{ route('team_point' , ['id' => $user_id] ) }}" method="GET" style="text-align: center;">
+     <a href="{{ route('team_point', $user->id) }}" class="btn btn-primary" style="text-align: center;">戻る</a>
+        <!-- <form action="{{ route('team_point' , ['id' => $user_id] ) }}" method="GET" style="text-align: center;">
             <button type="submit" name="result" value="ok" class="btn btn-primary" >戻る</button>
         </form>
-        
+         -->
     <hr>
     <footer style="text-align: right;">
         <h8>© 2025 (特非)愛知県オリエンテーリング協会</h8>
