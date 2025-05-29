@@ -54,7 +54,7 @@
                 <!-- 強制ロック解除は 確認してから-->
                 <form action="{{ route('team_point_unlock', $user->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('この操作は行わないでください。本当に強制ロック解除しますか？');">
                     @csrf
-                    <button type="submit" class="btn btn-success">強制ロック解除</button>
+                    <button type="submit" class="btn btn-danger">強制ロック解除</button>
                 </form>
             @endif
         </div>
