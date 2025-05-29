@@ -133,7 +133,7 @@
 
     <hr>
     <!-- デバッグ中 -->
-     <a href="{{ route('team_point', $user->id) }}" class="btn btn-primary" style="text-align: center;">戻る</a>
+     <a href="{{ route('team_point', $user_id) }}" class="btn btn-primary" style="text-align: center;">戻る</a>
         <!-- <form action="{{ route('team_point' , ['id' => $user_id] ) }}" method="GET" style="text-align: center;">
             <button type="submit" name="result" value="ok" class="btn btn-primary" >戻る</button>
         </form>
