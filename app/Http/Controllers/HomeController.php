@@ -1125,9 +1125,14 @@ public function upload_image(Request $request)
     return redirect()->route('get_point',['flag' => 0] )->withErrors(['image' => '画像のアップロードに失敗しました。']);
 }
 
-public function bug()
+public function debug($id , Request $request)
 {
-    return view('bug');
+   
+    $user_id = $request->input('user_id');
+    $get_id = $request->input('get_id');
+    $flag = $request->input('flag');
+
+    return view('bug', compact('id' , 'user_id' , 'get_id' , 'flag'));
 }
 
 
@@ -1700,23 +1705,7 @@ public function canvas_upload_test(Request $request)
         return view('test_canvas_2', compact('result'));
         
     }
-   
-}
 
 }
 
-
- // $file = $request->file('image');
-    // // UPLOAD画像読み込み
-    // $manager = new ImageManager(new Driver());
-    // $image = $manager->read($file);
-
-    // // 横幅と高さを取得
-    // $width = $image->width();
-    // $height = $image->height(); 
-
-    // // 容量を取得
-    // $filesize = $file->getSize();
-
-    // // 結果をビューに渡す
-    // return view('test_canvas_2', compact('width', 'height', 'filesize'));
+}

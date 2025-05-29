@@ -6,8 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    @foreach($results as $result)
-        <p>{{ $result->name }}</p>
-    @endforeach
+    <p>id {{ $id }} </p>
+    <p>user_id {{ $user_id }} </p>
+    <p>get_id {{ $get_id }} </p>
+    <p>flag {{ $flag}}<p>
 </body>
 </html>

@@ -122,7 +122,7 @@ Route::post('/team_point_unlock/{user_id}' , [HomeController::class , 'team_poin
 // ポイント履歴一覧
 Route::get('/point_history' , [HomeController::class , 'point_history'])->name('point_history');
 // でバグ用
-Route::get('/bug', [HomeController::class, 'bug'])->name('bug');
+Route::get('/bug/{id)', [HomeController::class, 'bug'])->name('bug');
 
 // Canvas画像圧縮テスト
 Route::get('/canvas_test', [HomeController::class, 'canvas_test'])->name('canvas_test');
