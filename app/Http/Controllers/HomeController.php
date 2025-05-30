@@ -829,9 +829,12 @@ public function team_point_input($id , Request $request){
     
     // あたらしくGet_pointテーブルにレコードを追加
     if ($exits){
+        // team_pointへ戻る前にLockを一旦解除
+        $user->role = 0; // ロック解除
+        $user->save(); // データベースに保存// ポイント番号入力画面で戻る
         return redirect()->back()->with('message', 'すでに登録済みのポイントです');
     }else{
-    Get_point::create([
+        Get_point::create([
         'team_no' => $team_no,
         'point_no' => $point_no,
         'checked' => 5,
