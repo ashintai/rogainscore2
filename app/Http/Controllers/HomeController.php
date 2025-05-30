@@ -739,7 +739,14 @@ public function team_point_delete($get_id , $user_id){
         $get_point->save(); // データベースに保存
     }
     // ポイント一覧に戻るときに、user_idを渡す
-    return redirect()->route( 'team_point' , [ 'id' => $user_id ]);
+    $user = User::find($user_id);
+    if($user){
+        $user->role = 0; // ロック解除
+        $user->save(); // データベースに保存
+        return redirect()->route( 'team_point' , [ 'id' => $user_id ]);
+    }
+    // エラーで返す
+    return redirect()->back()->with('message' , 'システムエラーですteam_point_delete');
 }
 
 // ポイント一覧から写真を選んで状態を変化させる
