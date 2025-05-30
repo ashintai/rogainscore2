@@ -717,12 +717,16 @@ $penalty = $request->input('penalty');
 if($user){
     $user->penalty =$penalty;
     $user->save(); // データベースに保存}
-    }else{
-        return redirect()->back()->with('message' , 'システムエラーですteam_penalty_input');
-    }
+    // team_pointへ戻る前にLockを一旦解除
+    $user->role = 0; // ロック解除
+    $user->save(); // データベースに保存
     return redirect()->route('team_point' , [ 'id' => $user_id ]);
-    
+    }
+    // エラーで返す
+    return redirect()->back()->with('message' , 'システムエラーですteam_penalty_input');
 }
+
+
 
 // 手入力の削除
 public function team_point_delete($get_id , $user_id){
@@ -806,6 +810,9 @@ return redirect()->route('team_point' , [ 'id' => $user_id ]);
 public function team_point_input($id , Request $request){
     // ルートパラメーidはUser_id  $request->input('point_no')はポイント番号
     $user = User::find($id);
+    if(!$user){
+        return redirect()->back()->with('message', 'システムエラーですteam_point_input');
+    }
     // チーム番号を取得
     $team_no = $user->team_no;
     // 入力されたポイント番号を取得
@@ -824,7 +831,9 @@ public function team_point_input($id , Request $request){
         'photo_filename' => null
         ]);
     }
-    // ポイント番号入力画面で戻る
+    // team_pointへ戻る前にLockを一旦解除
+    $user->role = 0; // ロック解除
+    $user->save(); // データベースに保存// ポイント番号入力画面で戻る
     return redirect()->route( 'team_point' , [ 'id' => $id ]);
 }
 
