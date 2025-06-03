@@ -384,7 +384,20 @@ if ($request->hasFile('csvFile')){
     // １行ずつCSVファイルを読込み
     while(( $csvData = fgetcsv($fp)) !== FALSE){
     
-        // 新しいSet_pointインスタンス
+    // 空行（全カラムが空）の場合はスキップ
+        if ($csvData === null || $csvData === false || count(array_filter($csvData, 'strlen')) === 0) {
+            continue;
+        }
+        // 必須カラムが空の場合もスキップ
+        if (
+            empty($csvData[$csv_team_name]) ||
+            empty($csvData[$csv_mailadress]) ||
+            empty($csvData[$csv_password])
+        ) {
+            continue;
+        }
+
+        // 新しいUserインスタンス
         $user = new User();
         // チーム名
         $user->name = $csvData[$csv_team_name];
