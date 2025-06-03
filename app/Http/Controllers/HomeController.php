@@ -234,7 +234,14 @@ public function get_photo_download(Request $request)
 
         // １行ずつCSVファイルを読込み
         while(( $csvData = fgetcsv($fp)) !== FALSE){
-        
+        // 空白行はスキップする
+            if (
+                empty($csvData[$csv_point_no]) ||
+                empty($csvData[$csv_point_name]) ||
+                empty($csvData[$csv_score])
+            ) {
+                continue;
+            }
             // 新しいSet_pointインスタンス
             $set_point = new Set_point();
             // ポイント番号
