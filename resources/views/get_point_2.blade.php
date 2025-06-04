@@ -153,7 +153,9 @@ user: ログインしているユーザー -->
             const key = selectedOption.getAttribute('data-image-key');
             getImageUrl(key).then(url => {
                 const imageElement = document.getElementById('point-image');
-                imageElement.src = url;
+                // キャッシュバスターを付与
+                const cacheBuster = Date.now();
+                imageElement.src = url + '?t=' + cacheBuster;
             });
     }
 
