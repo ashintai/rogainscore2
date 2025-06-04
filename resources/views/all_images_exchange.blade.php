@@ -118,8 +118,10 @@
             const key = selectedOption.getAttribute('data-image-key');
             getImageUrl(key).then(url => {
                 const imageElement = document.getElementById('point-image');
-                imageElement.src = url;
-            });
+                // キャッシュバスターを付与
+                const cacheBuster = Date.now();
+                imageElement.src = url + '?t=' + cacheBuster;
+                });
     }
 
     // ページロード時にSetポイント番号を現在の設定にする

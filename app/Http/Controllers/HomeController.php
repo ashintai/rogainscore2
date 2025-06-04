@@ -526,7 +526,7 @@ public function next_get_point()
     
         // 設定写真のURLを生成
         $key = "set_" . $next_point->point_no . ".JPG";
-        $set_photo_url = Storage::disk('s3')->url($key);
+        $set_photo_url = Storage::disk('s3')->url($key) . '?t=' . time(); // キャッシュ対策のためにタイムスタンプを付加
         // 設定ポイントの名前
         $set_point = Set_point::where('point_no', $next_point->point_no)->first();
         if($set_point){
@@ -788,7 +788,7 @@ public function team_point_photo($get_id , $user_id){
         $point_name = $get_point->setPoint ? $get_point->setPoint->point_name : '不明';
         $get_photo_url = $get_point->photo_filename;
         $checked = $get_point->checked;
-        $set_photo_url = "https://rogain.s3.amazonaws.com/set_" . $point_no . ".JPG";
+        $set_photo_url = "https://rogain.s3.amazonaws.com/set_" . $point_no . ".JPG?t=" . time(); // キャッシュ対策のためにタイムスタンプを付加";
     }
     else{
         return redirect()->back()->with('message' , 'システムエラーですteam_point_photo');
